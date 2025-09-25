@@ -1,0 +1,33 @@
+# Core dependencies for RAG Attack pedagogic guide
+
+# LangChain and LangGraph
+langchain>=0.1.0
+langchain-community>=0.0.10
+langchain-openai>=0.0.5
+langgraph>=0.0.20
+
+# Azure OpenAI
+openai>=1.10.0
+azure-identity>=1.15.0
+
+# Vector stores and embeddings
+chromadb>=0.4.22
+tiktoken>=0.5.2
+
+# Data processing
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Async support
+asyncio-throttle>=1.0.2
+aiohttp>=3.9.0
+
+# Utilities
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+typing-extensions>=4.9.0
+
+# Jupyter notebook support
+jupyter>=1.0.0
+ipykernel>=6.28.0
+notebook>=7.0.0
