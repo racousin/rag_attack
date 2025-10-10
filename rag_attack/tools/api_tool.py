@@ -208,10 +208,20 @@ def create_api_tools(config: Dict[str, Any]):
     """
     from functools import partial
 
+    # Create partial functions and set their __name__ attribute for LangChain compatibility
+    azure_api_partial = partial(azure_function_api_tool, config)
+    azure_api_partial.__name__ = "azure_function_api_tool"
+
+    search_api_partial = partial(search_api_tool, config)
+    search_api_partial.__name__ = "search_api_tool"
+
+    crm_partial = partial(crm_opportunities_tool, config)
+    crm_partial.__name__ = "crm_opportunities_tool"
+
     return [
-        partial(azure_function_api_tool, config),
-        partial(search_api_tool, config),
-        partial(crm_opportunities_tool, config),
+        azure_api_partial,
+        search_api_partial,
+        crm_partial,
         weather_api_tool,
         web_search_tool
     ]

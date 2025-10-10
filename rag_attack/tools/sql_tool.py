@@ -198,10 +198,20 @@ def create_sql_agent_tools(config: Dict[str, Any]):
     Returns:
         List of SQL-related tools with config bound
     """
-    from functools import partial
+    from functools import partial, update_wrapper
+
+    # Create partial functions and set their __name__ attribute for LangChain compatibility
+    sql_query_partial = partial(sql_query_tool, config)
+    sql_query_partial.__name__ = "sql_query_tool"
+
+    get_schema_partial = partial(get_database_schema, config)
+    get_schema_partial.__name__ = "get_database_schema"
+
+    table_info_partial = partial(sql_table_info, config)
+    table_info_partial.__name__ = "sql_table_info"
 
     return [
-        partial(sql_query_tool, config),
-        partial(get_database_schema, config),
-        partial(sql_table_info, config)
+        sql_query_partial,
+        get_schema_partial,
+        table_info_partial
     ]

@@ -205,4 +205,7 @@ def create_hybrid_search_tool(config: Dict[str, Any], index_name: str = "velocor
         except Exception as e:
             return f"Error in hybrid search: {str(e)}"
 
+    # Set function name for LangChain compatibility
+    hybrid_search.__name__ = "hybrid_search"
+
     return hybrid_search
