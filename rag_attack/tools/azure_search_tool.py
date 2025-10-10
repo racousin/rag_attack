@@ -2,7 +2,8 @@
 from typing import List, Dict, Any, Optional
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
-from ..utils.config import get_search_client
+from azure.search.documents import SearchClient
+from azure.core.credentials import AzureKeyCredential
 
 
 class SearchQuery(BaseModel):
@@ -12,21 +13,26 @@ class SearchQuery(BaseModel):
     search_fields: Optional[str] = Field(default=None, description="Comma-separated list of fields to search")
 
 
-@tool
-def azure_search_tool(query: str, top: int = 5, search_fields: Optional[str] = None) -> str:
+def azure_search_tool(config: Dict[str, Any], query: str, top: int = 5, search_fields: Optional[str] = None, index_name: str = "velocorp-documents") -> str:
     """
     Search documents in Azure Cognitive Search.
 
     Args:
+        config: Azure configuration dictionary with 'search_endpoint' and 'search_key'
         query: The search query
         top: Number of results to return (default: 5)
         search_fields: Comma-separated list of fields to search
+        index_name: Name of the search index (default: "velocorp-documents")
 
     Returns:
         Formatted search results as a string
     """
     try:
-        client = get_search_client()
+        client = SearchClient(
+            endpoint=config["search_endpoint"],
+            index_name=index_name,
+            credential=AzureKeyCredential(config["search_key"])
+        )
 
         # Prepare search options
         search_options = {
@@ -77,25 +83,23 @@ class VectorSearchQuery(BaseModel):
     filter: Optional[str] = Field(default=None, description="OData filter expression")
 
 
-@tool
-def azure_vector_search_tool(query: str, top: int = 5, filter: Optional[str] = None) -> str:
+def azure_vector_search_tool(config: Dict[str, Any], query: str, top: int = 5, filter: Optional[str] = None, index_name: str = "velocorp-documents") -> str:
     """
     Perform vector search using Azure Cognitive Search with embeddings.
 
     Args:
+        config: Azure configuration dictionary with openai and search credentials
         query: The search query to vectorize
         top: Number of results to return (default: 5)
         filter: OData filter expression
+        index_name: Name of the search index (default: "velocorp-documents")
 
     Returns:
         Formatted search results with relevance scores
     """
     try:
         from openai import AzureOpenAI
-        from ..utils.config import load_azure_config
         import numpy as np
-
-        config = load_azure_config()
 
         # Get embeddings for query
         openai_client = AzureOpenAI(
@@ -113,7 +117,11 @@ def azure_vector_search_tool(query: str, top: int = 5, filter: Optional[str] = N
         query_embedding = response.data[0].embedding
 
         # Get search client
-        client = get_search_client()
+        client = SearchClient(
+            endpoint=config["search_endpoint"],
+            index_name=index_name,
+            credential=AzureKeyCredential(config["search_key"])
+        )
 
         # Prepare vector search
         from azure.search.documents.models import VectorizedQuery
@@ -160,14 +168,17 @@ def azure_vector_search_tool(query: str, top: int = 5, filter: Optional[str] = N
         return f"Error performing vector search: {str(e)}"
 
 
-def create_hybrid_search_tool():
+def create_hybrid_search_tool(config: Dict[str, Any], index_name: str = "velocorp-documents"):
     """
     Create a hybrid search tool combining text and vector search.
 
+    Args:
+        config: Azure configuration dictionary
+        index_name: Name of the search index
+
     Returns:
-        A LangChain tool for hybrid search
+        A function for hybrid search
     """
-    @tool
     def hybrid_search(query: str, top: int = 5, alpha: float = 0.5) -> str:
         """
         Perform hybrid search combining text and vector search.
@@ -182,8 +193,8 @@ def create_hybrid_search_tool():
         """
         try:
             # Get both text and vector results
-            text_results = azure_search_tool(query, top=top*2)
-            vector_results = azure_vector_search_tool(query, top=top*2)
+            text_results = azure_search_tool(config, query, top=top*2, index_name=index_name)
+            vector_results = azure_vector_search_tool(config, query, top=top*2, index_name=index_name)
 
             # Simple combination - in production, you'd want more sophisticated reranking
             combined = f"=== Text Search Results (weight: {alpha}) ===\n{text_results}\n\n"

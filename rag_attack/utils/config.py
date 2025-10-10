@@ -1,50 +1,61 @@
 """Configuration management for Azure services"""
-import os
-import sys
-import json
-from typing import Dict, Any
-from pathlib import Path
+from typing import Dict, Any, Optional
 
 
-def load_azure_config() -> Dict[str, Any]:
-    """Load Azure configuration from credentials file or scai_onepoint_rag config
+# Global configuration storage
+_global_config: Optional[Dict[str, Any]] = None
 
-    Priority:
-    1. Load from credentials/azure_credentials.json (for students)
-    2. Fall back to scai_onepoint_rag config (for development)
+
+def set_config(config: Dict[str, Any]) -> None:
+    """Set the global Azure configuration
+
+    Args:
+        config: Dictionary containing Azure credentials and endpoints
+            Required keys:
+            - openai_key: Azure OpenAI API key
+            - openai_endpoint: Azure OpenAI endpoint URL
+            - chat_deployment: Azure OpenAI chat deployment name
+            - search_endpoint: Azure Cognitive Search endpoint
+            - search_key: Azure Cognitive Search API key
+            - sql_server: SQL server address (optional)
+            - sql_database: SQL database name (optional)
+            - sql_username: SQL username (optional)
+            - sql_password: SQL password (optional)
     """
-    project_root = Path(__file__).parent.parent.parent
+    global _global_config
+    _global_config = config
 
-    # Try loading from credentials file first (student mode)
-    credentials_file = project_root  / "azure_credentials.json"
-    if credentials_file.exists():
-        try:
-            with open(credentials_file, 'r') as f:
-                config = json.load(f)
-            return config
-        except Exception as e:
-            raise RuntimeError(f"Error loading credentials file: {e}")
 
-    # Fall back to scai_onepoint_rag config (development mode)
-    try:
-        scai_path = project_root / "scai_onepoint_rag"
-        sys.path.insert(0, str(scai_path))
+def get_config() -> Dict[str, Any]:
+    """Get the global Azure configuration
 
-        from config.azure_config import config
-        return config
-    except ImportError:
-        raise ImportError(
-            "Azure configuration not found. Please either:\n"
-            "  1. Place azure_credentials.json in credentials/ directory, OR\n"
-            "  2. Run 'make config' in scai_onepoint_rag directory"
+    Returns:
+        The global configuration dictionary
+
+    Raises:
+        RuntimeError: If configuration has not been set
+    """
+    if _global_config is None:
+        raise RuntimeError(
+            "Configuration not set. Please call set_config() with your Azure credentials first.\n"
+            "Example:\n"
+            "  from rag_attack.utils.config import set_config\n"
+            "  set_config({\n"
+            "      'openai_key': 'your-key',\n"
+            "      'openai_endpoint': 'https://your-endpoint.openai.azure.com/',\n"
+            "      'chat_deployment': 'your-deployment',\n"
+            "      'search_endpoint': 'https://your-search.search.windows.net',\n"
+            "      'search_key': 'your-search-key'\n"
+            "  })"
         )
+    return _global_config
 
 
 def get_openai_client():
     """Initialize Azure OpenAI client"""
     from openai import AzureOpenAI
 
-    config = load_azure_config()
+    config = get_config()
 
     client = AzureOpenAI(
         api_key=config["openai_key"],
@@ -60,7 +71,7 @@ def get_search_client(index_name: str = "velocorp-documents"):
     from azure.search.documents import SearchClient
     from azure.core.credentials import AzureKeyCredential
 
-    config = load_azure_config()
+    config = get_config()
 
     search_client = SearchClient(
         endpoint=config["search_endpoint"],
@@ -75,7 +86,7 @@ def get_sql_connection():
     """Get SQL database connection string"""
     import pyodbc
 
-    config = load_azure_config()
+    config = get_config()
 
     connection_string = (
         f"Driver={{ODBC Driver 18 for SQL Server}};"
