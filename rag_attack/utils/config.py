@@ -1,15 +1,32 @@
 """Configuration management for Azure services"""
 import os
 import sys
+import json
 from typing import Dict, Any
 from pathlib import Path
 
 
 def load_azure_config() -> Dict[str, Any]:
-    """Load Azure configuration from scai_onepoint_rag config"""
+    """Load Azure configuration from credentials file or scai_onepoint_rag config
+
+    Priority:
+    1. Load from credentials/azure_credentials.json (for students)
+    2. Fall back to scai_onepoint_rag config (for development)
+    """
+    project_root = Path(__file__).parent.parent.parent
+
+    # Try loading from credentials file first (student mode)
+    credentials_file = project_root  / "azure_credentials.json"
+    if credentials_file.exists():
+        try:
+            with open(credentials_file, 'r') as f:
+                config = json.load(f)
+            return config
+        except Exception as e:
+            raise RuntimeError(f"Error loading credentials file: {e}")
+
+    # Fall back to scai_onepoint_rag config (development mode)
     try:
-        # Add scai_onepoint_rag to path
-        project_root = Path(__file__).parent.parent.parent
         scai_path = project_root / "scai_onepoint_rag"
         sys.path.insert(0, str(scai_path))
 
@@ -17,7 +34,9 @@ def load_azure_config() -> Dict[str, Any]:
         return config
     except ImportError:
         raise ImportError(
-            "Azure configuration not found. Please run 'make config' in scai_onepoint_rag directory first."
+            "Azure configuration not found. Please either:\n"
+            "  1. Place azure_credentials.json in credentials/ directory, OR\n"
+            "  2. Run 'make config' in scai_onepoint_rag directory"
         )
 
 

@@ -5,6 +5,8 @@ __pycache__/
 *$py.class
 exp/
 
+azure_credentials.json
+
 # C extensions
 *.so
 
