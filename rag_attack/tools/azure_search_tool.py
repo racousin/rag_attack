@@ -1,9 +1,33 @@
 """Azure Cognitive Search tool for RAG"""
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Callable
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
 from azure.search.documents import SearchClient
 from azure.core.credentials import AzureKeyCredential
+
+# Global config will be set by the user
+_CONFIG: Optional[Dict[str, Any]] = None
+
+
+def set_config(config: Dict[str, Any]) -> None:
+    """
+    Set the global configuration for all tools.
+    Call this once at the beginning of your notebook/script.
+
+    Args:
+        config: Azure configuration dictionary with all credentials
+    """
+    global _CONFIG
+    _CONFIG = config
+
+
+def get_config() -> Dict[str, Any]:
+    """Get the global configuration"""
+    if _CONFIG is None:
+        raise RuntimeError(
+            "Configuration not set. Call set_config(config) first at the beginning of your notebook."
+        )
+    return _CONFIG
 
 
 class SearchQuery(BaseModel):
@@ -209,3 +233,62 @@ def create_hybrid_search_tool(config: Dict[str, Any], index_name: str = "velocor
     hybrid_search.__name__ = "hybrid_search"
 
     return hybrid_search
+
+
+# ============================================================================
+# CLEAN WRAPPER FUNCTIONS (No config parameter needed!)
+# ============================================================================
+
+def search_documents(query: str, top: int = 5, search_fields: Optional[str] = None, index_name: str = "velocorp-documents") -> str:
+    """
+    Search documents in Azure Cognitive Search.
+    Uses the global configuration set via set_config().
+
+    Args:
+        query: The search query
+        top: Number of results to return (default: 5)
+        search_fields: Comma-separated list of fields to search
+        index_name: Name of the search index (default: "velocorp-documents")
+
+    Returns:
+        Formatted search results as a string
+    """
+    config = get_config()
+    return azure_search_tool(config, query, top, search_fields, index_name)
+
+
+def vector_search_documents(query: str, top: int = 5, filter: Optional[str] = None, index_name: str = "velocorp-documents") -> str:
+    """
+    Perform vector search using Azure Cognitive Search with embeddings.
+    Uses the global configuration set via set_config().
+
+    Args:
+        query: The search query to vectorize
+        top: Number of results to return (default: 5)
+        filter: OData filter expression
+        index_name: Name of the search index (default: "velocorp-documents")
+
+    Returns:
+        Formatted search results with relevance scores
+    """
+    config = get_config()
+    return azure_vector_search_tool(config, query, top, filter, index_name)
+
+
+def hybrid_search_documents(query: str, top: int = 5, alpha: float = 0.5, index_name: str = "velocorp-documents") -> str:
+    """
+    Perform hybrid search combining text and vector search.
+    Uses the global configuration set via set_config().
+
+    Args:
+        query: The search query
+        top: Number of results to return
+        alpha: Weight for text vs vector search (0=vector only, 1=text only)
+        index_name: Name of the search index
+
+    Returns:
+        Combined and reranked search results
+    """
+    config = get_config()
+    tool = create_hybrid_search_tool(config, index_name)
+    return tool(query, top, alpha)

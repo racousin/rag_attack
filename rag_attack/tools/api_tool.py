@@ -5,6 +5,9 @@ from typing import Dict, Any, Optional
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
 
+# Import config management from azure_search_tool
+from .azure_search_tool import get_config
+
 
 class APIRequest(BaseModel):
     """Input schema for API request tool"""
@@ -225,3 +228,94 @@ def create_api_tools(config: Dict[str, Any]):
         weather_api_tool,
         web_search_tool
     ]
+
+
+# ============================================================================
+# CLEAN WRAPPER FUNCTIONS (No config parameter needed!)
+# ============================================================================
+
+def call_azure_api(
+    endpoint: str,
+    method: str = "GET",
+    params: Optional[Dict[str, Any]] = None,
+    data: Optional[Dict[str, Any]] = None
+) -> str:
+    """
+    Call Azure Function API endpoints.
+    Uses the global configuration set via set_config().
+
+    Args:
+        endpoint: The API endpoint path (e.g., '/crm/opportunities')
+        method: HTTP method (GET, POST, PUT, DELETE)
+        params: Query parameters
+        data: Request body data
+
+    Returns:
+        API response as formatted JSON string
+    """
+    config = get_config()
+    return azure_function_api_tool(config, endpoint, method, params, data)
+
+
+def search_via_api(query: str, top: int = 5) -> str:
+    """
+    Search using the Azure Function search API.
+    Uses the global configuration set via set_config().
+
+    Args:
+        query: The search query
+        top: Number of results to return
+
+    Returns:
+        Search results from the API
+    """
+    config = get_config()
+    return search_api_tool(config, query, top)
+
+
+def get_crm_opportunities(
+    status: Optional[str] = None,
+    min_value: Optional[float] = None,
+    max_value: Optional[float] = None
+) -> str:
+    """
+    Get CRM opportunities from the Azure Function API.
+    Uses the global configuration set via set_config().
+
+    Args:
+        status: Filter by opportunity status
+        min_value: Minimum opportunity value
+        max_value: Maximum opportunity value
+
+    Returns:
+        CRM opportunities data
+    """
+    config = get_config()
+    return crm_opportunities_tool(config, status, min_value, max_value)
+
+
+def get_weather(city: str) -> str:
+    """
+    Get weather information for a city.
+
+    Args:
+        city: Name of the city
+
+    Returns:
+        Weather information
+    """
+    return weather_api_tool(city)
+
+
+def search_web(query: str, num_results: int = 5) -> str:
+    """
+    Search the web using DuckDuckGo.
+
+    Args:
+        query: The search query
+        num_results: Number of results to return
+
+    Returns:
+        Web search results
+    """
+    return web_search_tool(query, num_results)

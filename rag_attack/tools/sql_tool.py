@@ -5,6 +5,9 @@ from pydantic import BaseModel, Field
 import pandas as pd
 import pyodbc
 
+# Import config management from azure_search_tool
+from .azure_search_tool import get_config
+
 
 class SQLQuery(BaseModel):
     """Input schema for SQL query tool"""
@@ -215,3 +218,50 @@ def create_sql_agent_tools(config: Dict[str, Any]):
         get_schema_partial,
         table_info_partial
     ]
+
+
+# ============================================================================
+# CLEAN WRAPPER FUNCTIONS (No config parameter needed!)
+# ============================================================================
+
+def execute_sql_query(query: str, max_rows: int = 10) -> str:
+    """
+    Execute SQL queries against Azure SQL Database.
+    Uses the global configuration set via set_config().
+
+    Args:
+        query: The SQL query to execute (SELECT only)
+        max_rows: Maximum number of rows to return (default: 10)
+
+    Returns:
+        Query results as formatted string
+    """
+    config = get_config()
+    return sql_query_tool(config, query, max_rows)
+
+
+def get_schema() -> str:
+    """
+    Get the schema information for all tables in the database.
+    Uses the global configuration set via set_config().
+
+    Returns:
+        Formatted schema information
+    """
+    config = get_config()
+    return get_database_schema(config)
+
+
+def get_table_info(table_name: str) -> str:
+    """
+    Get detailed information about a specific table.
+    Uses the global configuration set via set_config().
+
+    Args:
+        table_name: Name of the table to inspect
+
+    Returns:
+        Table schema and sample data
+    """
+    config = get_config()
+    return sql_table_info(config, table_name)
