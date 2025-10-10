@@ -1,20 +1,21 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "rag-attack"
 version = "0.1.0"
-description = ""
-authors = [
-    {name = "racousin",email = "racousin@student.42.fr"}
-]
+description = "RAG Attack educational toolkit"
+authors = [{name = "racousin", email = "racousin@student.42.fr"}]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.8"
 dependencies = [
-    "jupyter (>=1.1.1,<2.0.0)",
-    "azure-search-documents (>=11.5.3,<12.0.0)",
-    "pyodbc (>=5.2.0,<6.0.0)",
-    "azure-identity (>=1.25.0,<2.0.0)"
+    "azure-core>=1.35.0",
+    "azure-identity>=1.23.0",
+    "azure-search-documents>=11.5.3",
+    "langchain-community>=0.3.27",
+    "langchain-openai>=0.3.27",
+    "langgraph>=0.5.1",
+    "pyodbc>=5.2.0",
+    "requests>=2.32.4",
 ]
-
-
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
