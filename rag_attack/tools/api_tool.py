@@ -14,8 +14,8 @@ class APIRequest(BaseModel):
     data: Optional[Dict[str, Any]] = Field(default=None, description="Request body data")
 
 
-@tool
 def azure_function_api_tool(
+    config: Dict[str, Any],
     endpoint: str,
     method: str = "GET",
     params: Optional[Dict[str, Any]] = None,
@@ -25,6 +25,7 @@ def azure_function_api_tool(
     Call Azure Function API endpoints.
 
     Args:
+        config: Azure configuration dictionary with 'api_base_url'
         endpoint: The API endpoint path (e.g., '/crm/opportunities')
         method: HTTP method (GET, POST, PUT, DELETE)
         params: Query parameters
@@ -34,9 +35,6 @@ def azure_function_api_tool(
         API response as formatted JSON string
     """
     try:
-        from ..utils.config import load_azure_config
-
-        config = load_azure_config()
         base_url = config["api_base_url"]
 
         # Ensure endpoint starts with /
@@ -71,12 +69,12 @@ def azure_function_api_tool(
         return f"Error calling API: {str(e)}"
 
 
-@tool
-def search_api_tool(query: str, top: int = 5) -> str:
+def search_api_tool(config: Dict[str, Any], query: str, top: int = 5) -> str:
     """
     Search using the Azure Function search API.
 
     Args:
+        config: Azure configuration dictionary
         query: The search query
         top: Number of results to return
 
@@ -84,13 +82,14 @@ def search_api_tool(query: str, top: int = 5) -> str:
         Search results from the API
     """
     return azure_function_api_tool(
+        config,
         endpoint="/search",
         params={"q": query, "top": top}
     )
 
 
-@tool
 def crm_opportunities_tool(
+    config: Dict[str, Any],
     status: Optional[str] = None,
     min_value: Optional[float] = None,
     max_value: Optional[float] = None
@@ -99,6 +98,7 @@ def crm_opportunities_tool(
     Get CRM opportunities from the Azure Function API.
 
     Args:
+        config: Azure configuration dictionary
         status: Filter by opportunity status
         min_value: Minimum opportunity value
         max_value: Maximum opportunity value
@@ -115,12 +115,12 @@ def crm_opportunities_tool(
         params["max_value"] = max_value
 
     return azure_function_api_tool(
+        config,
         endpoint="/crm/opportunities",
         params=params if params else None
     )
 
 
-@tool
 def weather_api_tool(city: str) -> str:
     """
     Get weather information for a city using OpenWeatherMap API.
@@ -159,7 +159,6 @@ def weather_api_tool(city: str) -> str:
         return f"Error getting weather data: {str(e)}"
 
 
-@tool
 def web_search_tool(query: str, num_results: int = 5) -> str:
     """
     Search the web using DuckDuckGo (no API key required).
@@ -197,17 +196,22 @@ def web_search_tool(query: str, num_results: int = 5) -> str:
         return f"Error searching the web: {str(e)}"
 
 
-def create_api_tools():
+def create_api_tools(config: Dict[str, Any]):
     """
-    Create a collection of API tools.
+    Create a collection of API tools with config bound.
+
+    Args:
+        config: Azure configuration dictionary
 
     Returns:
-        List of API-related tools
+        List of API-related tools with config bound
     """
+    from functools import partial
+
     return [
-        azure_function_api_tool,
-        search_api_tool,
-        crm_opportunities_tool,
+        partial(azure_function_api_tool, config),
+        partial(search_api_tool, config),
+        partial(crm_opportunities_tool, config),
         weather_api_tool,
         web_search_tool
     ]

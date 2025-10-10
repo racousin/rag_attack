@@ -6,7 +6,6 @@ from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, ToolMe
 from langchain_openai import AzureChatOpenAI
 from langchain_core.tools import BaseTool
 import operator
-from ..utils.config import load_azure_config, get_openai_client
 
 
 class AgentState(TypedDict):
@@ -15,10 +14,16 @@ class AgentState(TypedDict):
     next: str
 
 
-def create_llm(temperature: float = 0.0) -> AzureChatOpenAI:
-    """Create Azure OpenAI LLM instance"""
-    config = load_azure_config()
+def create_llm(config: Dict[str, Any], temperature: float = 0.0) -> AzureChatOpenAI:
+    """Create Azure OpenAI LLM instance
 
+    Args:
+        config: Azure configuration dictionary with OpenAI credentials
+        temperature: Temperature for the LLM
+
+    Returns:
+        AzureChatOpenAI instance
+    """
     return AzureChatOpenAI(
         azure_endpoint=config["openai_endpoint"],
         api_key=config["openai_key"],
@@ -31,16 +36,18 @@ def create_llm(temperature: float = 0.0) -> AzureChatOpenAI:
 class SimpleToolAgent:
     """Simple agent that can use tools to answer questions"""
 
-    def __init__(self, tools: List[BaseTool], system_prompt: str = None):
+    def __init__(self, config: Dict[str, Any], tools: List[BaseTool], system_prompt: str = None):
         """
         Initialize the agent with tools.
 
         Args:
+            config: Azure configuration dictionary
             tools: List of LangChain tools the agent can use
             system_prompt: Optional system prompt for the agent
         """
+        self.config = config
         self.tools = tools
-        self.llm = create_llm()
+        self.llm = create_llm(config)
 
         # Bind tools to the LLM
         self.llm_with_tools = self.llm.bind_tools(tools)

@@ -1,8 +1,9 @@
 """SQL Database tool for querying Azure SQL"""
-from typing import Optional
+from typing import Optional, Dict, Any
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
 import pandas as pd
+import pyodbc
 
 
 class SQLQuery(BaseModel):
@@ -11,12 +12,27 @@ class SQLQuery(BaseModel):
     max_rows: int = Field(default=10, description="Maximum number of rows to return")
 
 
-@tool
-def sql_query_tool(query: str, max_rows: int = 10) -> str:
+def _get_sql_connection(config: Dict[str, Any]):
+    """Helper to get SQL connection from config"""
+    connection_string = (
+        f"Driver={{ODBC Driver 18 for SQL Server}};"
+        f"Server={config['sql_server']};"
+        f"Database={config['sql_database']};"
+        f"Uid={config['sql_username']};"
+        f"Pwd={config['sql_password']};"
+        f"Encrypt=yes;"
+        f"TrustServerCertificate=no;"
+        f"Connection Timeout=30;"
+    )
+    return pyodbc.connect(connection_string)
+
+
+def sql_query_tool(config: Dict[str, Any], query: str, max_rows: int = 10) -> str:
     """
     Execute SQL queries against Azure SQL Database.
 
     Args:
+        config: Azure configuration dictionary with SQL credentials
         query: The SQL query to execute
         max_rows: Maximum number of rows to return (default: 10)
 
@@ -24,15 +40,13 @@ def sql_query_tool(query: str, max_rows: int = 10) -> str:
         Query results as formatted string
     """
     try:
-        from ..utils.config import get_sql_connection
-
         # Security check - only allow SELECT queries
         query_lower = query.lower().strip()
         if not query_lower.startswith("select"):
             return "Error: Only SELECT queries are allowed for safety"
 
         # Get connection
-        conn = get_sql_connection()
+        conn = _get_sql_connection(config)
 
         try:
             # Execute query
@@ -57,18 +71,18 @@ def sql_query_tool(query: str, max_rows: int = 10) -> str:
         return f"Error executing SQL query: {str(e)}"
 
 
-@tool
-def get_database_schema() -> str:
+def get_database_schema(config: Dict[str, Any]) -> str:
     """
     Get the schema information for all tables in the database.
+
+    Args:
+        config: Azure configuration dictionary with SQL credentials
 
     Returns:
         Formatted schema information
     """
     try:
-        from ..utils.config import get_sql_connection
-
-        conn = get_sql_connection()
+        conn = _get_sql_connection(config)
 
         try:
             # Query to get all tables and their columns
@@ -110,21 +124,19 @@ def get_database_schema() -> str:
         return f"Error getting database schema: {str(e)}"
 
 
-@tool
-def sql_table_info(table_name: str) -> str:
+def sql_table_info(config: Dict[str, Any], table_name: str) -> str:
     """
     Get detailed information about a specific table.
 
     Args:
+        config: Azure configuration dictionary with SQL credentials
         table_name: Name of the table to inspect
 
     Returns:
         Table schema and sample data
     """
     try:
-        from ..utils.config import get_sql_connection
-
-        conn = get_sql_connection()
+        conn = _get_sql_connection(config)
 
         try:
             # Get column information
@@ -176,15 +188,20 @@ def sql_table_info(table_name: str) -> str:
         return f"Error getting table info: {str(e)}"
 
 
-def create_sql_agent_tools():
+def create_sql_agent_tools(config: Dict[str, Any]):
     """
-    Create a collection of SQL tools for the agent.
+    Create a collection of SQL tools for the agent with config bound.
+
+    Args:
+        config: Azure configuration dictionary
 
     Returns:
-        List of SQL-related tools
+        List of SQL-related tools with config bound
     """
+    from functools import partial
+
     return [
-        sql_query_tool,
-        get_database_schema,
-        sql_table_info
+        partial(sql_query_tool, config),
+        partial(get_database_schema, config),
+        partial(sql_table_info, config)
     ]

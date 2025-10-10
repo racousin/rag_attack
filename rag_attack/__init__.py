@@ -3,30 +3,41 @@
 __version__ = "0.2.0"
 
 # Import main components
-from .agents import SimpleToolAgent, ReActAgent
+from .agents import SimpleToolAgent, create_llm
 from .tools import (
     azure_search_tool,
     azure_vector_search_tool,
     sql_query_tool,
+    get_database_schema,
+    sql_table_info,
     azure_function_api_tool,
-    crm_opportunities_tool
+    search_api_tool,
+    crm_opportunities_tool,
+    weather_api_tool,
+    web_search_tool,
+    create_api_tools,
+    create_sql_agent_tools,
+    create_hybrid_search_tool
 )
-from .planners import HierarchicalPlanner
-from .utils import load_azure_config, get_openai_client
 
 __all__ = [
     # Agents
     "SimpleToolAgent",
-    "ReActAgent",
-    # Tools
+    "create_llm",
+    # Search Tools
     "azure_search_tool",
     "azure_vector_search_tool",
+    "create_hybrid_search_tool",
+    # SQL Tools
     "sql_query_tool",
+    "get_database_schema",
+    "sql_table_info",
+    "create_sql_agent_tools",
+    # API Tools
     "azure_function_api_tool",
+    "search_api_tool",
     "crm_opportunities_tool",
-    # Planners
-    "HierarchicalPlanner",
-    # Utils
-    "load_azure_config",
-    "get_openai_client",
+    "weather_api_tool",
+    "web_search_tool",
+    "create_api_tools",
 ]
