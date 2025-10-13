@@ -1,7 +1,7 @@
 """Tools for agentic RAG"""
 
-# Configuration management
-from .azure_search_tool import (
+# Configuration management - import from centralized location
+from ..utils.config import (
     set_config,
     get_config,
 )

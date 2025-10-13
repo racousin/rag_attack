@@ -5,8 +5,8 @@ from pydantic import BaseModel, Field
 import pandas as pd
 import pyodbc
 
-# Import config management from azure_search_tool
-from .azure_search_tool import get_config
+# Import config management from centralized location
+from ..utils.config import get_config
 
 
 class SQLQuery(BaseModel):
@@ -30,18 +30,18 @@ def _get_sql_connection(config: Dict[str, Any]):
     return pyodbc.connect(connection_string)
 
 
-def sql_query_tool(config: Dict[str, Any], query: str, max_rows: int = 10) -> str:
-    """
-    Execute SQL queries against Azure SQL Database.
+@tool
+def sql_query_tool(query: str, max_rows: int = 10) -> str:
+    """Execute SQL queries against Azure SQL Database.
 
     Args:
-        config: Azure configuration dictionary with SQL credentials
-        query: The SQL query to execute
+        query: The SQL query to execute (SELECT only)
         max_rows: Maximum number of rows to return (default: 10)
 
     Returns:
         Query results as formatted string
     """
+    config = get_config()
     try:
         # Security check - only allow SELECT queries
         query_lower = query.lower().strip()
@@ -74,16 +74,14 @@ def sql_query_tool(config: Dict[str, Any], query: str, max_rows: int = 10) -> st
         return f"Error executing SQL query: {str(e)}"
 
 
-def get_database_schema(config: Dict[str, Any]) -> str:
-    """
-    Get the schema information for all tables in the database.
-
-    Args:
-        config: Azure configuration dictionary with SQL credentials
+@tool
+def get_database_schema() -> str:
+    """Get the schema information for all tables in the database.
 
     Returns:
         Formatted schema information
     """
+    config = get_config()
     try:
         conn = _get_sql_connection(config)
 
@@ -127,17 +125,17 @@ def get_database_schema(config: Dict[str, Any]) -> str:
         return f"Error getting database schema: {str(e)}"
 
 
-def sql_table_info(config: Dict[str, Any], table_name: str) -> str:
-    """
-    Get detailed information about a specific table.
+@tool
+def sql_table_info(table_name: str) -> str:
+    """Get detailed information about a specific table.
 
     Args:
-        config: Azure configuration dictionary with SQL credentials
         table_name: Name of the table to inspect
 
     Returns:
         Table schema and sample data
     """
+    config = get_config()
     try:
         conn = _get_sql_connection(config)
 
@@ -236,8 +234,7 @@ def execute_sql_query(query: str, max_rows: int = 10) -> str:
     Returns:
         Query results as formatted string
     """
-    config = get_config()
-    return sql_query_tool(config, query, max_rows)
+    return sql_query_tool.invoke({"query": query, "max_rows": max_rows})
 
 
 def get_schema() -> str:
@@ -248,8 +245,7 @@ def get_schema() -> str:
     Returns:
         Formatted schema information
     """
-    config = get_config()
-    return get_database_schema(config)
+    return get_database_schema.invoke({})
 
 
 def get_table_info(table_name: str) -> str:
@@ -263,5 +259,4 @@ def get_table_info(table_name: str) -> str:
     Returns:
         Table schema and sample data
     """
-    config = get_config()
-    return sql_table_info(config, table_name)
+    return sql_table_info.invoke({"table_name": table_name})

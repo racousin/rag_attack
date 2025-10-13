@@ -9,6 +9,7 @@ from langchain.agents.format_scratchpad import format_to_openai_function_message
 from langchain.agents.output_parsers import ReActSingleInputOutputParser
 import operator
 from ..agents.base_agent import create_llm
+from ..utils.config import get_config
 
 
 class ReActState(TypedDict):
@@ -28,17 +29,22 @@ class ReActAgent:
     making its thought process transparent and debuggable.
     """
 
-    def __init__(self, tools: List[BaseTool], max_iterations: int = 5):
+    def __init__(self, tools: List[BaseTool], max_iterations: int = 5, verbose: bool = True):
         """
         Initialize ReAct agent.
 
         Args:
             tools: List of tools available to the agent
             max_iterations: Maximum number of reasoning-acting cycles
+            verbose: Whether to print progress information (default: True)
         """
         self.tools = tools
         self.max_iterations = max_iterations
-        self.llm = create_llm(temperature=0.0)
+        self.verbose = verbose
+
+        # Get global config and create LLM
+        config = get_config()
+        self.llm = create_llm(config, temperature=0.0)
 
         # ReAct specific prompt
         self.react_prompt = """You are an assistant that uses the ReAct (Reasoning and Acting) framework to solve problems.
@@ -106,6 +112,12 @@ Let's think step by step.
         reasoning = state.get("reasoning", [])
         observations = state.get("observations", [])
 
+        if self.verbose:
+            step_num = len(reasoning) + 1
+            print(f"\n{'='*60}")
+            print(f"🧠 STEP {step_num}: REASONING")
+            print(f"{'='*60}")
+
         # Build context from previous reasoning and observations
         context = "\n".join([
             f"Thought {i+1}: {r}\nObservation {i+1}: {o}"
@@ -122,9 +134,15 @@ Previous reasoning and observations:
 
 Current thought:"""
 
+        if self.verbose:
+            print("⏳ Thinking...")
+
         # Get reasoning from LLM
         response = self.llm.invoke(prompt)
         new_reasoning = response.content
+
+        if self.verbose:
+            print(f"\n💭 Thought: {new_reasoning}")
 
         # Determine next action
         if "final answer" in new_reasoning.lower() or len(reasoning) >= self.max_iterations:
@@ -142,6 +160,10 @@ Current thought:"""
         reasoning = state.get("reasoning", [])
         last_thought = reasoning[-1] if reasoning else ""
 
+        if self.verbose:
+            print(f"\n🔧 ACTION")
+            print(f"{'-'*60}")
+
         # Parse the thought to determine which tool to use
         tool_prompt = f"""Based on this thought: "{last_thought}"
 
@@ -151,6 +173,9 @@ Which tool should I use and with what input? Available tools:
 Respond in this format:
 Tool: [tool_name]
 Input: [tool_input]"""
+
+        if self.verbose:
+            print("⏳ Deciding which tool to use...")
 
         response = self.llm.invoke(tool_prompt)
 
@@ -165,8 +190,17 @@ Input: [tool_input]"""
             elif line.startswith("Input:"):
                 tool_input = line.replace("Input:", "").strip()
 
+        if self.verbose:
+            print(f"🔨 Using tool: {tool_name}")
+            print(f"📝 Input: {tool_input[:100]}{'...' if len(tool_input) > 100 else ''}")
+            print("⏳ Executing...")
+
         # Execute the tool
         tool_result = self._execute_tool(tool_name, tool_input)
+
+        if self.verbose:
+            result_preview = tool_result[:200] if len(tool_result) > 200 else tool_result
+            print(f"\n✅ Result: {result_preview}{'...' if len(tool_result) > 200 else ''}")
 
         return {
             "observations": [f"Used {tool_name} with input '{tool_input}': {tool_result}"]
@@ -184,6 +218,11 @@ Input: [tool_input]"""
         observations = state.get("observations", [])
         messages = state.get("messages", [])
 
+        if self.verbose:
+            print(f"\n🤔 REFLECTION")
+            print(f"{'-'*60}")
+            print("⏳ Evaluating if we have enough information...")
+
         # Check if we have enough information
         reflection_prompt = f"""Based on the task and observations so far, do I have enough information to provide a final answer?
 
@@ -198,8 +237,12 @@ Do I have enough information? (yes/no) and why:"""
 
         # Decide whether to continue or finalize
         if "yes" in response.content.lower() or len(reasoning) >= self.max_iterations:
+            if self.verbose:
+                print("✅ Sufficient information gathered. Moving to finalize.")
             return {"next_action": "finalize"}
         else:
+            if self.verbose:
+                print("🔄 Need more information. Continuing reasoning cycle...")
             return {"next_action": "continue"}
 
     def _finalize_node(self, state: ReActState) -> Dict[str, Any]:
@@ -207,6 +250,12 @@ Do I have enough information? (yes/no) and why:"""
         reasoning = state.get("reasoning", [])
         observations = state.get("observations", [])
         messages = state.get("messages", [])
+
+        if self.verbose:
+            print(f"\n{'='*60}")
+            print(f"🎯 FINALIZING ANSWER")
+            print(f"{'='*60}")
+            print("⏳ Generating final answer based on all gathered information...")
 
         # Generate final answer
         final_prompt = f"""Based on all the reasoning and observations, provide a final answer to the task.
@@ -219,6 +268,12 @@ Reasoning and observations:
 Final answer:"""
 
         response = self.llm.invoke(final_prompt)
+
+        if self.verbose:
+            print(f"\n✨ FINAL ANSWER:")
+            print(f"{'-'*60}")
+            print(response.content)
+            print(f"{'='*60}\n")
 
         return {
             "final_answer": response.content,
@@ -240,6 +295,23 @@ Final answer:"""
         for tool in self.tools:
             if tool.name.lower() == tool_name.lower():
                 try:
+                    # Get the tool's input schema to determine the parameter name
+                    if hasattr(tool, 'args_schema') and tool.args_schema:
+                        # Get the first field name from the schema
+                        schema_fields = tool.args_schema.model_fields
+                        if schema_fields:
+                            # Use the first parameter name
+                            first_param = list(schema_fields.keys())[0]
+                            return tool.invoke({first_param: tool_input})
+
+                    # Fallback: try common parameter names
+                    for param_name in ['query', 'input', 'text', 'question']:
+                        try:
+                            return tool.invoke({param_name: tool_input})
+                        except:
+                            continue
+
+                    # Last resort: try with the input directly
                     return tool.invoke(tool_input)
                 except Exception as e:
                     return f"Error executing tool: {str(e)}"
@@ -272,6 +344,15 @@ Final answer:"""
         Returns:
             The final answer
         """
+        if self.verbose:
+            print(f"\n{'#'*60}")
+            print(f"🤖 ReAct Agent Starting")
+            print(f"{'#'*60}")
+            print(f"❓ Question: {question}")
+            print(f"🔧 Available tools: {', '.join([tool.name for tool in self.tools])}")
+            print(f"🔄 Max iterations: {self.max_iterations}")
+            print(f"{'#'*60}")
+
         initial_state = {
             "messages": [HumanMessage(content=question)],
             "reasoning": [],
@@ -293,6 +374,15 @@ Final answer:"""
         Returns:
             Dictionary containing the full reasoning trace
         """
+        if self.verbose:
+            print(f"\n{'#'*60}")
+            print(f"🤖 ReAct Agent Starting (Trace Mode)")
+            print(f"{'#'*60}")
+            print(f"❓ Question: {question}")
+            print(f"🔧 Available tools: {', '.join([tool.name for tool in self.tools])}")
+            print(f"🔄 Max iterations: {self.max_iterations}")
+            print(f"{'#'*60}")
+
         initial_state = {
             "messages": [HumanMessage(content=question)],
             "reasoning": [],

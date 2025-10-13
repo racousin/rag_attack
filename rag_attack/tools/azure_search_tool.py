@@ -5,29 +5,8 @@ from pydantic import BaseModel, Field
 from azure.search.documents import SearchClient
 from azure.core.credentials import AzureKeyCredential
 
-# Global config will be set by the user
-_CONFIG: Optional[Dict[str, Any]] = None
-
-
-def set_config(config: Dict[str, Any]) -> None:
-    """
-    Set the global configuration for all tools.
-    Call this once at the beginning of your notebook/script.
-
-    Args:
-        config: Azure configuration dictionary with all credentials
-    """
-    global _CONFIG
-    _CONFIG = config
-
-
-def get_config() -> Dict[str, Any]:
-    """Get the global configuration"""
-    if _CONFIG is None:
-        raise RuntimeError(
-            "Configuration not set. Call set_config(config) first at the beginning of your notebook."
-        )
-    return _CONFIG
+# Import centralized config management
+from ..utils.config import set_config, get_config
 
 
 class SearchQuery(BaseModel):
@@ -37,20 +16,20 @@ class SearchQuery(BaseModel):
     search_fields: Optional[str] = Field(default=None, description="Comma-separated list of fields to search")
 
 
-def azure_search_tool(config: Dict[str, Any], query: str, top: int = 5, search_fields: Optional[str] = None, index_name: str = "velocorp-documents") -> str:
-    """
-    Search documents in Azure Cognitive Search.
+@tool
+def azure_search_tool(query: str, top: int = 5, search_fields: Optional[str] = None, index_name: str = "documents") -> str:
+    """Search documents in Azure Cognitive Search.
 
     Args:
-        config: Azure configuration dictionary with 'search_endpoint' and 'search_key'
         query: The search query
         top: Number of results to return (default: 5)
         search_fields: Comma-separated list of fields to search
-        index_name: Name of the search index (default: "velocorp-documents")
+        index_name: Name of the search index (default: "documents")
 
     Returns:
         Formatted search results as a string
     """
+    config = get_config()
     try:
         client = SearchClient(
             endpoint=config["search_endpoint"],
@@ -107,38 +86,30 @@ class VectorSearchQuery(BaseModel):
     filter: Optional[str] = Field(default=None, description="OData filter expression")
 
 
-def azure_vector_search_tool(config: Dict[str, Any], query: str, top: int = 5, filter: Optional[str] = None, index_name: str = "velocorp-documents") -> str:
-    """
-    Perform vector search using Azure Cognitive Search with embeddings.
+@tool
+def azure_vector_search_tool(query: str, top: int = 5, filter: Optional[str] = None, index_name: str = "documents") -> str:
+    """Perform vector search using Azure Cognitive Search with embeddings.
 
     Args:
-        config: Azure configuration dictionary with openai and search credentials
         query: The search query to vectorize
         top: Number of results to return (default: 5)
         filter: OData filter expression
-        index_name: Name of the search index (default: "velocorp-documents")
+        index_name: Name of the search index (default: "documents")
 
     Returns:
         Formatted search results with relevance scores
     """
+    config = get_config()
     try:
-        from openai import AzureOpenAI
-        import numpy as np
+        from langchain.embeddings import HuggingFaceEmbeddings
 
-        # Get embeddings for query
-        openai_client = AzureOpenAI(
-            api_key=config["openai_key"],
-            api_version="2024-02-01",
-            azure_endpoint=config["openai_endpoint"]
+        # Use the same embedding model as upload_azure_search.py
+        embedding_fn = HuggingFaceEmbeddings(
+            model_name="sentence-transformers/all-MiniLM-L6-v2"
         )
 
-        # Generate embedding for the query
-        response = openai_client.embeddings.create(
-            input=query,
-            model="textemb3small"  # Using the deployment name from config
-        )
-
-        query_embedding = response.data[0].embedding
+        # Generate embedding for the query (returns list of lists, take first)
+        query_embedding = embedding_fn.embed_query(query)
 
         # Get search client
         client = SearchClient(
@@ -192,7 +163,7 @@ def azure_vector_search_tool(config: Dict[str, Any], query: str, top: int = 5, f
         return f"Error performing vector search: {str(e)}"
 
 
-def create_hybrid_search_tool(config: Dict[str, Any], index_name: str = "velocorp-documents"):
+def create_hybrid_search_tool(config: Dict[str, Any], index_name: str = "documents"):
     """
     Create a hybrid search tool combining text and vector search.
 
@@ -239,7 +210,7 @@ def create_hybrid_search_tool(config: Dict[str, Any], index_name: str = "velocor
 # CLEAN WRAPPER FUNCTIONS (No config parameter needed!)
 # ============================================================================
 
-def search_documents(query: str, top: int = 5, search_fields: Optional[str] = None, index_name: str = "velocorp-documents") -> str:
+def search_documents(query: str, top: int = 5, search_fields: Optional[str] = None, index_name: str = "documents") -> str:
     """
     Search documents in Azure Cognitive Search.
     Uses the global configuration set via set_config().
@@ -248,16 +219,15 @@ def search_documents(query: str, top: int = 5, search_fields: Optional[str] = No
         query: The search query
         top: Number of results to return (default: 5)
         search_fields: Comma-separated list of fields to search
-        index_name: Name of the search index (default: "velocorp-documents")
+        index_name: Name of the search index (default: "documents")
 
     Returns:
         Formatted search results as a string
     """
-    config = get_config()
-    return azure_search_tool(config, query, top, search_fields, index_name)
+    return azure_search_tool.invoke({"query": query, "top": top, "search_fields": search_fields, "index_name": index_name})
 
 
-def vector_search_documents(query: str, top: int = 5, filter: Optional[str] = None, index_name: str = "velocorp-documents") -> str:
+def vector_search_documents(query: str, top: int = 5, filter: Optional[str] = None, index_name: str = "documents") -> str:
     """
     Perform vector search using Azure Cognitive Search with embeddings.
     Uses the global configuration set via set_config().
@@ -266,16 +236,15 @@ def vector_search_documents(query: str, top: int = 5, filter: Optional[str] = No
         query: The search query to vectorize
         top: Number of results to return (default: 5)
         filter: OData filter expression
-        index_name: Name of the search index (default: "velocorp-documents")
+        index_name: Name of the search index (default: "documents")
 
     Returns:
         Formatted search results with relevance scores
     """
-    config = get_config()
-    return azure_vector_search_tool(config, query, top, filter, index_name)
+    return azure_vector_search_tool.invoke({"query": query, "top": top, "filter": filter, "index_name": index_name})
 
 
-def hybrid_search_documents(query: str, top: int = 5, alpha: float = 0.5, index_name: str = "velocorp-documents") -> str:
+def hybrid_search_documents(query: str, top: int = 5, alpha: float = 0.5, index_name: str = "documents") -> str:
     """
     Perform hybrid search combining text and vector search.
     Uses the global configuration set via set_config().

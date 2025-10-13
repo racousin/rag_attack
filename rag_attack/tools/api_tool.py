@@ -5,8 +5,8 @@ from typing import Dict, Any, Optional
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
 
-# Import config management from azure_search_tool
-from .azure_search_tool import get_config
+# Import config management from centralized location
+from ..utils.config import get_config
 
 
 class APIRequest(BaseModel):
@@ -91,17 +91,15 @@ def search_api_tool(config: Dict[str, Any], query: str, top: int = 5) -> str:
     )
 
 
+@tool
 def crm_opportunities_tool(
-    config: Dict[str, Any],
     status: Optional[str] = None,
     min_value: Optional[float] = None,
     max_value: Optional[float] = None
 ) -> str:
-    """
-    Get CRM opportunities from the Azure Function API.
+    """Get CRM opportunities from the Azure Function API.
 
     Args:
-        config: Azure configuration dictionary
         status: Filter by opportunity status
         min_value: Minimum opportunity value
         max_value: Maximum opportunity value
@@ -109,6 +107,7 @@ def crm_opportunities_tool(
     Returns:
         CRM opportunities data
     """
+    config = get_config()
     params = {}
     if status:
         params["status"] = status
@@ -124,9 +123,9 @@ def crm_opportunities_tool(
     )
 
 
+@tool
 def weather_api_tool(city: str) -> str:
-    """
-    Get weather information for a city using OpenWeatherMap API.
+    """Get weather information for a city using OpenWeatherMap API.
 
     Args:
         city: Name of the city
@@ -162,9 +161,9 @@ def weather_api_tool(city: str) -> str:
         return f"Error getting weather data: {str(e)}"
 
 
+@tool
 def web_search_tool(query: str, num_results: int = 5) -> str:
-    """
-    Search the web using DuckDuckGo (no API key required).
+    """Search the web using DuckDuckGo (no API key required).
 
     Args:
         query: The search query
@@ -290,8 +289,7 @@ def get_crm_opportunities(
     Returns:
         CRM opportunities data
     """
-    config = get_config()
-    return crm_opportunities_tool(config, status, min_value, max_value)
+    return crm_opportunities_tool.invoke({"status": status, "min_value": min_value, "max_value": max_value})
 
 
 def get_weather(city: str) -> str:
@@ -304,7 +302,7 @@ def get_weather(city: str) -> str:
     Returns:
         Weather information
     """
-    return weather_api_tool(city)
+    return weather_api_tool.invoke({"city": city})
 
 
 def search_web(query: str, num_results: int = 5) -> str:
@@ -318,4 +316,4 @@ def search_web(query: str, num_results: int = 5) -> str:
     Returns:
         Web search results
     """
-    return web_search_tool(query, num_results)
+    return web_search_tool.invoke({"query": query, "num_results": num_results})
