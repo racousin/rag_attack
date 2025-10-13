@@ -20,6 +20,5 @@ dependencies = [
     "requests==2.32.4",
 ]
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["rag_attack*"]
+[tool.setuptools]
+packages = ["rag_attack", "rag_attack.agents", "rag_attack.tools", "rag_attack.utils", "rag_attack.planners"]
