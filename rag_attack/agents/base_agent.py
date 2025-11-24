@@ -36,7 +36,7 @@ def create_llm(config: Dict[str, Any], temperature: float = 0.0) -> AzureChatOpe
 class SimpleToolAgent:
     """Simple agent that can use tools to answer questions"""
 
-    def __init__(self, config: Dict[str, Any], tools: List[BaseTool], system_prompt: str = None):
+    def __init__(self, config: Dict[str, Any], tools: List[BaseTool], system_prompt: str = None, max_iterations: int = 15, verbose: bool = False):
         """
         Initialize the agent with tools.
 
@@ -44,9 +44,13 @@ class SimpleToolAgent:
             config: Azure configuration dictionary
             tools: List of LangChain tools the agent can use
             system_prompt: Optional system prompt for the agent
+            max_iterations: Maximum number of tool calls before stopping (default: 15)
+            verbose: Whether to print progress information (default: False)
         """
         self.config = config
         self.tools = tools
+        self.max_iterations = max_iterations
+        self.verbose = verbose
         self.llm = create_llm(config)
 
         # Bind tools to the LLM
@@ -89,6 +93,24 @@ class SimpleToolAgent:
         """Agent node that decides what to do"""
         messages = state["messages"]
 
+        # Count tool calls to enforce max_iterations
+        tool_call_count = sum(1 for msg in messages if isinstance(msg, AIMessage) and hasattr(msg, 'tool_calls') and msg.tool_calls)
+
+        if self.verbose:
+            print(f"\n🤖 Agent thinking... (Tool calls so far: {tool_call_count}/{self.max_iterations})")
+
+        # Check if we've exceeded max iterations
+        if tool_call_count >= self.max_iterations:
+            if self.verbose:
+                print(f"⚠️ Reached max iterations ({self.max_iterations}). Generating final answer with available information.")
+            # Force a final answer without tool calls
+            final_prompt = [
+                {"role": "system", "content": "Provide a final answer based on the information gathered so far. Do not use any more tools."},
+                *messages
+            ]
+            response = self.llm.invoke(final_prompt)
+            return {"messages": [response]}
+
         # Add system prompt if this is the first message
         if len(messages) == 1 and isinstance(messages[0], HumanMessage):
             messages = [
@@ -98,6 +120,12 @@ class SimpleToolAgent:
 
         # Get response from LLM
         response = self.llm_with_tools.invoke(messages)
+
+        if self.verbose:
+            if hasattr(response, 'tool_calls') and response.tool_calls:
+                print(f"🔧 Agent wants to use tools: {[tc['name'] for tc in response.tool_calls]}")
+            else:
+                print(f"✅ Agent provided final answer")
 
         return {"messages": [response]}
 
@@ -123,15 +151,35 @@ class SimpleToolAgent:
         Returns:
             The agent's response
         """
+        if self.verbose:
+            print(f"\n{'='*60}")
+            print(f"🚀 SimpleToolAgent Starting")
+            print(f"{'='*60}")
+            print(f"❓ Question: {question}")
+            print(f"🔧 Available tools: {', '.join([t.name for t in self.tools])}")
+            print(f"🔄 Max iterations: {self.max_iterations}")
+            print(f"{'='*60}")
+
         initial_state = {
             "messages": [HumanMessage(content=question)]
         }
 
-        result = self.graph.invoke(initial_state)
+        # Set recursion limit based on max_iterations
+        # Each iteration goes through agent -> tools -> agent (2 nodes)
+        recursion_limit = max(self.max_iterations * 3 + 10, 30)
+
+        result = self.graph.invoke(
+            initial_state,
+            config={"recursion_limit": recursion_limit}
+        )
 
         # Extract the final answer
         for message in reversed(result["messages"]):
             if isinstance(message, AIMessage) and not message.tool_calls:
+                if self.verbose:
+                    print(f"\n{'='*60}")
+                    print(f"✨ Final Answer Generated")
+                    print(f"{'='*60}\n")
                 return message.content
 
         return "No response generated"
@@ -150,5 +198,8 @@ class SimpleToolAgent:
             "messages": [HumanMessage(content=question)]
         }
 
-        for chunk in self.graph.stream(initial_state):
+        # Set recursion limit based on max_iterations
+        recursion_limit = max(self.max_iterations * 3 + 10, 30)
+
+        for chunk in self.graph.stream(initial_state, config={"recursion_limit": recursion_limit}):
             yield chunk

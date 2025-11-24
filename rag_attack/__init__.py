@@ -3,7 +3,7 @@
 __version__ = "0.2.0"
 
 # Import main components
-from .agents import SimpleToolAgent, create_llm
+from .agents import SimpleToolAgent, ReActAgent, create_llm
 
 # Configuration management
 from .tools import set_config, get_config
@@ -21,6 +21,7 @@ from .tools import (
     get_crm_opportunities,
     get_weather,
     search_web,
+    write_report,
 )
 
 # Original tools (for backward compatibility)
@@ -35,6 +36,7 @@ from .tools import (
     crm_opportunities_tool,
     weather_api_tool,
     web_search_tool,
+    report_writer_tool,
     create_api_tools,
     create_sql_agent_tools,
     create_hybrid_search_tool
@@ -43,6 +45,7 @@ from .tools import (
 __all__ = [
     # Agents
     "SimpleToolAgent",
+    "ReActAgent",
     "create_llm",
     # Configuration
     "set_config",
@@ -59,6 +62,7 @@ __all__ = [
     "get_crm_opportunities",
     "get_weather",
     "search_web",
+    "write_report",
     # Original tools (for backward compatibility)
     "azure_search_tool",
     "azure_vector_search_tool",
@@ -72,5 +76,6 @@ __all__ = [
     "crm_opportunities_tool",
     "weather_api_tool",
     "web_search_tool",
+    "report_writer_tool",
     "create_api_tools",
 ]

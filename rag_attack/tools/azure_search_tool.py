@@ -45,7 +45,12 @@ def azure_search_tool(query: str, top: int = 5, search_fields: Optional[str] = N
         }
 
         if search_fields:
-            search_options["search_fields"] = search_fields
+            # Convert search_fields to list if it's a string
+            if isinstance(search_fields, str):
+                # Split by comma and strip whitespace
+                search_options["search_fields"] = [field.strip() for field in search_fields.split(",")]
+            else:
+                search_options["search_fields"] = search_fields
 
         # Execute search
         results = client.search(

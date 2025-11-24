@@ -112,11 +112,22 @@ Let's think step by step.
         reasoning = state.get("reasoning", [])
         observations = state.get("observations", [])
 
+        # Check iteration limit FIRST before doing anything else
+        current_iteration = len(reasoning) + 1
+
         if self.verbose:
-            step_num = len(reasoning) + 1
             print(f"\n{'='*60}")
-            print(f"🧠 STEP {step_num}: REASONING")
+            print(f"🧠 STEP {current_iteration}: REASONING")
             print(f"{'='*60}")
+
+        # Force finalization if we've reached max iterations
+        if current_iteration > self.max_iterations:
+            if self.verbose:
+                print(f"⚠️ Reached max iterations ({self.max_iterations}). Forcing finalization.")
+            return {
+                "reasoning": ["Maximum iterations reached. Finalizing with available information."],
+                "next_action": "finalize"
+            }
 
         # Build context from previous reasoning and observations
         context = "\n".join([
@@ -124,15 +135,27 @@ Let's think step by step.
             for i, (r, o) in enumerate(zip(reasoning, observations))
         ])
 
-        # Create reasoning prompt
-        prompt = f"""Based on the current task and observations so far, what should I do next?
+        # Create reasoning prompt with available tools
+        prompt = f"""You are solving the following task using available tools.
 
 Task: {messages[0].content if messages else "No task specified"}
+
+Available tools:
+{self._get_tool_descriptions()}
 
 Previous reasoning and observations:
 {context if context else "None yet"}
 
-Current thought:"""
+Current iteration: {current_iteration}/{self.max_iterations}
+
+Based on the task and observations, reason about:
+1. What information do I still need to answer the task?
+2. Which specific tool should I use next to get that information?
+3. What exact input should I provide to that tool?
+
+If you have gathered enough information to answer the task, state "I have enough information for a final answer" in your response.
+
+Your reasoning:"""
 
         if self.verbose:
             print("⏳ Thinking...")
@@ -145,7 +168,8 @@ Current thought:"""
             print(f"\n💭 Thought: {new_reasoning}")
 
         # Determine next action
-        if "final answer" in new_reasoning.lower() or len(reasoning) >= self.max_iterations:
+        if "enough information for a final answer" in new_reasoning.lower() or \
+           "final answer" in new_reasoning.lower():
             next_action = "finalize"
         else:
             next_action = "act"
@@ -165,34 +189,71 @@ Current thought:"""
             print(f"{'-'*60}")
 
         # Parse the thought to determine which tool to use
-        tool_prompt = f"""Based on this thought: "{last_thought}"
+        tool_prompt = f"""Based on this reasoning: "{last_thought}"
 
-Which tool should I use and with what input? Available tools:
+You need to select ONE tool to use and provide the exact input for it.
+
+Available tools:
 {self._get_tool_descriptions()}
 
-Respond in this format:
-Tool: [tool_name]
-Input: [tool_input]"""
+Respond ONLY in this exact format (no additional text):
+Tool: [exact_tool_name]
+Input: [the specific query or input for the tool]
+
+Example:
+Tool: azure_search_tool
+Input: vélos électriques VéloCorp"""
 
         if self.verbose:
             print("⏳ Deciding which tool to use...")
 
         response = self.llm.invoke(tool_prompt)
 
-        # Parse tool and input
-        lines = response.content.strip().split("\n")
+        # Parse tool and input - handle various formats
+        content = response.content.strip()
+        lines = content.split("\n")
         tool_name = ""
         tool_input = ""
 
-        for line in lines:
+        for i, line in enumerate(lines):
+            line = line.strip()
             if line.startswith("Tool:"):
                 tool_name = line.replace("Tool:", "").strip()
             elif line.startswith("Input:"):
+                # Get everything after "Input:" and handle multiline/JSON
                 tool_input = line.replace("Input:", "").strip()
+                # If input is empty or starts with JSON marker, look at following lines
+                if not tool_input or tool_input.startswith("```") or tool_input == "{":
+                    # Collect remaining lines
+                    remaining_lines = lines[i+1:]
+                    tool_input = "\n".join(remaining_lines)
+                    # Remove JSON code block markers if present
+                    tool_input = tool_input.replace("```json", "").replace("```", "").strip()
+                    # If it's JSON, try to extract the query value
+                    if tool_input.startswith("{"):
+                        try:
+                            import json
+                            json_input = json.loads(tool_input)
+                            # Try to get the main query/input parameter
+                            tool_input = json_input.get('query', json_input.get('input', json_input.get('text', str(json_input))))
+                        except:
+                            # If JSON parsing fails, use the first line as input
+                            tool_input = lines[i+1].strip() if i+1 < len(lines) else ""
+                break
+
+        # Validate that we have both tool_name and tool_input
+        if not tool_name or not tool_input:
+            error_msg = f"Failed to parse tool action. Tool: '{tool_name}', Input: '{tool_input}'"
+            if self.verbose:
+                print(f"❌ Error: {error_msg}")
+                print(f"Raw LLM response:\n{response.content}")
+            return {
+                "observations": [f"Error: {error_msg}. Could not determine which tool to use."]
+            }
 
         if self.verbose:
             print(f"🔨 Using tool: {tool_name}")
-            print(f"📝 Input: {tool_input[:100]}{'...' if len(tool_input) > 100 else ''}")
+            print(f"📝 Input: {tool_input}")
             print("⏳ Executing...")
 
         # Execute the tool
@@ -223,7 +284,46 @@ Input: [tool_input]"""
             print(f"{'-'*60}")
             print("⏳ Evaluating if we have enough information...")
 
-        # Check if we have enough information
+        # SAFEGUARD 1: Check max iterations (prevent infinite loops)
+        if len(observations) >= self.max_iterations:
+            if self.verbose:
+                print(f"⚠️ Reached max iterations ({self.max_iterations}). Moving to finalize with available information.")
+            return {"next_action": "finalize"}
+
+        # SAFEGUARD 2: Check for repeated errors
+        if len(observations) >= 2:
+            last_two_obs = observations[-2:]
+            if all("Error" in obs for obs in last_two_obs):
+                if self.verbose:
+                    print("⚠️ Detected repeated errors. Stopping to prevent infinite loop.")
+                return {"next_action": "finalize"}
+
+        # SAFEGUARD 3: Check for repeated similar observations (tool called 3+ times with similar results)
+        if len(observations) >= 3:
+            # Check if last 3 observations are similar (same tool used, getting results)
+            last_three = observations[-3:]
+            # Extract tool names from observations
+            tool_uses = []
+            for obs in last_three:
+                if "Used " in obs and " with input" in obs:
+                    tool_name = obs.split("Used ")[1].split(" with input")[0] if "Used " in obs else ""
+                    tool_uses.append(tool_name)
+
+            # If same tool used 3 times, we have enough
+            if len(tool_uses) == 3 and len(set(tool_uses)) == 1:
+                if self.verbose:
+                    print(f"⚠️ Same tool '{tool_uses[0]}' used 3 times. We have enough data. Moving to finalize.")
+                return {"next_action": "finalize"}
+
+        # SAFEGUARD 4: If we have substantial observations (2+) with actual data, be lenient
+        # Observations have format "Used tool_name with input 'x': {result}"
+        has_data = sum(1 for obs in observations if "Used " in obs and "Error" not in obs and len(obs) > 100)
+        if has_data >= 2:
+            if self.verbose:
+                print(f"✅ We have {has_data} observations with actual data. This should be sufficient.")
+            return {"next_action": "finalize"}
+
+        # Only if all safeguards pass, ask LLM for evaluation
         reflection_prompt = f"""Based on the task and observations so far, do I have enough information to provide a final answer?
 
 Task: {messages[0].content if messages else "No task"}
@@ -231,18 +331,29 @@ Task: {messages[0].content if messages else "No task"}
 Reasoning and observations:
 {self._format_history(reasoning, observations)}
 
-Do I have enough information? (yes/no) and why:"""
+Important: If the observations contain ANY relevant data (even if incomplete), answer YES.
+Only answer NO if the observations are completely empty or all errors.
+
+Evaluate:
+1. Have I received ANY relevant information from the tools?
+2. Can I provide at least a partial answer based on the observations?
+
+Answer ONLY with:
+- "Yes, I have enough information"
+- "No, I need more information"
+
+Your evaluation:"""
 
         response = self.llm.invoke(reflection_prompt)
 
         # Decide whether to continue or finalize
-        if "yes" in response.content.lower() or len(reasoning) >= self.max_iterations:
+        if "yes" in response.content.lower():
             if self.verbose:
-                print("✅ Sufficient information gathered. Moving to finalize.")
+                print("✅ LLM confirmed: Sufficient information gathered. Moving to finalize.")
             return {"next_action": "finalize"}
         else:
             if self.verbose:
-                print("🔄 Need more information. Continuing reasoning cycle...")
+                print("🔄 LLM says: Need more information. Continuing reasoning cycle...")
             return {"next_action": "continue"}
 
     def _finalize_node(self, state: ReActState) -> Dict[str, Any]:
@@ -361,7 +472,17 @@ Final answer:"""
             "final_answer": None
         }
 
-        result = self.graph.invoke(initial_state)
+        # Set recursion limit to prevent infinite loops
+        # Each reasoning cycle goes through 4 nodes (reason->act->observe->reflect)
+        # Plus initial entry and final node = max_iterations * 4 + 2
+        # Add buffer for safety
+        # So we need max_iterations * 4 + a buffer
+        recursion_limit = max(self.max_iterations * 4 + 10, 30)
+
+        result = self.graph.invoke(
+            initial_state,
+            config={"recursion_limit": recursion_limit}
+        )
         return result.get("final_answer", "No answer generated")
 
     def get_reasoning_trace(self, question: str) -> Dict[str, Any]:
@@ -391,13 +512,17 @@ Final answer:"""
             "final_answer": None
         }
 
+        # Set recursion limit
+        recursion_limit = max(self.max_iterations * 4 + 10, 30)
+        config = {"recursion_limit": recursion_limit}
+
         # Collect all steps
         trace = []
-        for step in self.graph.stream(initial_state):
+        for step in self.graph.stream(initial_state, config=config):
             trace.append(step)
 
         # Get final state
-        final_state = self.graph.invoke(initial_state)
+        final_state = self.graph.invoke(initial_state, config=config)
 
         return {
             "question": question,

@@ -45,6 +45,10 @@ from .api_tool import (
     get_weather,
     search_web,
 )
+from .report_writer_tool import (
+    report_writer_tool,
+    write_report,
+)
 
 __all__ = [
     # Configuration
@@ -62,6 +66,8 @@ __all__ = [
     "get_crm_opportunities",
     "get_weather",
     "search_web",
+    "report_writer_tool",
+    "write_report",
     # Original tools (for backward compatibility)
     "azure_search_tool",
     "azure_vector_search_tool",
