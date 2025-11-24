@@ -95,17 +95,19 @@ def search_api_tool(config: Dict[str, Any], query: str, top: int = 5) -> str:
 def crm_opportunities_tool(
     status: Optional[str] = None,
     min_value: Optional[float] = None,
-    max_value: Optional[float] = None
+    sales_rep_id: Optional[int] = None
 ) -> str:
-    """Get CRM opportunities from the Azure Function API.
+    """Get CRM opportunities (opportunités commerciales) from VéloCorp CRM.
+
+    Returns opportunities with pipeline metrics (valeur_pipeline, taux_gain, etc).
 
     Args:
-        status: Filter by opportunity status
-        min_value: Minimum opportunity value
-        max_value: Maximum opportunity value
+        status: Filter by status (e.g., "Proposition", "Négociation", "Gagné", "Perdu")
+        min_value: Minimum opportunity value in euros
+        sales_rep_id: Filter by sales rep ID
 
     Returns:
-        CRM opportunities data
+        CRM opportunities data with pipeline metrics
     """
     config = get_config()
     params = {}
@@ -113,13 +115,90 @@ def crm_opportunities_tool(
         params["status"] = status
     if min_value is not None:
         params["min_value"] = min_value
-    if max_value is not None:
-        params["max_value"] = max_value
+    if sales_rep_id is not None:
+        params["sales_rep_id"] = sales_rep_id
 
     return azure_function_api_tool(
         config,
-        endpoint="/crm/opportunities",
+        endpoint="/crm/opportunites",
         params=params if params else None
+    )
+
+
+@tool
+def crm_prospects_tool(
+    status: Optional[str] = None,
+    min_score: Optional[int] = None,
+    source: Optional[str] = None,
+    limit: int = 50
+) -> str:
+    """Get CRM prospects from VéloCorp CRM.
+
+    Returns prospects with summary stats (total, qualified, conversion rate, etc).
+
+    Args:
+        status: Filter by prospect status (e.g., "Nouveau", "Qualifié", "Contacté")
+        min_score: Minimum lead score (0-100)
+        source: Filter by lead source (e.g., "Site web", "Salon", "Référence")
+        limit: Maximum number of prospects to return (default: 50)
+
+    Returns:
+        CRM prospects data with conversion metrics
+    """
+    config = get_config()
+    params = {"limit": limit}
+    if status:
+        params["status"] = status
+    if min_score is not None:
+        params["min_score"] = min_score
+    if source:
+        params["source"] = source
+
+    return azure_function_api_tool(
+        config,
+        endpoint="/crm/prospects",
+        params=params
+    )
+
+
+@tool
+def crm_sales_reps_tool(region: Optional[str] = None) -> str:
+    """Get sales representatives (commerciaux) from VéloCorp CRM.
+
+    Returns active sales reps with their regions, quotas, and performance ratings.
+
+    Args:
+        region: Filter by assigned region (e.g., "Occitanie", "Bretagne", "Provence-Alpes-Côte d'Azur")
+
+    Returns:
+        Sales representatives data
+    """
+    config = get_config()
+    params = {}
+    if region:
+        params["region"] = region
+
+    return azure_function_api_tool(
+        config,
+        endpoint="/crm/commerciaux",
+        params=params if params else None
+    )
+
+
+@tool
+def crm_analytics_tool() -> str:
+    """Get comprehensive CRM analytics and KPIs from VéloCorp CRM.
+
+    Returns:
+        - Sales rep performance (nombre d'opportunités, taux de gain, valeur totale)
+        - Lead source analysis (taux de qualification par source)
+        - Opportunity status breakdown
+        - Global metrics (pipeline value, win rate, average deal size)
+    """
+    config = get_config()
+    return azure_function_api_tool(
+        config,
+        endpoint="/crm/analytics"
     )
 
 

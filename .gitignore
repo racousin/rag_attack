@@ -7,9 +7,12 @@ exp/
 
 azure_credentials.json
 rag_attack_repo
+tests_tools/
 
 # C extensions
 *.so
+
+.DS_Store
 
 # Distribution / packaging
 .Python

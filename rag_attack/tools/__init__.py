@@ -14,7 +14,6 @@ from .azure_search_tool import (
 )
 from .sql_tool import (
     sql_query_tool,
-    get_database_schema,
     sql_table_info,
     create_sql_agent_tools
 )
@@ -22,6 +21,9 @@ from .api_tool import (
     azure_function_api_tool,
     search_api_tool,
     crm_opportunities_tool,
+    crm_prospects_tool,
+    crm_sales_reps_tool,
+    crm_analytics_tool,
     weather_api_tool,
     web_search_tool,
     create_api_tools
@@ -35,7 +37,6 @@ from .azure_search_tool import (
 )
 from .sql_tool import (
     execute_sql_query,
-    get_schema,
     get_table_info,
 )
 from .api_tool import (
@@ -59,7 +60,7 @@ __all__ = [
     "vector_search_documents",
     "hybrid_search_documents",
     "execute_sql_query",
-    "get_schema",
+    # "get_schema",  # DEPRECATED: Schema now embedded in sql_query_tool description
     "get_table_info",
     "call_azure_api",
     "search_via_api",
@@ -73,12 +74,15 @@ __all__ = [
     "azure_vector_search_tool",
     "create_hybrid_search_tool",
     "sql_query_tool",
-    "get_database_schema",
+    # "get_database_schema",  # DEPRECATED: Schema now embedded in sql_query_tool description
     "sql_table_info",
     "create_sql_agent_tools",
     "azure_function_api_tool",
     "search_api_tool",
     "crm_opportunities_tool",
+    "crm_prospects_tool",
+    "crm_sales_reps_tool",
+    "crm_analytics_tool",
     "weather_api_tool",
     "web_search_tool",
     "create_api_tools"

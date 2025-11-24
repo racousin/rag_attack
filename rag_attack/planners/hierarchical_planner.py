@@ -6,6 +6,7 @@ from langchain_core.tools import BaseTool
 import operator
 import json
 from ..agents.base_agent import create_llm
+from ..utils.config import get_config
 
 
 class PlanStep(TypedDict):
@@ -44,7 +45,8 @@ class HierarchicalPlanner:
         """
         self.tools = tools
         self.max_steps = max_steps
-        self.llm = create_llm(temperature=0.1)
+        config = get_config()
+        self.llm = create_llm(config, temperature=0.1)
         self.graph = self._build_graph()
 
     def _build_graph(self) -> StateGraph:

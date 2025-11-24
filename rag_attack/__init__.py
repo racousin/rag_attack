@@ -3,7 +3,8 @@
 __version__ = "0.2.0"
 
 # Import main components
-from .agents import SimpleToolAgent, ReActAgent, create_llm
+from .agents import SimpleToolAgent, ReActAgent, SimpleReActAgent, create_llm
+from .planners.hierarchical_planner import HierarchicalPlanner
 
 # Configuration management
 from .tools import set_config, get_config
@@ -14,7 +15,6 @@ from .tools import (
     vector_search_documents,
     hybrid_search_documents,
     execute_sql_query,
-    get_schema,
     get_table_info,
     call_azure_api,
     search_via_api,
@@ -29,11 +29,13 @@ from .tools import (
     azure_search_tool,
     azure_vector_search_tool,
     sql_query_tool,
-    get_database_schema,
     sql_table_info,
     azure_function_api_tool,
     search_api_tool,
     crm_opportunities_tool,
+    crm_prospects_tool,
+    crm_sales_reps_tool,
+    crm_analytics_tool,
     weather_api_tool,
     web_search_tool,
     report_writer_tool,
@@ -46,6 +48,8 @@ __all__ = [
     # Agents
     "SimpleToolAgent",
     "ReActAgent",
+    "SimpleReActAgent",
+    "HierarchicalPlanner",
     "create_llm",
     # Configuration
     "set_config",
@@ -74,6 +78,9 @@ __all__ = [
     "azure_function_api_tool",
     "search_api_tool",
     "crm_opportunities_tool",
+    "crm_prospects_tool",
+    "crm_sales_reps_tool",
+    "crm_analytics_tool",
     "weather_api_tool",
     "web_search_tool",
     "report_writer_tool",

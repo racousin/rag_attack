@@ -18,16 +18,32 @@ class SearchQuery(BaseModel):
 
 @tool
 def azure_search_tool(query: str, top: int = 5, search_fields: Optional[str] = None, index_name: str = "documents") -> str:
-    """Search documents in Azure Cognitive Search.
+    """Search documents in Azure Cognitive Search using keyword search (BM25).
+
+    The index contains VéloCorp documents: FAQs, user manuals, emails, call transcripts.
+
+    Available searchable fields:
+    - content: Main text content (default if search_fields not specified)
+    - filename: Document filename
+
+    Available filter fields (use with filter parameter, not search_fields):
+    - type: Document type (e.g., "manuel", "conversation", "autre")
+    - created: Creation date
+    - document_id: Numeric document ID
 
     Args:
-        query: The search query
+        query: The search query (keywords to search for)
         top: Number of results to return (default: 5)
-        search_fields: Comma-separated list of fields to search
+        search_fields: Comma-separated searchable fields (e.g., "content", "filename", "content,filename")
         index_name: Name of the search index (default: "documents")
 
     Returns:
-        Formatted search results as a string
+        Formatted search results as a string with title, category, source, and content excerpt
+
+    Examples:
+        - azure_search_tool("garantie vélo", top=3) - Search in all fields
+        - azure_search_tool("E-City", search_fields="filename") - Search only in filenames
+        - azure_search_tool("freins hydrauliques", search_fields="content") - Search only in content
     """
     config = get_config()
     try:
@@ -93,16 +109,32 @@ class VectorSearchQuery(BaseModel):
 
 @tool
 def azure_vector_search_tool(query: str, top: int = 5, filter: Optional[str] = None, index_name: str = "documents") -> str:
-    """Perform vector search using Azure Cognitive Search with embeddings.
+    """Perform semantic vector search using Azure Cognitive Search with embeddings.
+
+    Uses sentence-transformers/all-MiniLM-L6-v2 (384D) for semantic similarity search.
+    Better for conceptual queries, intent-based search, and finding similar content.
+
+    The index contains VéloCorp documents: FAQs, user manuals, emails, call transcripts.
 
     Args:
-        query: The search query to vectorize
+        query: The search query to vectorize (natural language question or concept)
         top: Number of results to return (default: 5)
-        filter: OData filter expression
+        filter: OData filter expression for additional filtering
+                Examples: "type eq 'manuel'", "document_id gt 10"
         index_name: Name of the search index (default: "documents")
 
     Returns:
-        Formatted search results with relevance scores
+        Formatted search results with relevance scores and content excerpts
+
+    When to use:
+        - Conceptual queries: "how to maintain my bike"
+        - Similar meaning: "battery problems" vs "batterie défaillante"
+        - Intent-based: "je veux savoir comment réparer"
+
+    When NOT to use (use azure_search_tool instead):
+        - Exact terms: "SKU-ELC-2024"
+        - Product names: "E-City"
+        - Specific keywords: "garantie 2 ans"
     """
     config = get_config()
     try:
@@ -129,7 +161,7 @@ def azure_vector_search_tool(query: str, top: int = 5, filter: Optional[str] = N
         vector_query = VectorizedQuery(
             vector=query_embedding,
             k_nearest_neighbors=top,
-            fields="content_vector"  # Assuming this field exists
+            fields="embedding"  # Matches the field name in create_search_index.py
         )
 
         search_options = {

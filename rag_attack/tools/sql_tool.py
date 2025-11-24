@@ -32,10 +32,109 @@ def _get_sql_connection(config: Dict[str, Any]):
 
 @tool
 def sql_query_tool(query: str, max_rows: int = 10) -> str:
-    """Execute SQL queries against Azure SQL Database.
+    """Execute SQL queries against Azure SQL Server Database (T-SQL syntax).
+
+    IMPORTANT: This is SQL Server, use T-SQL syntax:
+    - Use TOP N instead of LIMIT N
+    - Example: SELECT TOP 5 * FROM table ORDER BY column DESC
+
+    DATABASE SCHEMA:
+
+    Table: products
+    - id: INT PRIMARY KEY (auto-increment)
+    - model: NVARCHAR(100) NOT NULL
+    - product_line: NVARCHAR(50) NOT NULL
+    - name: NVARCHAR(200) NOT NULL
+    - description: NVARCHAR(MAX)
+    - price: DECIMAL(10,2) NOT NULL
+    - cost: DECIMAL(10,2) NOT NULL
+    - stock_quantity: INT DEFAULT 0
+    - target_market: NVARCHAR(10) ('B2C' or 'B2B')
+    - color_options: NVARCHAR(200)
+    - size_options: NVARCHAR(100)
+    - weight_kg: DECIMAL(5,2)
+    - material: NVARCHAR(50)
+    - warranty_months: INT DEFAULT 12
+    - launch_date: DATE
+    - created_date: DATETIME2
+
+    Table: customers
+    - id: INT PRIMARY KEY (auto-increment)
+    - customer_type: NVARCHAR(10) ('B2C' or 'B2B')
+    - segment: NVARCHAR(50)
+    - name: NVARCHAR(200) NOT NULL
+    - email: NVARCHAR(200) NOT NULL
+    - phone: NVARCHAR(50)
+    - address_street: NVARCHAR(200)
+    - address_city: NVARCHAR(100)
+    - address_postal_code: NVARCHAR(20)
+    - address_country: NVARCHAR(100)
+    - registration_date: DATE
+    - loyalty_level: NVARCHAR(20)
+    - total_spent: DECIMAL(12,2) DEFAULT 0
+    - order_count: INT DEFAULT 0
+    - last_order_date: DATE
+    - notes: NVARCHAR(MAX)
+    - created_date: DATETIME2
+
+    Table: orders
+    - id: INT PRIMARY KEY (auto-increment)
+    - customer_id: INT NOT NULL (FK to customers.id)
+    - order_date: DATE NOT NULL
+    - status: NVARCHAR(20) ('en_attente', 'en_cours', 'expédié', 'livré', 'annulé')
+    - channel: NVARCHAR(20)
+    - total_amount: DECIMAL(10,2) NOT NULL
+    - discount_applied: DECIMAL(10,2) DEFAULT 0
+    - shipping_street: NVARCHAR(200)
+    - shipping_city: NVARCHAR(100)
+    - shipping_postal_code: NVARCHAR(20)
+    - shipping_country: NVARCHAR(100)
+    - delivery_date: DATE
+    - payment_method: NVARCHAR(30)
+    - notes: NVARCHAR(MAX)
+    - created_date: DATETIME2
+
+    Table: order_items
+    - id: INT PRIMARY KEY (auto-increment)
+    - order_id: INT NOT NULL (FK to orders.id)
+    - product_id: INT NOT NULL (FK to products.id)
+    - quantity: INT NOT NULL DEFAULT 1
+    - unit_price: DECIMAL(10,2) NOT NULL
+    - color: NVARCHAR(50)
+    - size: NVARCHAR(10)
+
+    Table: support_tickets
+    - id: INT PRIMARY KEY (auto-increment)
+    - customer_id: INT NOT NULL (FK to customers.id)
+    - product_id: INT (FK to products.id)
+    - category: NVARCHAR(50)
+    - priority: NVARCHAR(20) ('basse', 'moyenne', 'haute', 'critique')
+    - status: NVARCHAR(20) ('ouvert', 'en_cours', 'résolu', 'fermé')
+    - title: NVARCHAR(200) NOT NULL
+    - description: NVARCHAR(MAX)
+    - created_date: DATE NOT NULL
+    - resolved_date: DATE
+    - assigned_to: NVARCHAR(100)
+    - resolution_notes: NVARCHAR(MAX)
+
+    Table: invoices
+    - id: INT PRIMARY KEY (auto-increment)
+    - order_id: INT NOT NULL (FK to orders.id)
+    - customer_id: INT NOT NULL (FK to customers.id)
+    - invoice_number: NVARCHAR(50) UNIQUE NOT NULL
+    - invoice_date: DATE NOT NULL
+    - due_date: DATE NOT NULL
+    - amount: DECIMAL(10,2) NOT NULL
+    - tax_rate: DECIMAL(5,4) DEFAULT 0.20
+    - tax_amount: DECIMAL(10,2)
+    - total_amount: DECIMAL(10,2)
+    - payment_status: NVARCHAR(20) ('en_attente', 'payé', 'en_retard', 'annulé')
+    - payment_date: DATE
+    - payment_method: NVARCHAR(30)
+    - notes: NVARCHAR(MAX)
 
     Args:
-        query: The SQL query to execute (SELECT only)
+        query: The SQL query to execute (SELECT only, T-SQL syntax)
         max_rows: Maximum number of rows to return (default: 10)
 
     Returns:
@@ -75,62 +174,16 @@ def sql_query_tool(query: str, max_rows: int = 10) -> str:
 
 
 @tool
-def get_database_schema() -> str:
-    """Get the schema information for all tables in the database.
-
-    Returns:
-        Formatted schema information
-    """
-    config = get_config()
-    try:
-        conn = _get_sql_connection(config)
-
-        try:
-            # Query to get all tables and their columns
-            schema_query = """
-            SELECT
-                t.TABLE_SCHEMA,
-                t.TABLE_NAME,
-                c.COLUMN_NAME,
-                c.DATA_TYPE,
-                c.IS_NULLABLE,
-                c.COLUMN_DEFAULT
-            FROM INFORMATION_SCHEMA.TABLES t
-            JOIN INFORMATION_SCHEMA.COLUMNS c
-                ON t.TABLE_SCHEMA = c.TABLE_SCHEMA
-                AND t.TABLE_NAME = c.TABLE_NAME
-            WHERE t.TABLE_TYPE = 'BASE TABLE'
-            ORDER BY t.TABLE_SCHEMA, t.TABLE_NAME, c.ORDINAL_POSITION
-            """
-
-            df = pd.read_sql(schema_query, conn)
-
-            # Format schema information
-            schema_info = []
-            for table_name, group in df.groupby('TABLE_NAME'):
-                schema_info.append(f"\nTable: {table_name}")
-                schema_info.append("-" * 50)
-                for _, row in group.iterrows():
-                    nullable = "NULL" if row['IS_NULLABLE'] == 'YES' else "NOT NULL"
-                    schema_info.append(
-                        f"  {row['COLUMN_NAME']}: {row['DATA_TYPE']} {nullable}"
-                    )
-
-            return "\n".join(schema_info)
-
-        finally:
-            conn.close()
-
-    except Exception as e:
-        return f"Error getting database schema: {str(e)}"
-
-
-@tool
 def sql_table_info(table_name: str) -> str:
-    """Get detailed information about a specific table.
+    """Get detailed information about a specific table including sample data.
+
+    Available tables: products, customers, orders, order_items, support_tickets, invoices
+
+    Note: For full schema of all tables, check the sql_query_tool description which contains
+    the complete database schema.
 
     Args:
-        table_name: Name of the table to inspect
+        table_name: Name of the table to inspect (e.g., 'products', 'customers', 'orders')
 
     Returns:
         Table schema and sample data
@@ -205,15 +258,11 @@ def create_sql_agent_tools(config: Dict[str, Any]):
     sql_query_partial = partial(sql_query_tool, config)
     sql_query_partial.__name__ = "sql_query_tool"
 
-    get_schema_partial = partial(get_database_schema, config)
-    get_schema_partial.__name__ = "get_database_schema"
-
     table_info_partial = partial(sql_table_info, config)
     table_info_partial.__name__ = "sql_table_info"
 
     return [
         sql_query_partial,
-        get_schema_partial,
         table_info_partial
     ]
 
@@ -237,15 +286,6 @@ def execute_sql_query(query: str, max_rows: int = 10) -> str:
     return sql_query_tool.invoke({"query": query, "max_rows": max_rows})
 
 
-def get_schema() -> str:
-    """
-    Get the schema information for all tables in the database.
-    Uses the global configuration set via set_config().
-
-    Returns:
-        Formatted schema information
-    """
-    return get_database_schema.invoke({})
 
 
 def get_table_info(table_name: str) -> str:
