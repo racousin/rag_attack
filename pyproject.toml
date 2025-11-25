@@ -23,6 +23,8 @@ dependencies = [
     "openpyxl (>=3.1.5,<4.0.0)",
     "ddgs (>=9.9.1,<10.0.0)",
     "sentence-transformers (>=5.1.2,<6.0.0)",
+    "langchain-huggingface (>=1.1.0,<2.0.0)",
+    "sqlalchemy (>=2.0.44,<3.0.0)",
 ]
 
 [tool.setuptools.packages.find]

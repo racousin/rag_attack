@@ -2,13 +2,14 @@
 from typing import Optional
 from langchain_core.tools import tool
 import pandas as pd
-import pyodbc
+from sqlalchemy import create_engine
+from urllib.parse import quote_plus
 
 from ..utils.config import get_config
 
 
-def _get_sql_connection():
-    """Helper to get SQL connection from config"""
+def _get_sql_engine():
+    """Helper to get SQLAlchemy engine from config"""
     config = get_config()
     connection_string = (
         f"Driver={{ODBC Driver 18 for SQL Server}};"
@@ -20,7 +21,7 @@ def _get_sql_connection():
         f"TrustServerCertificate=no;"
         f"Connection Timeout=30;"
     )
-    return pyodbc.connect(connection_string)
+    return create_engine(f"mssql+pyodbc:///?odbc_connect={quote_plus(connection_string)}")
 
 
 @tool
@@ -80,8 +81,8 @@ def get_erp(query: str, max_rows: int = 10) -> str:
         if not query_lower.startswith("select"):
             return "Error: Only SELECT queries are allowed for safety"
 
-        conn = _get_sql_connection()
-        try:
+        engine = _get_sql_engine()
+        with engine.connect() as conn:
             df = pd.read_sql(query, conn)
 
             if len(df) > max_rows:
@@ -92,8 +93,6 @@ def get_erp(query: str, max_rows: int = 10) -> str:
 
             result_str += df.to_string(index=False)
             return result_str
-        finally:
-            conn.close()
 
     except Exception as e:
         return f"Error executing SQL query: {str(e)}"
