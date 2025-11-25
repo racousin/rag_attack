@@ -17,10 +17,15 @@ def set_config(config: Dict[str, Any]) -> None:
             - chat_deployment: Azure OpenAI chat deployment name
             - search_endpoint: Azure Cognitive Search endpoint
             - search_key: Azure Cognitive Search API key
-            - sql_server: SQL server address (optional)
-            - sql_database: SQL database name (optional)
-            - sql_username: SQL username (optional)
-            - sql_password: SQL password (optional)
+            Optional keys:
+            - sql_server: SQL server address
+            - sql_database: SQL database name
+            - sql_username: SQL username
+            - sql_password: SQL password
+            - smtp_server: SMTP server (default: smtp.gmail.com)
+            - smtp_port: SMTP port (default: 465)
+            - mail_sender: Sender email address (default: raphaelcousin.education@gmail.com)
+            - mail_password: Gmail App Password for authentication
     """
     global _global_config
     _global_config = config

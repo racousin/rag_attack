@@ -1,9 +1,3 @@
-"""Planner implementations for complex task orchestration"""
+"""Planners module - deprecated, use agents instead"""
 
-from .hierarchical_planner import HierarchicalPlanner, PlanStep, PlannerState
-
-__all__ = [
-    "HierarchicalPlanner",
-    "PlanStep",
-    "PlannerState"
-]
+__all__ = []
