@@ -201,6 +201,7 @@ class ReflectionAgent:
         workflow.add_node("tools", ToolNode(self.tools))
         workflow.add_node("critique", self._critique_node)
         workflow.add_node("improve", self._improve_node)
+        workflow.add_node("tools_reflect", ToolNode(self.tools))  # Tools available during reflection
         workflow.add_node("evaluate", self._evaluate_node)
 
         # Entry point
@@ -214,13 +215,14 @@ class ReflectionAgent:
         )
         workflow.add_edge("tools", "generate")
 
-        # Reflection loop: critique → improve → evaluate → (critique or END)
+        # Reflection loop: critique → improve (with tool access) → evaluate → (critique or END)
         workflow.add_edge("critique", "improve")
         workflow.add_conditional_edges(
             "improve",
-            self._should_continue_reflection,
-            {"evaluate": "evaluate", "end": END}
+            self._should_use_tools_or_evaluate,
+            {"tools_reflect": "tools_reflect", "evaluate": "evaluate", "end": END}
         )
+        workflow.add_edge("tools_reflect", "improve")  # Tool results go back to improve
         workflow.add_conditional_edges(
             "evaluate",
             self._evaluate_decision,
@@ -319,13 +321,20 @@ class ReflectionAgent:
         }
 
     def _improve_node(self, state: ReflectionState) -> Dict[str, Any]:
-        """Generate improved response based on critique"""
+        """Generate improved response based on critique - can use tools if needed"""
         reflection_count = state.get("reflection_count", 0)
-        self._log(f"  Improving response (iteration {reflection_count + 1})...", VerboseLevel.NORMAL)
+        messages = state["messages"]
+
+        # Check if last message is a tool result (continuing tool loop)
+        last_msg = messages[-1] if messages else None
+        is_tool_result = hasattr(last_msg, 'type') and last_msg.type == 'tool'
+
+        if not is_tool_result:
+            self._log(f"  Improving response (iteration {reflection_count + 1})...", VerboseLevel.NORMAL)
 
         # Get question
         question = ""
-        for msg in state["messages"]:
+        for msg in messages:
             if isinstance(msg, HumanMessage):
                 question = msg.content
                 break
@@ -333,26 +342,47 @@ class ReflectionAgent:
         current_response = state.get("current_response", state.get("initial_response", ""))
         critique = state.get("critique", "")
 
-        # Generate improved response
+        # Build improve prompt with tool access
         improve_prompt = self._improve_prompt.format(
             question=question,
             response=current_response,
             critique=critique
         )
-        improved_response = self.llm.invoke(improve_prompt)
 
+        # Use LLM with tools - agent can fetch more info if critique identified gaps
+        improve_messages = [
+            {"role": "system", "content": f"{self._system_prompt}\n\nTu peux utiliser les outils si tu as besoin d'informations supplémentaires pour améliorer la réponse."},
+            {"role": "user", "content": improve_prompt}
+        ]
+
+        # Add any tool results from previous iterations in this improvement phase
+        for msg in messages:
+            if hasattr(msg, 'tool_calls') or (hasattr(msg, 'type') and msg.type == 'tool'):
+                improve_messages.append(msg)
+
+        response = self.llm_with_tools.invoke(improve_messages)
+
+        # If tool calls, return for tool execution
+        if hasattr(response, 'tool_calls') and response.tool_calls:
+            tool_names = [tc['name'] for tc in response.tool_calls]
+            self._log(f"    Fetching more info: {', '.join(tool_names)}", VerboseLevel.NORMAL)
+            return {"messages": [response]}
+
+        # No tool calls - we have the improved response
         return {
-            "current_response": improved_response.content,
+            "current_response": response.content,
             "reflection_count": reflection_count + 1
         }
 
-    def _should_continue_reflection(self, state: ReflectionState) -> str:
-        """Decide whether to evaluate or end (if max reflections reached)"""
+    def _should_use_tools_or_evaluate(self, state: ReflectionState) -> str:
+        """Decide whether to use tools, evaluate, or end"""
+        messages = state["messages"]
         reflection_count = state.get("reflection_count", 0)
 
-        # First iteration always goes to evaluate
-        if reflection_count == 1:
-            return "evaluate"
+        # Check if last message has tool calls (improve wants to fetch more info)
+        last_msg = messages[-1] if messages else None
+        if hasattr(last_msg, 'tool_calls') and last_msg.tool_calls:
+            return "tools_reflect"
 
         # If we've hit max reflections, end immediately
         if reflection_count >= self.max_reflections:
