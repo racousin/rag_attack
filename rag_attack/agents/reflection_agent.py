@@ -14,8 +14,12 @@ class ReflectionState(TypedDict):
     """State for the reflection agent workflow"""
     messages: Annotated[Sequence[BaseMessage], operator.add]
     initial_response: Optional[str]
+    current_response: Optional[str]  # Current version being refined
     critique: Optional[str]
     final_response: Optional[str]
+    reflection_count: int  # Track reflection loop iterations
+    critiques_history: List[str]  # Store all critiques for inspection
+    _evaluation: Optional[str]  # Internal: last evaluation result
 
 
 # Default prompts
@@ -41,24 +45,40 @@ Critique: {critique}
 
 Réponse améliorée:"""
 
+DEFAULT_EVALUATE_PROMPT = """Évalue si cette réponse est suffisamment bonne pour être finale.
+
+Question: {question}
+Réponse: {response}
+Critique précédente: {critique}
+
+Réponds UNIQUEMENT par:
+- "APPROVED" si la réponse est complète, précise et bien structurée
+- "NEEDS_IMPROVEMENT" suivi d'une brève explication si des améliorations significatives sont encore possibles
+
+Évaluation:"""
+
 
 class ReflectionAgent:
     """
-    Agent with reflection loop that critiques and improves its responses.
+    Agent with iterative reflection loop that critiques and improves its responses.
 
     The workflow is:
     1. Generate initial response (using tools if needed)
     2. Critique the response
     3. Generate improved response
+    4. Evaluate if response is good enough
+       - If APPROVED → return final response
+       - If NEEDS_IMPROVEMENT → loop back to step 2 (up to max_reflections)
 
-    This pattern produces higher quality answers for complex questions
-    at the cost of additional LLM calls.
+    This critic loop pattern produces higher quality answers by iteratively
+    refining responses until they meet quality standards.
 
     Features:
-    - Customizable prompts (system, critique, improve)
+    - Iterative critique-improve loop with configurable max iterations
+    - Customizable prompts (system, critique, improve, evaluate)
     - Adjustable verbosity levels
     - Graph visualization
-    - Access to critique and improvement reasoning
+    - Access to all critiques history and intermediate responses
     """
 
     def __init__(
@@ -68,7 +88,9 @@ class ReflectionAgent:
         system_prompt: Optional[str] = None,
         critique_prompt: Optional[str] = None,
         improve_prompt: Optional[str] = None,
+        evaluate_prompt: Optional[str] = None,
         max_iterations: int = 5,
+        max_reflections: int = 3,
         verbose: Literal["silent", "minimal", "normal", "verbose"] = "normal"
     ):
         """
@@ -80,12 +102,15 @@ class ReflectionAgent:
             system_prompt: Custom system prompt
             critique_prompt: Custom critique prompt (use {question} and {response} placeholders)
             improve_prompt: Custom improvement prompt (use {question}, {response}, {critique} placeholders)
+            evaluate_prompt: Custom evaluation prompt (use {question}, {response}, {critique} placeholders)
             max_iterations: Maximum tool calls for initial response (default: 5)
+            max_reflections: Maximum critique-improve loops (default: 3)
             verbose: Verbosity level - "silent", "minimal", "normal", "verbose"
         """
         self.config = config
         self.tools = tools
         self.max_iterations = max_iterations
+        self.max_reflections = max_reflections
         self.verbose = VerboseLevel(verbose)
 
         # LLM setup
@@ -96,11 +121,13 @@ class ReflectionAgent:
         self._system_prompt = system_prompt or DEFAULT_SYSTEM_PROMPT
         self._critique_prompt = critique_prompt or DEFAULT_CRITIQUE_PROMPT
         self._improve_prompt = improve_prompt or DEFAULT_IMPROVE_PROMPT
+        self._evaluate_prompt = evaluate_prompt or DEFAULT_EVALUATE_PROMPT
 
         # Last run info (for inspection)
         self._last_initial_response = None
         self._last_critique = None
         self._last_improved_response = None
+        self._last_critiques_history = []
 
         # Build graph
         self.graph = self._build_graph()
@@ -120,14 +147,16 @@ class ReflectionAgent:
         return {
             "system_prompt": self._system_prompt,
             "critique_prompt": self._critique_prompt,
-            "improve_prompt": self._improve_prompt
+            "improve_prompt": self._improve_prompt,
+            "evaluate_prompt": self._evaluate_prompt
         }
 
     def set_prompts(
         self,
         system_prompt: Optional[str] = None,
         critique_prompt: Optional[str] = None,
-        improve_prompt: Optional[str] = None
+        improve_prompt: Optional[str] = None,
+        evaluate_prompt: Optional[str] = None
     ):
         """
         Set custom prompts for the agent.
@@ -136,6 +165,7 @@ class ReflectionAgent:
             system_prompt: Main system instruction
             critique_prompt: Template for critique (use {question}, {response})
             improve_prompt: Template for improvement (use {question}, {response}, {critique})
+            evaluate_prompt: Template for evaluation (use {question}, {response}, {critique})
         """
         if system_prompt is not None:
             self._system_prompt = system_prompt
@@ -143,13 +173,17 @@ class ReflectionAgent:
             self._critique_prompt = critique_prompt
         if improve_prompt is not None:
             self._improve_prompt = improve_prompt
+        if evaluate_prompt is not None:
+            self._evaluate_prompt = evaluate_prompt
 
-    def get_last_run(self) -> Dict[str, Optional[str]]:
+    def get_last_run(self) -> Dict[str, Any]:
         """Get details from the last invocation"""
         return {
             "initial_response": self._last_initial_response,
-            "critique": self._last_critique,
-            "improved_response": self._last_improved_response
+            "final_critique": self._last_critique,
+            "improved_response": self._last_improved_response,
+            "critiques_history": self._last_critiques_history,
+            "reflection_iterations": len(self._last_critiques_history)
         }
 
     def _log(self, message: str, level: VerboseLevel = VerboseLevel.NORMAL):
@@ -159,7 +193,7 @@ class ReflectionAgent:
             print(message)
 
     def _build_graph(self) -> StateGraph:
-        """Build the LangGraph workflow with reflection"""
+        """Build the LangGraph workflow with iterative reflection loop"""
         workflow = StateGraph(ReflectionState)
 
         # Nodes
@@ -167,11 +201,12 @@ class ReflectionAgent:
         workflow.add_node("tools", ToolNode(self.tools))
         workflow.add_node("critique", self._critique_node)
         workflow.add_node("improve", self._improve_node)
+        workflow.add_node("evaluate", self._evaluate_node)
 
         # Entry point
         workflow.set_entry_point("generate")
 
-        # Edges for tool loop
+        # Edges for tool loop (generate phase)
         workflow.add_conditional_edges(
             "generate",
             self._should_use_tools,
@@ -179,9 +214,18 @@ class ReflectionAgent:
         )
         workflow.add_edge("tools", "generate")
 
-        # Reflection edges
+        # Reflection loop: critique → improve → evaluate → (critique or END)
         workflow.add_edge("critique", "improve")
-        workflow.add_edge("improve", END)
+        workflow.add_conditional_edges(
+            "improve",
+            self._should_continue_reflection,
+            {"evaluate": "evaluate", "end": END}
+        )
+        workflow.add_conditional_edges(
+            "evaluate",
+            self._evaluate_decision,
+            {"critique": "critique", "end": END}
+        )
 
         return workflow.compile()
 
@@ -207,7 +251,10 @@ class ReflectionAgent:
             response = self.llm.invoke(final_prompt)
             return {
                 "messages": [response],
-                "initial_response": response.content
+                "initial_response": response.content,
+                "current_response": response.content,
+                "reflection_count": 0,
+                "critiques_history": []
             }
 
         # Add system prompt for first message
@@ -225,7 +272,10 @@ class ReflectionAgent:
         else:
             return {
                 "messages": [response],
-                "initial_response": response.content
+                "initial_response": response.content,
+                "current_response": response.content,
+                "reflection_count": 0,
+                "critiques_history": []
             }
 
     def _should_use_tools(self, state: ReflectionState) -> str:
@@ -236,22 +286,23 @@ class ReflectionAgent:
         return "critique"
 
     def _critique_node(self, state: ReflectionState) -> Dict[str, Any]:
-        """Critique the initial response"""
-        self._log(f"\n  Critiquing response...", VerboseLevel.NORMAL)
+        """Critique the current response"""
+        reflection_count = state.get("reflection_count", 0)
+        self._log(f"\n  Critiquing response (iteration {reflection_count + 1})...", VerboseLevel.NORMAL)
 
-        # Get question and response
+        # Get question and current response
         question = ""
         for msg in state["messages"]:
             if isinstance(msg, HumanMessage):
                 question = msg.content
                 break
 
-        initial_response = state.get("initial_response", "")
+        current_response = state.get("current_response", state.get("initial_response", ""))
 
         # Generate critique
         critique_prompt = self._critique_prompt.format(
             question=question,
-            response=initial_response
+            response=current_response
         )
         critique_response = self.llm.invoke(critique_prompt)
         critique = critique_response.content
@@ -259,11 +310,18 @@ class ReflectionAgent:
         self._log(f"\n  Critique:", VerboseLevel.VERBOSE)
         self._log(f"  {critique[:200]}...", VerboseLevel.VERBOSE)
 
-        return {"critique": critique}
+        # Add to history
+        critiques_history = state.get("critiques_history", []) + [critique]
+
+        return {
+            "critique": critique,
+            "critiques_history": critiques_history
+        }
 
     def _improve_node(self, state: ReflectionState) -> Dict[str, Any]:
         """Generate improved response based on critique"""
-        self._log(f"  Improving response...", VerboseLevel.NORMAL)
+        reflection_count = state.get("reflection_count", 0)
+        self._log(f"  Improving response (iteration {reflection_count + 1})...", VerboseLevel.NORMAL)
 
         # Get question
         question = ""
@@ -272,18 +330,80 @@ class ReflectionAgent:
                 question = msg.content
                 break
 
-        initial_response = state.get("initial_response", "")
+        current_response = state.get("current_response", state.get("initial_response", ""))
         critique = state.get("critique", "")
 
         # Generate improved response
         improve_prompt = self._improve_prompt.format(
             question=question,
-            response=initial_response,
+            response=current_response,
             critique=critique
         )
         improved_response = self.llm.invoke(improve_prompt)
 
-        return {"final_response": improved_response.content}
+        return {
+            "current_response": improved_response.content,
+            "reflection_count": reflection_count + 1
+        }
+
+    def _should_continue_reflection(self, state: ReflectionState) -> str:
+        """Decide whether to evaluate or end (if max reflections reached)"""
+        reflection_count = state.get("reflection_count", 0)
+
+        # First iteration always goes to evaluate
+        if reflection_count == 1:
+            return "evaluate"
+
+        # If we've hit max reflections, end immediately
+        if reflection_count >= self.max_reflections:
+            self._log(f"  Max reflections ({self.max_reflections}) reached.", VerboseLevel.NORMAL)
+            return "end"
+
+        return "evaluate"
+
+    def _evaluate_node(self, state: ReflectionState) -> Dict[str, Any]:
+        """Evaluate if the improved response is good enough"""
+        reflection_count = state.get("reflection_count", 0)
+        self._log(f"\n  Evaluating response quality...", VerboseLevel.NORMAL)
+
+        # Get question and current response
+        question = ""
+        for msg in state["messages"]:
+            if isinstance(msg, HumanMessage):
+                question = msg.content
+                break
+
+        current_response = state.get("current_response", "")
+        critique = state.get("critique", "")
+
+        # Generate evaluation
+        evaluate_prompt = self._evaluate_prompt.format(
+            question=question,
+            response=current_response,
+            critique=critique
+        )
+        evaluation = self.llm.invoke(evaluate_prompt).content
+
+        self._log(f"  Evaluation: {evaluation[:100]}...", VerboseLevel.VERBOSE)
+
+        # Store evaluation result in state for routing decision
+        return {"_evaluation": evaluation}
+
+    def _evaluate_decision(self, state: ReflectionState) -> str:
+        """Route based on evaluation result"""
+        evaluation = state.get("_evaluation", "")
+        reflection_count = state.get("reflection_count", 0)
+
+        # Check if approved or max reflections reached
+        if "APPROVED" in evaluation.upper() or reflection_count >= self.max_reflections:
+            if reflection_count >= self.max_reflections:
+                self._log(f"  Max reflections reached, finalizing.", VerboseLevel.NORMAL)
+            else:
+                self._log(f"  Response approved after {reflection_count} iteration(s).", VerboseLevel.NORMAL)
+            return "end"
+
+        self._log(f"  Needs improvement, continuing reflection loop...", VerboseLevel.NORMAL)
+        return "critique"
 
     def invoke(self, question: str) -> str:
         """
@@ -291,32 +411,40 @@ class ReflectionAgent:
 
         The agent will:
         1. Generate an initial response (using tools)
-        2. Critique the response
-        3. Return an improved response
+        2. Enter the reflection loop:
+           - Critique the response
+           - Improve based on critique
+           - Evaluate if good enough
+           - Loop back or finalize
 
         Args:
             question: The question to answer
 
         Returns:
-            The improved response string
+            The final improved response string
         """
         # Header
         self._log(f"\n{'='*50}", VerboseLevel.NORMAL)
-        self._log(f"ReflectionAgent", VerboseLevel.NORMAL)
+        self._log(f"ReflectionAgent (max {self.max_reflections} reflection loops)", VerboseLevel.NORMAL)
         self._log(f"{'='*50}", VerboseLevel.NORMAL)
         self._log(f"Question: {question[:100]}{'...' if len(question) > 100 else ''}", VerboseLevel.NORMAL)
         self._log(f"Tools: {', '.join([t.name for t in self.tools])}", VerboseLevel.VERBOSE)
 
-        self._log(f"\n  Phase 1: Initial Response", VerboseLevel.NORMAL)
+        self._log(f"\n  Phase 1: Generating initial response...", VerboseLevel.NORMAL)
 
         # Execute
         initial_state: ReflectionState = {
             "messages": [HumanMessage(content=question)],
             "initial_response": None,
+            "current_response": None,
             "critique": None,
-            "final_response": None
+            "final_response": None,
+            "reflection_count": 0,
+            "critiques_history": [],
+            "_evaluation": None
         }
-        recursion_limit = max(self.max_iterations * 3 + 20, 40)
+        # Increased recursion limit to account for reflection loops
+        recursion_limit = max(self.max_iterations * 3 + self.max_reflections * 6 + 20, 50)
 
         result = self.graph.invoke(
             initial_state,
@@ -326,15 +454,16 @@ class ReflectionAgent:
         # Store for inspection
         self._last_initial_response = result.get("initial_response")
         self._last_critique = result.get("critique")
-        self._last_improved_response = result.get("final_response")
+        self._last_improved_response = result.get("current_response")
+        self._last_critiques_history = result.get("critiques_history", [])
 
-        self._log(f"\n  Phase 2: Critique", VerboseLevel.NORMAL)
-        self._log(f"\n  Phase 3: Improvement", VerboseLevel.NORMAL)
+        reflection_count = result.get("reflection_count", 0)
+        self._log(f"\n  Completed with {reflection_count} reflection iteration(s)", VerboseLevel.NORMAL)
         self._log(f"{'='*50}\n", VerboseLevel.NORMAL)
 
-        return result.get("final_response", "No response generated")
+        return result.get("current_response", result.get("initial_response", "No response generated"))
 
-    def invoke_with_details(self, question: str) -> Dict[str, str]:
+    def invoke_with_details(self, question: str) -> Dict[str, Any]:
         """
         Invoke the agent and return all intermediate results.
 
@@ -342,14 +471,16 @@ class ReflectionAgent:
             question: The question to answer
 
         Returns:
-            Dictionary with initial_response, critique, and improved_response
+            Dictionary with initial_response, all critiques, and final response
         """
         final_answer = self.invoke(question)
         return {
             "question": question,
             "initial_response": self._last_initial_response,
-            "critique": self._last_critique,
-            "improved_response": final_answer
+            "final_response": final_answer,
+            "final_critique": self._last_critique,
+            "critiques_history": self._last_critiques_history,
+            "reflection_iterations": len(self._last_critiques_history)
         }
 
     def display_graph(self, return_image: bool = False):
@@ -357,4 +488,4 @@ class ReflectionAgent:
         return display_graph(self.graph, return_image=return_image)
 
     def __repr__(self) -> str:
-        return f"ReflectionAgent(tools={[t.name for t in self.tools]}, max_iterations={self.max_iterations}, verbose={self.verbose.value})"
+        return f"ReflectionAgent(tools={[t.name for t in self.tools]}, max_iterations={self.max_iterations}, max_reflections={self.max_reflections}, verbose={self.verbose.value})"
