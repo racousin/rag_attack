@@ -1,89 +1,25 @@
-"""Tools for agentic RAG"""
+"""Tools for agentic RAG - VéloCorp"""
 
-# Configuration management - import from centralized location
-from ..utils.config import (
-    set_config,
-    get_config,
-)
+# Configuration management
+from ..utils.config import set_config, get_config
 
-# Original tool functions (with explicit config parameter)
-from .azure_search_tool import (
-    azure_search_tool,
-    azure_vector_search_tool,
-    create_hybrid_search_tool
-)
-from .sql_tool import (
-    sql_query_tool,
-    sql_table_info,
-    create_sql_agent_tools
-)
-from .api_tool import (
-    azure_function_api_tool,
-    search_api_tool,
-    crm_opportunities_tool,
-    crm_prospects_tool,
-    crm_sales_reps_tool,
-    crm_analytics_tool,
-    weather_api_tool,
-    web_search_tool,
-    create_api_tools
-)
-
-# Clean wrapper functions (use global config, no config parameter needed)
-from .azure_search_tool import (
-    search_documents,
-    vector_search_documents,
-    hybrid_search_documents,
-)
-from .sql_tool import (
-    execute_sql_query,
-    get_table_info,
-)
-from .api_tool import (
-    call_azure_api,
-    search_via_api,
-    get_crm_opportunities,
-    get_weather,
-    search_web,
-)
-from .report_writer_tool import (
-    report_writer_tool,
-    write_report,
-)
+# 6 consolidated tools
+from .crm_tool import get_crm
+from .erp_tool import get_erp
+from .rag_tool import get_document_rag
+from .internet_tool import get_internet_search
+from .writer_tool import write_file
+from .mail_tool import send_mail
 
 __all__ = [
     # Configuration
     "set_config",
     "get_config",
-    # Clean wrapper functions (RECOMMENDED - use these!)
-    "search_documents",
-    "vector_search_documents",
-    "hybrid_search_documents",
-    "execute_sql_query",
-    # "get_schema",  # DEPRECATED: Schema now embedded in sql_query_tool description
-    "get_table_info",
-    "call_azure_api",
-    "search_via_api",
-    "get_crm_opportunities",
-    "get_weather",
-    "search_web",
-    "report_writer_tool",
-    "write_report",
-    # Original tools (for backward compatibility)
-    "azure_search_tool",
-    "azure_vector_search_tool",
-    "create_hybrid_search_tool",
-    "sql_query_tool",
-    # "get_database_schema",  # DEPRECATED: Schema now embedded in sql_query_tool description
-    "sql_table_info",
-    "create_sql_agent_tools",
-    "azure_function_api_tool",
-    "search_api_tool",
-    "crm_opportunities_tool",
-    "crm_prospects_tool",
-    "crm_sales_reps_tool",
-    "crm_analytics_tool",
-    "weather_api_tool",
-    "web_search_tool",
-    "create_api_tools"
+    # Tools (6 total)
+    "get_crm",           # CRM data (opportunities, prospects, sales_reps, analytics)
+    "get_erp",           # SQL database (products, customers, orders, etc.)
+    "get_document_rag",  # Document search (keyword, vector, hybrid)
+    "get_internet_search",  # Web search
+    "write_file",        # Report generation (text, excel)
+    "send_mail",         # Send emails via SMTP
 ]

@@ -1,88 +1,38 @@
-"""RAG Attack - Pedagogic guide for Agentic RAG implementations"""
+"""RAG Attack - Pedagogic package for Agentic RAG implementations"""
 
-__version__ = "0.2.0"
+__version__ = "0.5.0"
 
-# Import main components
-from .agents import SimpleToolAgent, ReActAgent, SimpleReActAgent, create_llm
-from .planners.hierarchical_planner import HierarchicalPlanner
+# Agents
+from .agents import SimpleAgent, ReflectionAgent, create_llm, display_graph, VerboseLevel
 
-# Configuration management
+# Configuration
 from .tools import set_config, get_config
 
-# Clean wrapper functions (RECOMMENDED)
+# 6 Tools for agents
 from .tools import (
-    search_documents,
-    vector_search_documents,
-    hybrid_search_documents,
-    execute_sql_query,
-    get_table_info,
-    call_azure_api,
-    search_via_api,
-    get_crm_opportunities,
-    get_weather,
-    search_web,
-    write_report,
-)
-
-# Original tools (for backward compatibility)
-from .tools import (
-    azure_search_tool,
-    azure_vector_search_tool,
-    sql_query_tool,
-    sql_table_info,
-    azure_function_api_tool,
-    search_api_tool,
-    crm_opportunities_tool,
-    crm_prospects_tool,
-    crm_sales_reps_tool,
-    crm_analytics_tool,
-    weather_api_tool,
-    web_search_tool,
-    report_writer_tool,
-    create_api_tools,
-    create_sql_agent_tools,
-    create_hybrid_search_tool
+    get_crm,             # CRM data (opportunities, prospects, sales_reps, analytics)
+    get_erp,             # SQL database (products, customers, orders, etc.)
+    get_document_rag,    # Document search (keyword, vector, hybrid)
+    get_internet_search, # Web search
+    write_file,          # Report generation (text, excel)
+    send_mail,           # Send emails via SMTP
 )
 
 __all__ = [
     # Agents
-    "SimpleToolAgent",
-    "ReActAgent",
-    "SimpleReActAgent",
-    "HierarchicalPlanner",
+    "SimpleAgent",
+    "ReflectionAgent",
     "create_llm",
+    "display_graph",
+    "VerboseLevel",
     # Configuration
     "set_config",
     "get_config",
-    # Clean wrapper functions (RECOMMENDED)
-    "search_documents",
-    "vector_search_documents",
-    "hybrid_search_documents",
-    "execute_sql_query",
-    "get_schema",
-    "get_table_info",
-    "call_azure_api",
-    "search_via_api",
-    "get_crm_opportunities",
-    "get_weather",
-    "search_web",
-    "write_report",
-    # Original tools (for backward compatibility)
-    "azure_search_tool",
-    "azure_vector_search_tool",
-    "create_hybrid_search_tool",
-    "sql_query_tool",
-    "get_database_schema",
-    "sql_table_info",
-    "create_sql_agent_tools",
-    "azure_function_api_tool",
-    "search_api_tool",
-    "crm_opportunities_tool",
-    "crm_prospects_tool",
-    "crm_sales_reps_tool",
-    "crm_analytics_tool",
-    "weather_api_tool",
-    "web_search_tool",
-    "report_writer_tool",
-    "create_api_tools",
+    # Tools (6 total)
+    "get_crm",
+    "get_erp",
+    "get_document_rag",
+    "get_internet_search",
+    "write_file",
+    "send_mail",
 ]

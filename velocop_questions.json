@@ -1,0 +1,261 @@
+{
+  "questions_simples": [
+    {
+      "question": "Quels sont les modèles de vélos électriques proposés par VéloCorp ?",
+      "outils_attendus": ["azure_search_tool"],
+      "categorie": "produits",
+      "difficulte": "facile"
+    },
+    {
+      "question": "Quelle est la durée de garantie des vélos VéloCorp ?",
+      "outils_attendus": ["azure_search_tool"],
+      "categorie": "garantie",
+      "difficulte": "facile"
+    },
+    {
+      "question": "Quelles sont les spécifications techniques du modèle E-City ?",
+      "outils_attendus": ["azure_search_tool"],
+      "categorie": "produits",
+      "difficulte": "facile"
+    },
+    {
+      "question": "Comment faire une réclamation sous garantie ?",
+      "outils_attendus": ["azure_search_tool"],
+      "categorie": "garantie",
+      "difficulte": "facile"
+    },
+    {
+      "question": "Quand faut-il remplacer les patins de frein ?",
+      "outils_attendus": ["azure_search_tool"],
+      "categorie": "maintenance",
+      "difficulte": "facile"
+    }
+  ],
+  "questions_moyennes": [
+    {
+      "question": "Quels types de freins sont utilisés sur les vélos VéloCorp ?",
+      "outils_attendus": ["azure_search_tool"],
+      "categorie": "produits",
+      "difficulte": "moyenne",
+      "note": "Chercher dans les manuels techniques - tous les modèles ont 'Freins à disque hydrauliques'"
+    },
+    {
+      "question": "Compare la garantie du cadre et des composants",
+      "outils_attendus": ["azure_search_tool"],
+      "categorie": "garantie",
+      "difficulte": "moyenne",
+      "note": "FAQ garantie: cadre 2 ans, composants 1 an"
+    },
+    {
+      "question": "Y a-t-il des réclamations clients dans les emails ?",
+      "outils_attendus": ["azure_search_tool"],
+      "categorie": "support",
+      "difficulte": "moyenne",
+      "note": "Il y a des emails 'Réclamation' mais ils sont génériques sans détails spécifiques"
+    },
+    {
+      "question": "Quelles sont les informations d'entretien disponibles pour les freins ?",
+      "outils_attendus": ["azure_search_tool"],
+      "categorie": "maintenance",
+      "difficulte": "moyenne",
+      "note": "FAQ entretien contient info sur remplacement patins (3000-5000 km)"
+    }
+  ],
+  "questions_sql_simples": [
+    {
+      "question": "Quels sont tous les modèles de vélos disponibles dans la base de données ?",
+      "outils_attendus": ["sql_query_tool"],
+      "categorie": "produits",
+      "difficulte": "facile",
+      "note": "SELECT model, name, price FROM products"
+    },
+    {
+      "question": "Quel est le vélo le plus cher dans le catalogue ?",
+      "outils_attendus": ["sql_query_tool"],
+      "categorie": "produits",
+      "difficulte": "facile",
+      "note": "E-Sport à 3188.83€"
+    },
+    {
+      "question": "Combien de commandes ont été livrées ?",
+      "outils_attendus": ["sql_query_tool"],
+      "categorie": "commandes",
+      "difficulte": "facile",
+      "note": "154 commandes livrées"
+    },
+    {
+      "question": "Combien y a-t-il de clients B2B et B2C ?",
+      "outils_attendus": ["sql_query_tool"],
+      "categorie": "clients",
+      "difficulte": "facile",
+      "note": "51 B2B, 49 B2C"
+    }
+  ],
+  "questions_sql_moyennes": [
+    {
+      "question": "Quels sont les 5 clients qui ont le plus dépensé ?",
+      "outils_attendus": ["sql_query_tool"],
+      "categorie": "clients",
+      "difficulte": "moyenne",
+      "note": "Utiliser ORDER BY total_spent DESC et TOP 5"
+    },
+    {
+      "question": "Quels modèles ont moins de 50 unités en stock ?",
+      "outils_attendus": ["sql_query_tool"],
+      "categorie": "produits",
+      "difficulte": "moyenne",
+      "note": "8 modèles ont un stock faible"
+    },
+    {
+      "question": "Quelle est la différence de dépense moyenne entre les clients B2B et B2C ?",
+      "outils_attendus": ["sql_query_tool"],
+      "categorie": "clients",
+      "difficulte": "moyenne",
+      "note": "B2B: 8743€ en moyenne, B2C: 5637€ en moyenne"
+    },
+    {
+      "question": "Combien de commandes ont été passées par chaque canal de vente ?",
+      "outils_attendus": ["sql_query_tool"],
+      "categorie": "commandes",
+      "difficulte": "moyenne",
+      "note": "magasin (71), téléphone (67), B2B_portal (38), en_ligne (24)"
+    }
+  ],
+  "questions_multi_outils": [
+    {
+      "question": "Compare les spécifications techniques du E-City avec les informations disponibles sur internet concernant les vélos électriques similaires",
+      "outils_attendus": ["azure_search_tool", "web_search_tool"],
+      "categorie": "comparaison",
+      "difficulte": "moyenne"
+    },
+    {
+      "question": "Trouve les informations techniques sur les freins des vélos VéloCorp et les recommandations d'entretien",
+      "outils_attendus": ["azure_search_tool"],
+      "categorie": "analyse",
+      "difficulte": "moyenne",
+      "note": "Combiner info des manuels techniques (freins à disque hydrauliques) et FAQ entretien (remplacement patins)"
+    },
+    {
+      "question": "Quelle est la tendance actuelle du marché des vélos électriques en France selon internet ?",
+      "outils_attendus": ["web_search_tool"],
+      "categorie": "marche",
+      "difficulte": "moyenne"
+    },
+    {
+      "question": "Trouve le prix du modèle E-City dans la base de données et compare avec les prix sur internet",
+      "outils_attendus": ["sql_query_tool", "web_search_tool"],
+      "categorie": "comparaison",
+      "difficulte": "moyenne",
+      "note": "Combiner SQL pour le prix (2468.46€) et web search pour comparaison marché"
+    },
+    {
+      "question": "Quels sont les modèles en rupture de stock et trouve leurs spécifications techniques",
+      "outils_attendus": ["sql_query_tool", "azure_search_tool"],
+      "categorie": "produits",
+      "difficulte": "moyenne",
+      "note": "SQL pour stock faible, puis Azure Search pour specs techniques"
+    }
+  ],
+  "questions_api_crm_simples": [
+    {
+      "question": "Combien y a-t-il de commerciaux dans l'équipe VéloCorp ?",
+      "outils_attendus": ["crm_sales_reps_tool"],
+      "categorie": "crm",
+      "difficulte": "facile",
+      "note": "6 commerciaux"
+    },
+    {
+      "question": "Combien y a-t-il de prospects qualifiés dans le CRM ?",
+      "outils_attendus": ["crm_prospects_tool"],
+      "categorie": "crm",
+      "difficulte": "facile",
+      "note": "15 prospects qualifiés sur 60 total"
+    },
+    {
+      "question": "Quelle est la valeur totale du pipeline d'opportunités ?",
+      "outils_attendus": ["crm_opportunities_tool"],
+      "categorie": "crm",
+      "difficulte": "facile",
+      "note": "Environ 57K€ de pipeline value"
+    },
+    {
+      "question": "Quel est le taux de conversion des prospects ?",
+      "outils_attendus": ["crm_prospects_tool"],
+      "categorie": "crm",
+      "difficulte": "facile",
+      "note": "25% de taux de conversion"
+    }
+  ],
+  "questions_api_crm_moyennes": [
+    {
+      "question": "Quels sont les prospects avec un score supérieur à 70 ?",
+      "outils_attendus": ["crm_prospects_tool"],
+      "categorie": "crm",
+      "difficulte": "moyenne",
+      "note": "Utiliser min_score=70 comme paramètre"
+    },
+    {
+      "question": "Quelles sont les opportunités de plus de 3000€ en phase de proposition ?",
+      "outils_attendus": ["crm_opportunities_tool"],
+      "categorie": "crm",
+      "difficulte": "moyenne",
+      "note": "Utiliser min_value=3000 et status=Proposition"
+    },
+    {
+      "question": "Quel commercial a le meilleur taux de gain ?",
+      "outils_attendus": ["crm_analytics_tool"],
+      "categorie": "crm",
+      "difficulte": "moyenne",
+      "note": "Analytics contient performance_commerciaux avec taux_gain"
+    },
+    {
+      "question": "Quelle est la source de leads la plus efficace ?",
+      "outils_attendus": ["crm_analytics_tool"],
+      "categorie": "crm",
+      "difficulte": "moyenne",
+      "note": "Analytics contient analyse_sources_leads avec taux_qualification"
+    }
+  ],
+  "questions_complexes": [
+    {
+      "question": "Analyse tous les retours clients sur les problèmes de garantie et rédige un rapport complet avec recommandations",
+      "outils_attendus": ["azure_search_tool", "report_writer_tool"],
+      "categorie": "analyse_business",
+      "difficulte": "difficile"
+    },
+    {
+      "question": "Identifie les 3 principaux problèmes techniques remontés par les clients, trouve les solutions dans les manuels, et rédige un guide de résolution",
+      "outils_attendus": ["azure_search_tool", "report_writer_tool"],
+      "categorie": "support_technique",
+      "difficulte": "difficile"
+    },
+    {
+      "question": "Prépare un rapport complet pour le conseil d'administration incluant : analyse des réclamations clients, comparaison avec le marché, et recommandations stratégiques",
+      "outils_attendus": ["azure_search_tool", "web_search_tool", "report_writer_tool"],
+      "categorie": "strategie",
+      "difficulte": "tres_difficile"
+    },
+    {
+      "question": "Analyse la satisfaction client basée sur les emails et transcriptions, identifie les points d'amélioration, et génère un plan d'action",
+      "outils_attendus": ["azure_search_tool", "report_writer_tool"],
+      "categorie": "amelioration_qualite",
+      "difficulte": "difficile"
+    }
+  ],
+  "questions_pedagogiques": [
+    {
+      "question": "Qu'est-ce qu'un vélo électrique ?",
+      "outils_attendus": [],
+      "categorie": "general",
+      "difficulte": "facile",
+      "note": "L'agent ne devrait pas avoir besoin d'outils pour cette question"
+    },
+    {
+      "question": "Calcule 2+2 puis cherche les modèles de vélos VéloCorp",
+      "outils_attendus": ["azure_search_tool"],
+      "categorie": "pedagogique",
+      "difficulte": "facile",
+      "note": "Test de la capacité à ignorer les parties triviales et se concentrer sur ce qui nécessite des outils"
+    }
+  ]
+}
