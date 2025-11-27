@@ -73,7 +73,8 @@ def send_mail(
             encoders.encode_base64(part)
             part.add_header(
                 "Content-Disposition",
-                f"attachment; filename= {filename}"
+                "attachment",
+                filename=filename
             )
             msg.attach(part)
 
