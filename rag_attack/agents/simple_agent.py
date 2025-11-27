@@ -27,14 +27,6 @@ DEFAULT_SYSTEM_PROMPT = """Tu es un assistant intelligent qui utilise des outils
 Utilise les outils disponibles pour obtenir des informations précises et détaillées.
 Réponds toujours dans la langue de la question."""
 
-DEFAULT_TOOL_PROMPT = """Sources disponibles:
-- get_document_rag: Documentation, manuels, FAQs
-- get_erp: Base SQL (produits, clients, commandes, stock)
-- get_crm: CRM (commerciaux, prospects, opportunités)
-- get_internet_search: Recherche web
-- write_file: Génération de rapports
-- send_mail: Envoi d'emails"""
-
 
 def create_llm(config: Dict[str, Any], temperature: float = 0.0) -> AzureChatOpenAI:
     """Create Azure OpenAI LLM instance"""
@@ -126,7 +118,6 @@ class SimpleAgent:
 
         # Prompts
         self._system_prompt = system_prompt or DEFAULT_SYSTEM_PROMPT
-        self._tool_prompt = DEFAULT_TOOL_PROMPT
 
         # Build graph
         self.graph = self._build_graph()
@@ -144,22 +135,18 @@ class SimpleAgent:
     def get_prompts(self) -> Dict[str, str]:
         """Get all configurable prompts"""
         return {
-            "system_prompt": self._system_prompt,
-            "tool_prompt": self._tool_prompt
+            "system_prompt": self._system_prompt
         }
 
-    def set_prompts(self, system_prompt: Optional[str] = None, tool_prompt: Optional[str] = None):
+    def set_prompts(self, system_prompt: Optional[str] = None):
         """
         Set custom prompts for the agent.
 
         Args:
             system_prompt: Main system instruction
-            tool_prompt: Description of available tools
         """
         if system_prompt is not None:
             self._system_prompt = system_prompt
-        if tool_prompt is not None:
-            self._tool_prompt = tool_prompt
 
     def _log(self, message: str, level: VerboseLevel = VerboseLevel.NORMAL):
         """Print message if verbosity level allows"""
@@ -210,8 +197,7 @@ class SimpleAgent:
 
         # Add system prompt for first message
         if len(messages) == 1 and isinstance(messages[0], HumanMessage):
-            full_prompt = f"{self._system_prompt}\n\n{self._tool_prompt}"
-            messages = [{"role": "system", "content": full_prompt}, messages[0]]
+            messages = [{"role": "system", "content": self._system_prompt}, messages[0]]
 
         # Get LLM response
         response = self.llm_with_tools.invoke(messages)
