@@ -67,7 +67,16 @@ class ReflectionAgent:
         self.llm_with_tools = self.llm.bind_tools(tools)
 
         self._last_run = {}
+        self._current_token_usage = {}
         self.graph = self._build_graph()
+
+    def _accumulate_tokens(self, response) -> None:
+        """Accumulate token usage from an LLM response"""
+        if hasattr(response, 'response_metadata') and 'token_usage' in response.response_metadata:
+            usage = response.response_metadata['token_usage']
+            for key, value in usage.items():
+                if isinstance(value, (int, float)):
+                    self._current_token_usage[key] = self._current_token_usage.get(key, 0) + value
 
     def get_last_run(self) -> Dict[str, Any]:
         return self._last_run.copy()
@@ -120,6 +129,7 @@ class ReflectionAgent:
                 *tool_messages  # Include previous tool data
             ]
             response = self.llm_with_tools.invoke(messages)
+            self._accumulate_tokens(response)
 
             if hasattr(response, 'tool_calls') and response.tool_calls:
                 self._log(f"    Tools: {[tc['name'] for tc in response.tool_calls]}", VerboseLevel.NORMAL)
@@ -139,6 +149,7 @@ class ReflectionAgent:
                 {"role": "system", "content": "Fournis ta meilleure réponse avec les informations collectées."},
                 *messages
             ])
+            self._accumulate_tokens(response)
             self._log(f"  [Gen {iteration+1}] Réponse (max tools atteint)", VerboseLevel.NORMAL)
             return {"messages": [response], "current_response": response.content}
 
@@ -147,6 +158,7 @@ class ReflectionAgent:
             messages = [{"role": "system", "content": self.system_prompt}, messages[0]]
 
         response = self.llm_with_tools.invoke(messages)
+        self._accumulate_tokens(response)
 
         if hasattr(response, 'tool_calls') and response.tool_calls:
             self._log(f"  [Gen {iteration+1}] Tools: {[tc['name'] for tc in response.tool_calls]}", VerboseLevel.NORMAL)
@@ -171,7 +183,9 @@ class ReflectionAgent:
             question=state.get("question", ""),
             response=state.get("current_response", "")
         )
-        critique_response = self.llm.invoke(critique_prompt).content
+        critique_result = self.llm.invoke(critique_prompt)
+        self._accumulate_tokens(critique_result)
+        critique_response = critique_result.content
 
         self._log(f"    {critique_response[:80]}...", VerboseLevel.VERBOSE)
         return {"critique": critique_response, "iteration": iteration + 1}
@@ -227,6 +241,8 @@ class ReflectionAgent:
         return tool_messages
 
     def invoke(self, question: str) -> str:
+        self._current_token_usage = {}  # Reset token tracking
+
         self._log(f"\n{'='*50}", VerboseLevel.NORMAL)
         self._log(f"ReflectionAgent", VerboseLevel.NORMAL)
         self._log(f"{'='*50}", VerboseLevel.NORMAL)
@@ -249,7 +265,8 @@ class ReflectionAgent:
             "question": question,
             "response": result.get("current_response"),
             "critique": result.get("critique"),
-            "iterations": result.get("iteration", 0)
+            "iterations": result.get("iteration", 0),
+            "token_usage": self._current_token_usage.copy()
         }
 
         self._log(f"{'='*50}\n", VerboseLevel.NORMAL)

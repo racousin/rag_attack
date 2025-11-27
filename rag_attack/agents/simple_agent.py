@@ -119,8 +119,24 @@ class SimpleAgent:
         # Prompts
         self._system_prompt = system_prompt or DEFAULT_SYSTEM_PROMPT
 
+        # Tracking
+        self._last_run = {}
+        self._current_token_usage = {}
+
         # Build graph
         self.graph = self._build_graph()
+
+    def _accumulate_tokens(self, response) -> None:
+        """Accumulate token usage from an LLM response"""
+        if hasattr(response, 'response_metadata') and 'token_usage' in response.response_metadata:
+            usage = response.response_metadata['token_usage']
+            for key, value in usage.items():
+                if isinstance(value, (int, float)):
+                    self._current_token_usage[key] = self._current_token_usage.get(key, 0) + value
+
+    def get_last_run(self) -> Dict[str, Any]:
+        """Get details from the last run including token usage"""
+        return self._last_run.copy()
 
     @property
     def system_prompt(self) -> str:
@@ -193,6 +209,7 @@ class SimpleAgent:
                 *messages
             ]
             response = self.llm.invoke(final_prompt)
+            self._accumulate_tokens(response)
             return {"messages": [response]}
 
         # Add system prompt for first message
@@ -201,6 +218,7 @@ class SimpleAgent:
 
         # Get LLM response
         response = self.llm_with_tools.invoke(messages)
+        self._accumulate_tokens(response)
 
         # Log tool usage
         if hasattr(response, 'tool_calls') and response.tool_calls:
@@ -228,6 +246,8 @@ class SimpleAgent:
         Returns:
             The agent's response string
         """
+        self._current_token_usage = {}  # Reset token tracking
+
         # Header
         self._log(f"\n{'='*50}", VerboseLevel.NORMAL)
         self._log(f"SimpleAgent", VerboseLevel.NORMAL)
@@ -246,12 +266,20 @@ class SimpleAgent:
         )
 
         # Extract answer
+        response_content = "No response generated"
         for message in reversed(result["messages"]):
             if isinstance(message, AIMessage) and not message.tool_calls:
-                self._log(f"{'='*50}\n", VerboseLevel.NORMAL)
-                return message.content
+                response_content = message.content
+                break
 
-        return "No response generated"
+        self._last_run = {
+            "question": question,
+            "response": response_content,
+            "token_usage": self._current_token_usage.copy()
+        }
+
+        self._log(f"{'='*50}\n", VerboseLevel.NORMAL)
+        return response_content
 
     def stream(self, question: str):
         """Stream the agent's response chunk by chunk"""
