@@ -19,11 +19,14 @@ DEFAULT_CRITIQUE_PROMPT = """Évalue cette réponse à la question posée.
 Question: {question}
 Réponse: {response}
 
+Outils disponibles: {available_tools}
+Outils utilisés: {tools_used}
+
 Réponds UNIQUEMENT avec un JSON:
 {{"is_good": true/false, "feedback": "explication courte"}}
 
 - is_good=true si la réponse est complète, précise et répond bien à la question
-- is_good=false si des informations manquent ou si la réponse peut être améliorée"""
+- is_good=false si des informations manquent, si la réponse peut être améliorée, ou si des outils pertinents n'ont pas été utilisés"""
 
 
 class ReflectionState(TypedDict):
@@ -33,6 +36,7 @@ class ReflectionState(TypedDict):
     current_response: Optional[str]
     critique: Optional[str]
     iteration: int
+    tools_used: List[str]  # Track which tools have been called
 
 
 class ReflectionAgent:
@@ -114,6 +118,7 @@ class ReflectionAgent:
         messages = list(state["messages"])
         iteration = state.get("iteration", 0)
         critique = state.get("critique")
+        tools_used = list(state.get("tools_used", []))
 
         # If coming back from critique (iteration > 0), keep tool data but fresh reasoning
         if iteration > 0 and critique:
@@ -132,10 +137,12 @@ class ReflectionAgent:
             self._accumulate_tokens(response)
 
             if hasattr(response, 'tool_calls') and response.tool_calls:
-                self._log(f"    Tools: {[tc['name'] for tc in response.tool_calls]}", VerboseLevel.NORMAL)
-                return {"messages": [response]}
+                new_tools = [tc['name'] for tc in response.tool_calls]
+                self._log(f"    Tools: {new_tools}", VerboseLevel.NORMAL)
+                tools_used.extend(new_tools)
+                return {"messages": [response], "tools_used": tools_used}
 
-            return {"messages": [response], "current_response": response.content}
+            return {"messages": [response], "current_response": response.content, "tools_used": tools_used}
 
         # Count tool calls to prevent infinite loops
         tool_call_count = sum(
@@ -151,7 +158,7 @@ class ReflectionAgent:
             ])
             self._accumulate_tokens(response)
             self._log(f"  [Gen {iteration+1}] Réponse (max tools atteint)", VerboseLevel.NORMAL)
-            return {"messages": [response], "current_response": response.content}
+            return {"messages": [response], "current_response": response.content, "tools_used": tools_used}
 
         # First generation: add system prompt
         if len(messages) == 1 and isinstance(messages[0], HumanMessage):
@@ -161,11 +168,13 @@ class ReflectionAgent:
         self._accumulate_tokens(response)
 
         if hasattr(response, 'tool_calls') and response.tool_calls:
-            self._log(f"  [Gen {iteration+1}] Tools: {[tc['name'] for tc in response.tool_calls]}", VerboseLevel.NORMAL)
-            return {"messages": [response]}
+            new_tools = [tc['name'] for tc in response.tool_calls]
+            self._log(f"  [Gen {iteration+1}] Tools: {new_tools}", VerboseLevel.NORMAL)
+            tools_used.extend(new_tools)
+            return {"messages": [response], "tools_used": tools_used}
 
         self._log(f"  [Gen {iteration+1}] Réponse générée", VerboseLevel.NORMAL)
-        return {"messages": [response], "current_response": response.content}
+        return {"messages": [response], "current_response": response.content, "tools_used": tools_used}
 
     def _after_generate(self, state: ReflectionState) -> str:
         """Route after generate: use tools or go to critique"""
@@ -179,9 +188,15 @@ class ReflectionAgent:
         iteration = state.get("iteration", 0)
         self._log(f"  [Critique {iteration+1}] Évaluation...", VerboseLevel.NORMAL)
 
+        # Get available tools and tools used
+        available_tools = [t.name for t in self.tools]
+        tools_used = list(set(state.get("tools_used", [])))  # Deduplicate
+
         critique_prompt = self.critique_prompt.format(
             question=state.get("question", ""),
-            response=state.get("current_response", "")
+            response=state.get("current_response", ""),
+            available_tools=", ".join(available_tools),
+            tools_used=", ".join(tools_used) if tools_used else "aucun"
         )
         critique_result = self.llm.invoke(critique_prompt)
         self._accumulate_tokens(critique_result)
@@ -253,7 +268,8 @@ class ReflectionAgent:
             "question": question,
             "current_response": None,
             "critique": None,
-            "iteration": 0
+            "iteration": 0,
+            "tools_used": []
         }
 
         result = self.graph.invoke(
@@ -266,6 +282,7 @@ class ReflectionAgent:
             "response": result.get("current_response"),
             "critique": result.get("critique"),
             "iterations": result.get("iteration", 0),
+            "tools_used": list(set(result.get("tools_used", []))),
             "token_usage": self._current_token_usage.copy()
         }
 

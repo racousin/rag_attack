@@ -1,7 +1,10 @@
 """Email tool for sending emails via SMTP"""
 import smtplib
+import os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 from langchain_core.tools import tool
 from ..utils.config import get_config
 
@@ -11,9 +14,10 @@ def send_mail(
     to: str,
     subject: str,
     body: str,
-    html: bool = False
+    html: bool = False,
+    attachment_path: str = None
 ) -> str:
-    """Send an email via SMTP.
+    """Send an email via SMTP, optionally with an attachment.
 
     Use this tool to send emails to customers, colleagues, or other recipients.
     The email will be sent from the configured sender address.
@@ -23,13 +27,15 @@ def send_mail(
         subject: Email subject line
         body: Email content (plain text or HTML depending on html parameter)
         html: If True, body is treated as HTML content. Default is False (plain text).
+        attachment_path: Optional file path to attach (e.g., "/path/to/rapport.xlsx")
 
     Returns:
         Success message with recipient or error message
 
     Examples:
         send_mail("client@example.com", "Votre commande", "Bonjour, votre commande a été expédiée.")
-        send_mail("support@velocorp.fr", "Rapport mensuel", "<h1>Rapport</h1><p>Contenu...</p>", html=True)
+        send_mail("support@velocorp.fr", "Rapport mensuel", "<h1>Rapport</h1>", html=True)
+        send_mail("client@example.com", "Rapport", "Voir PJ", attachment_path="/tmp/rapport.xlsx")
     """
     try:
         config = get_config()
@@ -55,6 +61,22 @@ def send_mail(
         else:
             msg.attach(MIMEText(body, "plain"))
 
+        # Attach file if provided
+        if attachment_path:
+            if not os.path.exists(attachment_path):
+                return f"Error: Attachment file not found: {attachment_path}"
+
+            filename = os.path.basename(attachment_path)
+            with open(attachment_path, "rb") as f:
+                part = MIMEBase("application", "octet-stream")
+                part.set_payload(f.read())
+            encoders.encode_base64(part)
+            part.add_header(
+                "Content-Disposition",
+                f"attachment; filename= {filename}"
+            )
+            msg.attach(part)
+
         # Send email via SSL
         with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
             server.set_debuglevel(0)  # Set to 1 for debugging
@@ -63,7 +85,9 @@ def send_mail(
 
         if refused:
             return f"Email partially failed. Refused recipients: {refused}"
-        return f"Email sent successfully to {to} (from {sender_email})"
+
+        attachment_info = f" with attachment '{os.path.basename(attachment_path)}'" if attachment_path else ""
+        return f"Email sent successfully to {to}{attachment_info}"
 
     except smtplib.SMTPAuthenticationError:
         return "Error: SMTP authentication failed. Check mail_sender and mail_password in config."
