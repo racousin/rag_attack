@@ -78,8 +78,32 @@ def get_erp(query: str, max_rows: int = 10) -> str:
     """
     try:
         query_lower = query.lower().strip()
+
+        # Must start with SELECT
         if not query_lower.startswith("select"):
             return "Error: Only SELECT queries are allowed for safety"
+
+        # Block multiple statements (semicolon followed by another statement)
+        if ';' in query_lower:
+            # Check if there's anything meaningful after the semicolon
+            parts = query_lower.split(';')
+            for part in parts[1:]:
+                if part.strip():  # Non-empty statement after semicolon
+                    return "Error: Multiple SQL statements are not allowed"
+
+        # Blacklist dangerous keywords
+        dangerous_keywords = [
+            'drop', 'delete', 'update', 'insert', 'alter', 'create',
+            'truncate', 'exec', 'execute', 'grant', 'revoke',
+            'merge', 'replace', 'rename', 'xp_', 'sp_'
+        ]
+
+        for keyword in dangerous_keywords:
+            # Check for keyword as whole word (with word boundaries)
+            # This prevents false positives like "updated_at" column
+            import re
+            if re.search(rf'\b{keyword}\b', query_lower):
+                return f"Error: '{keyword.upper()}' is not allowed in queries"
 
         engine = _get_sql_engine()
         with engine.connect() as conn:
