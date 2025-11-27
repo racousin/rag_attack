@@ -1,82 +1,73 @@
-"""Reflection Agent - Simple critique and improvement pattern"""
+"""Reflection Agent - Generate → Critique → Loop or END"""
 from typing import TypedDict, Annotated, Sequence, Dict, Any, Optional, Literal, List
 from langgraph.graph import StateGraph, END
 from langgraph.prebuilt import ToolNode
-from langchain_core.messages import BaseMessage, HumanMessage, AIMessage
+from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage, ToolMessage
 from langchain_core.tools import BaseTool
 import operator
 
 from .simple_agent import create_llm, display_graph, VerboseLevel
 
 
-class ReflectionState(TypedDict):
-    """State for the reflection agent"""
-    messages: Annotated[Sequence[BaseMessage], operator.add]
-    question: str
-    initial_response: Optional[str]
-    critique: Optional[str]
-    final_response: Optional[str]
-
-
-# Default prompts - students customize these
-DEFAULT_PROMPTS = {
-    "system": """Tu es un assistant intelligent qui utilise des outils pour répondre aux questions.
+# Default prompts
+DEFAULT_SYSTEM_PROMPT = """Tu es un assistant intelligent qui utilise des outils pour répondre aux questions.
 Utilise les outils disponibles pour obtenir des informations précises.
-Réponds toujours dans la langue de la question.""",
+Réponds toujours dans la langue de la question."""
 
-    "critique": """Analyse cette réponse et identifie:
-1. Les points forts
-2. Les points à améliorer (clarté, complétude, précision)
-3. Les informations manquantes
+DEFAULT_CRITIQUE_PROMPT = """Évalue cette réponse à la question posée.
 
 Question: {question}
 Réponse: {response}
 
-Critique:""",
+Réponds UNIQUEMENT avec un JSON:
+{{"is_good": true/false, "feedback": "explication courte"}}
 
-    "improve": """Améliore cette réponse en tenant compte de la critique.
+- is_good=true si la réponse est complète, précise et répond bien à la question
+- is_good=false si des informations manquent ou si la réponse peut être améliorée"""
 
-Question: {question}
-Réponse initiale: {response}
-Critique: {critique}
 
-Réponse améliorée:"""
-}
+class ReflectionState(TypedDict):
+    """State for the reflection agent"""
+    messages: Annotated[Sequence[BaseMessage], operator.add]
+    question: str
+    current_response: Optional[str]
+    critique: Optional[str]
+    iteration: int
 
 
 class ReflectionAgent:
     """
-    Agent with reflection: generate → critique → improve → END
+    Agent with reflection: generate (with tools) → critique → loop or END
 
-    Students can customize the 3 prompts to change behavior.
+    Simple flow:
+    1. Generate response using tools
+    2. Critique: is the answer good enough?
+    3. If good → END, else → regenerate with feedback
     """
 
     def __init__(
         self,
         config: Dict[str, Any],
         tools: List[BaseTool],
-        prompts: Optional[Dict[str, str]] = None,
-        max_iterations: int = 5,
+        system_prompt: str = DEFAULT_SYSTEM_PROMPT,
+        critique_prompt: str = DEFAULT_CRITIQUE_PROMPT,
+        max_reflections: int = 3,
+        max_tool_calls: int = 5,
         verbose: Literal["silent", "minimal", "normal", "verbose"] = "normal"
     ):
         self.config = config
         self.tools = tools
-        self.max_iterations = max_iterations
+        self.system_prompt = system_prompt
+        self.critique_prompt = critique_prompt
+        self.max_reflections = max_reflections
+        self.max_tool_calls = max_tool_calls
         self.verbose = VerboseLevel(verbose)
 
         self.llm = create_llm(config)
         self.llm_with_tools = self.llm.bind_tools(tools)
 
-        # Prompts - merge defaults with user-provided
-        self.prompts = {**DEFAULT_PROMPTS, **(prompts or {})}
         self._last_run = {}
         self.graph = self._build_graph()
-
-    def get_prompts(self) -> Dict[str, str]:
-        return self.prompts.copy()
-
-    def set_prompts(self, prompts: Dict[str, str]):
-        self.prompts.update(prompts)
 
     def get_last_run(self) -> Dict[str, Any]:
         return self._last_run.copy()
@@ -87,108 +78,185 @@ class ReflectionAgent:
             print(message)
 
     def _build_graph(self) -> StateGraph:
-        """Fixed graph: generate → [tools] → critique → improve → END"""
+        """Graph: generate ↔ tools → critique → END or back to generate"""
         workflow = StateGraph(ReflectionState)
 
         workflow.add_node("generate", self._generate_node)
         workflow.add_node("tools", ToolNode(self.tools))
         workflow.add_node("critique", self._critique_node)
-        workflow.add_node("improve", self._improve_node)
 
         workflow.set_entry_point("generate")
         workflow.add_conditional_edges(
             "generate",
-            self._should_use_tools,
+            self._after_generate,
             {"tools": "tools", "critique": "critique"}
         )
         workflow.add_edge("tools", "generate")
-        workflow.add_edge("critique", "improve")
-        workflow.add_edge("improve", END)
+        workflow.add_conditional_edges(
+            "critique",
+            self._after_critique,
+            {"generate": "generate", "end": END}
+        )
 
         return workflow.compile()
 
     def _generate_node(self, state: ReflectionState) -> Dict[str, Any]:
-        messages = state["messages"]
+        """Generate response, using tools if needed"""
+        messages = list(state["messages"])
+        iteration = state.get("iteration", 0)
+        critique = state.get("critique")
+
+        # If coming back from critique (iteration > 0), keep tool data but fresh reasoning
+        if iteration > 0 and critique:
+            self._log(f"  [Gen {iteration+1}] Nouvelle tentative avec feedback...", VerboseLevel.NORMAL)
+
+            # Keep only tool-related messages (tool calls + tool results)
+            tool_messages = self._extract_tool_messages(messages)
+
+            system_content = self.system_prompt + f"\n\nFeedback sur ta réponse précédente: {critique}\nAméliore ta réponse en tenant compte de ce feedback."
+            messages = [
+                {"role": "system", "content": system_content},
+                HumanMessage(content=state["question"]),
+                *tool_messages  # Include previous tool data
+            ]
+            response = self.llm_with_tools.invoke(messages)
+
+            if hasattr(response, 'tool_calls') and response.tool_calls:
+                self._log(f"    Tools: {[tc['name'] for tc in response.tool_calls]}", VerboseLevel.NORMAL)
+                return {"messages": [response]}
+
+            return {"messages": [response], "current_response": response.content}
+
+        # Count tool calls to prevent infinite loops
         tool_call_count = sum(
             1 for msg in messages
             if isinstance(msg, AIMessage) and hasattr(msg, 'tool_calls') and msg.tool_calls
         )
 
-        if tool_call_count >= self.max_iterations:
+        # Force final answer if too many tool calls
+        if tool_call_count >= self.max_tool_calls:
             response = self.llm.invoke([
-                {"role": "system", "content": "Fournis une réponse avec les informations collectées."},
+                {"role": "system", "content": "Fournis ta meilleure réponse avec les informations collectées."},
                 *messages
             ])
-            return {"messages": [response], "initial_response": response.content}
+            self._log(f"  [Gen {iteration+1}] Réponse (max tools atteint)", VerboseLevel.NORMAL)
+            return {"messages": [response], "current_response": response.content}
 
+        # First generation: add system prompt
         if len(messages) == 1 and isinstance(messages[0], HumanMessage):
-            messages = [{"role": "system", "content": self.prompts["system"]}, messages[0]]
+            messages = [{"role": "system", "content": self.system_prompt}, messages[0]]
 
         response = self.llm_with_tools.invoke(messages)
 
         if hasattr(response, 'tool_calls') and response.tool_calls:
-            self._log(f"    Tools: {[tc['name'] for tc in response.tool_calls]}", VerboseLevel.NORMAL)
+            self._log(f"  [Gen {iteration+1}] Tools: {[tc['name'] for tc in response.tool_calls]}", VerboseLevel.NORMAL)
             return {"messages": [response]}
-        return {"messages": [response], "initial_response": response.content}
 
-    def _should_use_tools(self, state: ReflectionState) -> str:
+        self._log(f"  [Gen {iteration+1}] Réponse générée", VerboseLevel.NORMAL)
+        return {"messages": [response], "current_response": response.content}
+
+    def _after_generate(self, state: ReflectionState) -> str:
+        """Route after generate: use tools or go to critique"""
         last_message = state["messages"][-1]
         if hasattr(last_message, "tool_calls") and last_message.tool_calls:
             return "tools"
         return "critique"
 
     def _critique_node(self, state: ReflectionState) -> Dict[str, Any]:
-        self._log(f"  [2/3] Critique...", VerboseLevel.NORMAL)
-        critique_prompt = self.prompts["critique"].format(
-            question=state.get("question", ""),
-            response=state.get("initial_response", "")
-        )
-        critique = self.llm.invoke(critique_prompt).content
-        self._log(f"    {critique[:100]}...", VerboseLevel.VERBOSE)
-        return {"critique": critique}
+        """Critique the response: is it good enough?"""
+        iteration = state.get("iteration", 0)
+        self._log(f"  [Critique {iteration+1}] Évaluation...", VerboseLevel.NORMAL)
 
-    def _improve_node(self, state: ReflectionState) -> Dict[str, Any]:
-        self._log(f"  [3/3] Amélioration...", VerboseLevel.NORMAL)
-        improve_prompt = self.prompts["improve"].format(
+        critique_prompt = self.critique_prompt.format(
             question=state.get("question", ""),
-            response=state.get("initial_response", ""),
-            critique=state.get("critique", "")
+            response=state.get("current_response", "")
         )
-        final = self.llm.invoke(improve_prompt).content
-        return {"final_response": final}
+        critique_response = self.llm.invoke(critique_prompt).content
+
+        self._log(f"    {critique_response[:80]}...", VerboseLevel.VERBOSE)
+        return {"critique": critique_response, "iteration": iteration + 1}
+
+    def _after_critique(self, state: ReflectionState) -> str:
+        """Decide: END if good, or regenerate with feedback"""
+        iteration = state.get("iteration", 1)
+        critique = state.get("critique", "")
+
+        # Check if max reflections reached
+        if iteration >= self.max_reflections:
+            self._log(f"  → Max réflexions atteint, fin", VerboseLevel.NORMAL)
+            return "end"
+
+        # Parse critique to check if response is good
+        is_good = self._parse_critique(critique)
+
+        if is_good:
+            self._log(f"  → Réponse validée!", VerboseLevel.NORMAL)
+            return "end"
+        else:
+            self._log(f"  → Amélioration nécessaire, nouvelle génération...", VerboseLevel.NORMAL)
+            return "generate"
+
+    def _parse_critique(self, critique: str) -> bool:
+        """Parse critique JSON to determine if response is good"""
+        import json
+        try:
+            # Try to extract JSON from response
+            critique_lower = critique.lower()
+            if '"is_good": true' in critique_lower or '"is_good":true' in critique_lower:
+                return True
+            if '"is_good": false' in critique_lower or '"is_good":false' in critique_lower:
+                return False
+            # Fallback: try JSON parse
+            data = json.loads(critique)
+            return data.get("is_good", False)
+        except:
+            # If can't parse, assume needs improvement
+            return False
+
+    def _extract_tool_messages(self, messages: List[BaseMessage]) -> List[BaseMessage]:
+        """Extract tool calls and tool results, discard AI text responses"""
+        tool_messages = []
+        for msg in messages:
+            # Keep AI messages that have tool calls
+            if isinstance(msg, AIMessage) and hasattr(msg, 'tool_calls') and msg.tool_calls:
+                tool_messages.append(msg)
+            # Keep tool results
+            elif isinstance(msg, ToolMessage):
+                tool_messages.append(msg)
+            # Discard: HumanMessage (will re-add), AIMessage without tool calls (text responses)
+        return tool_messages
 
     def invoke(self, question: str) -> str:
         self._log(f"\n{'='*50}", VerboseLevel.NORMAL)
         self._log(f"ReflectionAgent", VerboseLevel.NORMAL)
         self._log(f"{'='*50}", VerboseLevel.NORMAL)
         self._log(f"Question: {question[:80]}...", VerboseLevel.NORMAL)
-        self._log(f"\n  [1/3] Génération initiale...", VerboseLevel.NORMAL)
 
         initial_state: ReflectionState = {
             "messages": [HumanMessage(content=question)],
             "question": question,
-            "initial_response": None,
+            "current_response": None,
             "critique": None,
-            "final_response": None
+            "iteration": 0
         }
 
         result = self.graph.invoke(
             initial_state,
-            config={"recursion_limit": self.max_iterations * 3 + 15}
+            config={"recursion_limit": self.max_reflections * self.max_tool_calls * 2 + 10}
         )
 
         self._last_run = {
             "question": question,
-            "initial_response": result.get("initial_response"),
+            "response": result.get("current_response"),
             "critique": result.get("critique"),
-            "final_response": result.get("final_response")
+            "iterations": result.get("iteration", 0)
         }
 
         self._log(f"{'='*50}\n", VerboseLevel.NORMAL)
-        return result.get("final_response") or result.get("initial_response") or "No response"
+        return result.get("current_response") or "No response"
 
     def display_graph(self, return_image: bool = False):
         return display_graph(self.graph, return_image=return_image)
 
     def __repr__(self) -> str:
-        return f"ReflectionAgent(tools={[t.name for t in self.tools]})"
+        return f"ReflectionAgent(tools={[t.name for t in self.tools]}, max_reflections={self.max_reflections})"
