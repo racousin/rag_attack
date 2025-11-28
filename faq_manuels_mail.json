@@ -1,0 +1,1057 @@
+{
+  "transcription_87_96": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 87,
+      "sales_rep": "Lucas-Alain Regnier",
+      "product_discussed": "Urbain-Classic",
+      "outcome": "pas_intéressé",
+      "duration_minutes": 49,
+      "word_count": 146
+    },
+    "text": "Document ID: 96\nCreated: 2025-07-03\nFilename: transcription_87_96.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 2019-08-22\nCommercial: William Mallet\nClient: Famille Briand\nProduit: Urbain-Classic\n\n---\n\nCommercial: Bonjour Famille Briand, merci de votre intérêt pour le Urbain-Classic. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Urbain-Classic est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 904.94€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_63_37": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 63,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "remerciement",
+      "customer_type": "B2C",
+      "word_count": 24
+    },
+    "text": "Document ID: 37\nCreated: 2025-07-03\nFilename: email_63_37.txt\n--------------------------------------------------\n\nObjet: Très satisfait\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nFamille Lacroix"
+  },
+  "email_63_44": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 63,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "question",
+      "customer_type": "B2C",
+      "word_count": 24
+    },
+    "text": "Document ID: 44\nCreated: 2025-07-03\nFilename: email_63_44.txt\n--------------------------------------------------\n\nObjet: Demande d'information\n\nBonjour,\n\nJe suis très satisfait de mon achat et j'aurais une question technique.\n\nPouvez-vous me conseiller sur l'entretien de mon vélo?\n\nCordialement,\nFamille Lacroix"
+  },
+  "email_26_80": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 26,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "problème_technique",
+      "customer_type": "B2C",
+      "word_count": 13
+    },
+    "text": "Document ID: 80\nCreated: 2025-07-03\nFilename: email_26_80.txt\n--------------------------------------------------\n\nObjet: Contact client\n\nBonjour,\n\nJe vous contacte concernant mon vélo.\n\nMerci pour votre attention.\n\nFamille Guérin"
+  },
+  "email_6_81": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 6,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "remerciement",
+      "customer_type": "B2B",
+      "word_count": 24
+    },
+    "text": "Document ID: 81\nCreated: 2025-07-03\nFilename: email_6_81.txt\n--------------------------------------------------\n\nObjet: Merci pour votre service\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nBonneau SA"
+  },
+  "email_100_82": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 100,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "remerciement",
+      "customer_type": "B2B",
+      "word_count": 24
+    },
+    "text": "Document ID: 82\nCreated: 2025-07-03\nFilename: email_100_82.txt\n--------------------------------------------------\n\nObjet: Excellent service\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nPascal SA"
+  },
+  "email_61_71": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 61,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "problème_technique",
+      "customer_type": "B2C",
+      "word_count": 13
+    },
+    "text": "Document ID: 71\nCreated: 2025-07-03\nFilename: email_61_71.txt\n--------------------------------------------------\n\nObjet: Contact client\n\nBonjour,\n\nJe vous contacte concernant mon vélo.\n\nMerci pour votre attention.\n\nFamille Navarro"
+  },
+  "transcription_36_90": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 36,
+      "sales_rep": "Pauline Lebrun",
+      "product_discussed": "Sport-Carbon",
+      "outcome": "devis_envoyé",
+      "duration_minutes": 39,
+      "word_count": 146
+    },
+    "text": "Document ID: 90\nCreated: 2025-07-03\nFilename: transcription_36_90.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1977-09-07\nCommercial: Célina Grégoire\nClient: Mace SA\nProduit: Sport-Carbon\n\n---\n\nCommercial: Bonjour Mace SA, merci de votre intérêt pour le Sport-Carbon. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Sport-Carbon est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 1252.29€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "transcription_1_95": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 1,
+      "sales_rep": "Mathilde Navarro-Tanguy",
+      "product_discussed": "E-City",
+      "outcome": "besoin_plus_info",
+      "duration_minutes": 52,
+      "word_count": 146
+    },
+    "text": "Document ID: 95\nCreated: 2025-07-03\nFilename: transcription_1_95.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 2017-02-23\nCommercial: William Regnier\nClient: Famille Fernandez\nProduit: E-City\n\n---\n\nCommercial: Bonjour Famille Fernandez, merci de votre intérêt pour le E-City. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le E-City est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 3116.01€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "manuel_urbain_classic": {
+    "metadata": {
+      "type": "manuel_technique",
+      "model": "Urbain-Classic",
+      "product_line": "Urbain",
+      "version": "2.5",
+      "last_updated": "2025-03-13",
+      "word_count": 368
+    },
+    "text": "Document ID: 20\nCreated: 2025-03-13\nFilename: manuel_urbain_classic.txt\n--------------------------------------------------\n\nManuel Technique - Urbain-Classic\n        \nBienvenue dans le manuel technique de votre Urbain-Classic. Ce document contient toutes les informations nécessaires pour l'utilisation, l'entretien et la maintenance de votre vélo.\n\nSPÉCIFICATIONS TECHNIQUES - Urbain-Classic\n\nPoids: 17.2 kg\nMatériau du cadre: acier\nTailles disponibles: S, M, L, XL\nCouleurs: noir, blanc, bleu\nGarantie: 12 mois\n\nComposants:\n- Freins: Freins à disque hydrauliques\n- Transmission: Dérailleur 21 vitesses\n- Roues: Jantes aluminium double paroi\n- Pneus: Pneus tout-terrain 700x35c\n- Selle: Selle ergonomique avec gel\n\nMONTAGE ET INSTALLATION\n\n1. Déballage\n   - Vérifiez que tous les composants sont présents\n   - Inspectez le cadre pour détecter d'éventuels dommages\n   - Rassemblez les outils nécessaires\n\n2. Installation de la roue avant\n   - Insérez la roue dans la fourche\n   - Serrez les écrous de fixation à 15-20 Nm\n   - Vérifiez l'alignement\n\n3. Réglage de la hauteur de selle\n   - Desserrez le collier de serrage\n   - Ajustez à la hauteur souhaitée\n   - Resserrez fermement\n\n4. Installation du guidon\n   - Alignez le guidon avec la roue avant\n   - Serrez progressivement les vis\n   - Vérifiez la stabilité\n\n5. Contrôles finaux\n   - Testez tous les freins\n   - Vérifiez le fonctionnement des vitesses\n   - Effectuez un test de roulage\n\nENTRETIEN ET MAINTENANCE\n\nEntretien quotidien:\n- Vérifiez la pression des pneus (recommandé: 3-4 bars)\n- Contrôlez l'état des freins\n- Nettoyez la chaîne si nécessaire\n\nEntretien hebdomadaire:\n- Lubrifiez la chaîne avec un lubrifiant adapté\n- Vérifiez le serrage des composants\n- Inspectez l'usure des pneus\n\nEntretien mensuel:\n- Nettoyage complet du vélo\n- Vérification des câbles et gaines\n- Contrôle du jeu de direction\n- Réglage des dérailleurs si nécessaire\n\nEntretien annuel:\n- Révision complète chez un professionnel\n- Remplacement des pièces d'usure\n- Contrôle de sécurité approfondi\n\nRÉSOLUTION DE PROBLÈMES\n\nProblème: Les freins ne répondent pas\nSolution: Vérifiez l'état des patins, ajustez la tension des câbles\n\nProblème: La chaîne saute\nSolution: Contrôlez l'alignement du dérailleur, lubrifiez la chaîne\n\nProblème: Vitesses difficiles à passer\nSolution: Vérifiez la tension des câbles, nettoyez les dérailleurs\n\nProblème: Roue qui frotte\nSolution: Vérifiez l'alignement de la roue et des freins\n\nProblème: Bruit anormal\nSolution: Identifiez la source, vérifiez le serrage des composants\n\nPour tout problème persistant, contactez notre service technique au 01 23 45 67 89."
+  },
+  "manuel_pro_livraison": {
+    "metadata": {
+      "type": "manuel_technique",
+      "model": "Pro-Livraison",
+      "product_line": "Professionnel",
+      "version": "1.3",
+      "last_updated": "2025-05-23",
+      "word_count": 365
+    },
+    "text": "Document ID: 18\nCreated: 2025-05-23\nFilename: manuel_pro_livraison.txt\n--------------------------------------------------\n\nManuel Technique - Pro-Livraison\n        \nBienvenue dans le manuel technique de votre Pro-Livraison. Ce document contient toutes les informations nécessaires pour l'utilisation, l'entretien et la maintenance de votre vélo.\n\nSPÉCIFICATIONS TECHNIQUES - Pro-Livraison\n\nPoids: 13.9 kg\nMatériau du cadre: carbone\nTailles disponibles: Unique\nCouleurs: noir, gris, rouge\nGarantie: 24 mois\n\nComposants:\n- Freins: Freins à disque hydrauliques\n- Transmission: Dérailleur 21 vitesses\n- Roues: Jantes aluminium double paroi\n- Pneus: Pneus tout-terrain 700x35c\n- Selle: Selle ergonomique avec gel\n\nMONTAGE ET INSTALLATION\n\n1. Déballage\n   - Vérifiez que tous les composants sont présents\n   - Inspectez le cadre pour détecter d'éventuels dommages\n   - Rassemblez les outils nécessaires\n\n2. Installation de la roue avant\n   - Insérez la roue dans la fourche\n   - Serrez les écrous de fixation à 15-20 Nm\n   - Vérifiez l'alignement\n\n3. Réglage de la hauteur de selle\n   - Desserrez le collier de serrage\n   - Ajustez à la hauteur souhaitée\n   - Resserrez fermement\n\n4. Installation du guidon\n   - Alignez le guidon avec la roue avant\n   - Serrez progressivement les vis\n   - Vérifiez la stabilité\n\n5. Contrôles finaux\n   - Testez tous les freins\n   - Vérifiez le fonctionnement des vitesses\n   - Effectuez un test de roulage\n\nENTRETIEN ET MAINTENANCE\n\nEntretien quotidien:\n- Vérifiez la pression des pneus (recommandé: 3-4 bars)\n- Contrôlez l'état des freins\n- Nettoyez la chaîne si nécessaire\n\nEntretien hebdomadaire:\n- Lubrifiez la chaîne avec un lubrifiant adapté\n- Vérifiez le serrage des composants\n- Inspectez l'usure des pneus\n\nEntretien mensuel:\n- Nettoyage complet du vélo\n- Vérification des câbles et gaines\n- Contrôle du jeu de direction\n- Réglage des dérailleurs si nécessaire\n\nEntretien annuel:\n- Révision complète chez un professionnel\n- Remplacement des pièces d'usure\n- Contrôle de sécurité approfondi\n\nRÉSOLUTION DE PROBLÈMES\n\nProblème: Les freins ne répondent pas\nSolution: Vérifiez l'état des patins, ajustez la tension des câbles\n\nProblème: La chaîne saute\nSolution: Contrôlez l'alignement du dérailleur, lubrifiez la chaîne\n\nProblème: Vitesses difficiles à passer\nSolution: Vérifiez la tension des câbles, nettoyez les dérailleurs\n\nProblème: Roue qui frotte\nSolution: Vérifiez l'alignement de la roue et des freins\n\nProblème: Bruit anormal\nSolution: Identifiez la source, vérifiez le serrage des composants\n\nPour tout problème persistant, contactez notre service technique au 01 23 45 67 89."
+  },
+  "email_76_76": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 76,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "réclamation",
+      "customer_type": "B2B",
+      "word_count": 28
+    },
+    "text": "Document ID: 76\nCreated: 2025-07-03\nFilename: email_76_76.txt\n--------------------------------------------------\n\nObjet: Réclamation\n\nBonjour,\n\nJe vous contacte car je rencontre un problème avec mon vélo acheté récemment.\n\nLe problème persiste malgré mes tentatives de résolution.\n\nJ'attends votre retour.\n\nGarnier S.A.R.L. SARL"
+  },
+  "transcription_94_89": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 94,
+      "sales_rep": "Tristan Lacroix",
+      "product_discussed": "Pro-Livraison",
+      "outcome": "devis_envoyé",
+      "duration_minutes": 36,
+      "word_count": 146
+    },
+    "text": "Document ID: 89\nCreated: 2025-07-03\nFilename: transcription_94_89.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 2010-03-29\nCommercial: Théodore-Emmanuel Joubert\nClient: Famille Bernier\nProduit: Pro-Livraison\n\n---\n\nCommercial: Bonjour Famille Bernier, merci de votre intérêt pour le Pro-Livraison. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Pro-Livraison est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 1341.92€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "transcription_79_100": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 79,
+      "sales_rep": "Timothée Charles du Dupuy",
+      "product_discussed": "Sport-Carbon",
+      "outcome": "pas_intéressé",
+      "duration_minutes": 33,
+      "word_count": 148
+    },
+    "text": "Document ID: 100\nCreated: 2025-07-03\nFilename: transcription_79_100.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1970-11-13\nCommercial: Henri Hubert Le Bonneau\nClient: Famille Cordier\nProduit: Sport-Carbon\n\n---\n\nCommercial: Bonjour Famille Cordier, merci de votre intérêt pour le Sport-Carbon. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Sport-Carbon est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 1252.29€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_96_63": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 96,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "réclamation",
+      "customer_type": "B2C",
+      "word_count": 27
+    },
+    "text": "Document ID: 63\nCreated: 2025-07-03\nFilename: email_96_63.txt\n--------------------------------------------------\n\nObjet: Problème avec ma commande\n\nBonjour,\n\nJe vous contacte car je rencontre un problème avec mon vélo acheté récemment.\n\nLe problème persiste malgré mes tentatives de résolution.\n\nJ'attends votre retour.\n\nFamille Dias"
+  },
+  "manuel_sport_carbon": {
+    "metadata": {
+      "type": "manuel_technique",
+      "model": "Sport-Carbon",
+      "product_line": "Sport",
+      "version": "2.3",
+      "last_updated": "2025-04-23",
+      "word_count": 368
+    },
+    "text": "Document ID: 17\nCreated: 2025-04-23\nFilename: manuel_sport_carbon.txt\n--------------------------------------------------\n\nManuel Technique - Sport-Carbon\n        \nBienvenue dans le manuel technique de votre Sport-Carbon. Ce document contient toutes les informations nécessaires pour l'utilisation, l'entretien et la maintenance de votre vélo.\n\nSPÉCIFICATIONS TECHNIQUES - Sport-Carbon\n\nPoids: 8.3 kg\nMatériau du cadre: carbone\nTailles disponibles: S, M, L, XL\nCouleurs: rouge, bleu, noir\nGarantie: 24 mois\n\nComposants:\n- Freins: Freins à disque hydrauliques\n- Transmission: Dérailleur 21 vitesses\n- Roues: Jantes aluminium double paroi\n- Pneus: Pneus tout-terrain 700x35c\n- Selle: Selle ergonomique avec gel\n\nMONTAGE ET INSTALLATION\n\n1. Déballage\n   - Vérifiez que tous les composants sont présents\n   - Inspectez le cadre pour détecter d'éventuels dommages\n   - Rassemblez les outils nécessaires\n\n2. Installation de la roue avant\n   - Insérez la roue dans la fourche\n   - Serrez les écrous de fixation à 15-20 Nm\n   - Vérifiez l'alignement\n\n3. Réglage de la hauteur de selle\n   - Desserrez le collier de serrage\n   - Ajustez à la hauteur souhaitée\n   - Resserrez fermement\n\n4. Installation du guidon\n   - Alignez le guidon avec la roue avant\n   - Serrez progressivement les vis\n   - Vérifiez la stabilité\n\n5. Contrôles finaux\n   - Testez tous les freins\n   - Vérifiez le fonctionnement des vitesses\n   - Effectuez un test de roulage\n\nENTRETIEN ET MAINTENANCE\n\nEntretien quotidien:\n- Vérifiez la pression des pneus (recommandé: 3-4 bars)\n- Contrôlez l'état des freins\n- Nettoyez la chaîne si nécessaire\n\nEntretien hebdomadaire:\n- Lubrifiez la chaîne avec un lubrifiant adapté\n- Vérifiez le serrage des composants\n- Inspectez l'usure des pneus\n\nEntretien mensuel:\n- Nettoyage complet du vélo\n- Vérification des câbles et gaines\n- Contrôle du jeu de direction\n- Réglage des dérailleurs si nécessaire\n\nEntretien annuel:\n- Révision complète chez un professionnel\n- Remplacement des pièces d'usure\n- Contrôle de sécurité approfondi\n\nRÉSOLUTION DE PROBLÈMES\n\nProblème: Les freins ne répondent pas\nSolution: Vérifiez l'état des patins, ajustez la tension des câbles\n\nProblème: La chaîne saute\nSolution: Contrôlez l'alignement du dérailleur, lubrifiez la chaîne\n\nProblème: Vitesses difficiles à passer\nSolution: Vérifiez la tension des câbles, nettoyez les dérailleurs\n\nProblème: Roue qui frotte\nSolution: Vérifiez l'alignement de la roue et des freins\n\nProblème: Bruit anormal\nSolution: Identifiez la source, vérifiez le serrage des composants\n\nPour tout problème persistant, contactez notre service technique au 01 23 45 67 89."
+  },
+  "email_21_45": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 21,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "question",
+      "customer_type": "B2C",
+      "word_count": 19
+    },
+    "text": "Document ID: 45\nCreated: 2025-07-03\nFilename: email_21_45.txt\n--------------------------------------------------\n\nObjet: Question sur mon vélo\n\nBonjour,\n\nJ'ai un problème avec mon vélo et j'aimerais obtenir de l'aide.\n\nMerci de me recontacter rapidement.\n\nVéronique-Margot Salmon"
+  },
+  "email_50_36": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 50,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "réclamation",
+      "customer_type": "B2B",
+      "word_count": 27
+    },
+    "text": "Document ID: 36\nCreated: 2025-07-03\nFilename: email_50_36.txt\n--------------------------------------------------\n\nObjet: Problème avec ma commande\n\nBonjour,\n\nJe vous contacte car je rencontre un problème avec mon vélo acheté récemment.\n\nLe problème persiste malgré mes tentatives de résolution.\n\nJ'attends votre retour.\n\nGautier SARL"
+  },
+  "email_82_65": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 82,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "réclamation",
+      "customer_type": "B2C",
+      "word_count": 27
+    },
+    "text": "Document ID: 65\nCreated: 2025-07-03\nFilename: email_82_65.txt\n--------------------------------------------------\n\nObjet: Problème avec ma commande\n\nBonjour,\n\nJe vous contacte car je rencontre un problème avec mon vélo acheté récemment.\n\nLe problème persiste malgré mes tentatives de résolution.\n\nJ'attends votre retour.\n\nFamille Gonzalez"
+  },
+  "email_70_48": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 70,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "remerciement",
+      "customer_type": "B2C",
+      "word_count": 24
+    },
+    "text": "Document ID: 48\nCreated: 2025-07-03\nFilename: email_70_48.txt\n--------------------------------------------------\n\nObjet: Excellent service\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nClémence Parent"
+  },
+  "email_51_60": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 51,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "question",
+      "customer_type": "B2B",
+      "word_count": 24
+    },
+    "text": "Document ID: 60\nCreated: 2025-07-03\nFilename: email_51_60.txt\n--------------------------------------------------\n\nObjet: Demande d'information\n\nBonjour,\n\nJe suis très satisfait de mon achat et j'aurais une question technique.\n\nPouvez-vous me conseiller sur l'entretien de mon vélo?\n\nCordialement,\nFontaine SA"
+  },
+  "email_8_78": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 8,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "réclamation",
+      "customer_type": "B2C",
+      "word_count": 27
+    },
+    "text": "Document ID: 78\nCreated: 2025-07-03\nFilename: email_8_78.txt\n--------------------------------------------------\n\nObjet: Problème avec ma commande\n\nBonjour,\n\nJe vous contacte car je rencontre un problème avec mon vélo acheté récemment.\n\nLe problème persiste malgré mes tentatives de résolution.\n\nJ'attends votre retour.\n\nChristiane Gonzalez"
+  },
+  "faq_utilisation": {
+    "metadata": {
+      "type": "faq",
+      "category": "Utilisation",
+      "num_questions": 9,
+      "word_count": 235
+    },
+    "text": "Document ID: 31\nCreated: 2025-07-03\nFilename: faq_utilisation.txt\n--------------------------------------------------\n\nFAQ - Utilisation\n\nFoire aux questions concernant utilisation. Retrouvez ici les réponses aux questions les plus fréquemment posées par nos clients.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition.\n\nQ: Comment régler la hauteur de selle?\nR: La hauteur de selle se règle en desserrant le collier de serrage, ajustant la position et resserrant fermement.\n\nQ: Comment régler la hauteur de selle?\nR: La hauteur de selle se règle en desserrant le collier de serrage, ajustant la position et resserrant fermement.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition."
+  },
+  "transcription_73_99": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 73,
+      "sales_rep": "Lorraine-Marguerite Barre",
+      "product_discussed": "Sport-Elite",
+      "outcome": "devis_envoyé",
+      "duration_minutes": 33,
+      "word_count": 148
+    },
+    "text": "Document ID: 99\nCreated: 2025-07-03\nFilename: transcription_73_99.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 2001-02-04\nCommercial: Charlotte Maury de Bonnin\nClient: Famille Godard\nProduit: Sport-Elite\n\n---\n\nCommercial: Bonjour Famille Godard, merci de votre intérêt pour le Sport-Elite. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Sport-Elite est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 1827.61€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "transcription_21_93": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 21,
+      "sales_rep": "Andrée Legendre",
+      "product_discussed": "Urbain-Sport",
+      "outcome": "pas_intéressé",
+      "duration_minutes": 58,
+      "word_count": 147
+    },
+    "text": "Document ID: 93\nCreated: 2025-07-03\nFilename: transcription_21_93.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1994-04-17\nCommercial: Olivier du Adam\nClient: Véronique-Margot Salmon\nProduit: Urbain-Sport\n\n---\n\nCommercial: Bonjour Véronique-Margot Salmon, merci de votre intérêt pour le Urbain-Sport. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Urbain-Sport est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 856.86€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_14_50": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 14,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "problème_technique",
+      "customer_type": "B2B",
+      "word_count": 13
+    },
+    "text": "Document ID: 50\nCreated: 2025-07-03\nFilename: email_14_50.txt\n--------------------------------------------------\n\nObjet: Contact client\n\nBonjour,\n\nJe vous contacte concernant mon vélo.\n\nMerci pour votre attention.\n\nPetitjean SA"
+  },
+  "email_85_84": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 85,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "remerciement",
+      "customer_type": "B2B",
+      "word_count": 24
+    },
+    "text": "Document ID: 84\nCreated: 2025-07-03\nFilename: email_85_84.txt\n--------------------------------------------------\n\nObjet: Très satisfait\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nCoste SARL"
+  },
+  "email_6_58": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 6,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "question",
+      "customer_type": "B2B",
+      "word_count": 19
+    },
+    "text": "Document ID: 58\nCreated: 2025-07-03\nFilename: email_6_58.txt\n--------------------------------------------------\n\nObjet: Demande d'information\n\nBonjour,\n\nJ'ai un problème avec mon vélo et j'aimerais obtenir de l'aide.\n\nMerci de me recontacter rapidement.\n\nBonneau SA"
+  },
+  "transcription_49_104": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 49,
+      "sales_rep": "Bernard Guilbert du Martinez",
+      "product_discussed": "Urbain-Sport",
+      "outcome": "besoin_plus_info",
+      "duration_minutes": 50,
+      "word_count": 153
+    },
+    "text": "Document ID: 104\nCreated: 2025-07-03\nFilename: transcription_49_104.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 2004-12-15\nCommercial: Camille Vallée de la Clerc\nClient: Giraud Costa S.A.S. SARL\nProduit: Urbain-Sport\n\n---\n\nCommercial: Bonjour Giraud Costa S.A.S. SARL, merci de votre intérêt pour le Urbain-Sport. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Urbain-Sport est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 856.86€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "manuel_pro_location": {
+    "metadata": {
+      "type": "manuel_technique",
+      "model": "Pro-Location",
+      "product_line": "Professionnel",
+      "version": "1.2",
+      "last_updated": "2025-05-03",
+      "word_count": 365
+    },
+    "text": "Document ID: 13\nCreated: 2025-05-03\nFilename: manuel_pro_location.txt\n--------------------------------------------------\n\nManuel Technique - Pro-Location\n        \nBienvenue dans le manuel technique de votre Pro-Location. Ce document contient toutes les informations nécessaires pour l'utilisation, l'entretien et la maintenance de votre vélo.\n\nSPÉCIFICATIONS TECHNIQUES - Pro-Location\n\nPoids: 14.6 kg\nMatériau du cadre: carbone\nTailles disponibles: Unique\nCouleurs: gris, bleu, noir\nGarantie: 24 mois\n\nComposants:\n- Freins: Freins à disque hydrauliques\n- Transmission: Dérailleur 21 vitesses\n- Roues: Jantes aluminium double paroi\n- Pneus: Pneus tout-terrain 700x35c\n- Selle: Selle ergonomique avec gel\n\nMONTAGE ET INSTALLATION\n\n1. Déballage\n   - Vérifiez que tous les composants sont présents\n   - Inspectez le cadre pour détecter d'éventuels dommages\n   - Rassemblez les outils nécessaires\n\n2. Installation de la roue avant\n   - Insérez la roue dans la fourche\n   - Serrez les écrous de fixation à 15-20 Nm\n   - Vérifiez l'alignement\n\n3. Réglage de la hauteur de selle\n   - Desserrez le collier de serrage\n   - Ajustez à la hauteur souhaitée\n   - Resserrez fermement\n\n4. Installation du guidon\n   - Alignez le guidon avec la roue avant\n   - Serrez progressivement les vis\n   - Vérifiez la stabilité\n\n5. Contrôles finaux\n   - Testez tous les freins\n   - Vérifiez le fonctionnement des vitesses\n   - Effectuez un test de roulage\n\nENTRETIEN ET MAINTENANCE\n\nEntretien quotidien:\n- Vérifiez la pression des pneus (recommandé: 3-4 bars)\n- Contrôlez l'état des freins\n- Nettoyez la chaîne si nécessaire\n\nEntretien hebdomadaire:\n- Lubrifiez la chaîne avec un lubrifiant adapté\n- Vérifiez le serrage des composants\n- Inspectez l'usure des pneus\n\nEntretien mensuel:\n- Nettoyage complet du vélo\n- Vérification des câbles et gaines\n- Contrôle du jeu de direction\n- Réglage des dérailleurs si nécessaire\n\nEntretien annuel:\n- Révision complète chez un professionnel\n- Remplacement des pièces d'usure\n- Contrôle de sécurité approfondi\n\nRÉSOLUTION DE PROBLÈMES\n\nProblème: Les freins ne répondent pas\nSolution: Vérifiez l'état des patins, ajustez la tension des câbles\n\nProblème: La chaîne saute\nSolution: Contrôlez l'alignement du dérailleur, lubrifiez la chaîne\n\nProblème: Vitesses difficiles à passer\nSolution: Vérifiez la tension des câbles, nettoyez les dérailleurs\n\nProblème: Roue qui frotte\nSolution: Vérifiez l'alignement de la roue et des freins\n\nProblème: Bruit anormal\nSolution: Identifiez la source, vérifiez le serrage des composants\n\nPour tout problème persistant, contactez notre service technique au 01 23 45 67 89."
+  },
+  "email_1_74": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 1,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "remerciement",
+      "customer_type": "B2C",
+      "word_count": 24
+    },
+    "text": "Document ID: 74\nCreated: 2025-07-03\nFilename: email_1_74.txt\n--------------------------------------------------\n\nObjet: Merci pour votre service\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nFamille Fernandez"
+  },
+  "email_46_47": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 46,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "réclamation",
+      "customer_type": "B2C",
+      "word_count": 27
+    },
+    "text": "Document ID: 47\nCreated: 2025-07-03\nFilename: email_46_47.txt\n--------------------------------------------------\n\nObjet: Vélo défectueux\n\nBonjour,\n\nJe vous contacte car je rencontre un problème avec mon vélo acheté récemment.\n\nLe problème persiste malgré mes tentatives de résolution.\n\nJ'attends votre retour.\n\nLaurent Masse"
+  },
+  "faq_livraison": {
+    "metadata": {
+      "type": "faq",
+      "category": "Livraison",
+      "num_questions": 6,
+      "word_count": 162
+    },
+    "text": "Document ID: 34\nCreated: 2025-07-03\nFilename: faq_livraison.txt\n--------------------------------------------------\n\nFAQ - Livraison\n\nFoire aux questions concernant livraison. Retrouvez ici les réponses aux questions les plus fréquemment posées par nos clients.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition.\n\nQ: Comment régler la hauteur de selle?\nR: La hauteur de selle se règle en desserrant le collier de serrage, ajustant la position et resserrant fermement."
+  },
+  "email_68_75": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 68,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "problème_technique",
+      "customer_type": "B2B",
+      "word_count": 13
+    },
+    "text": "Document ID: 75\nCreated: 2025-07-03\nFilename: email_68_75.txt\n--------------------------------------------------\n\nObjet: Contact client\n\nBonjour,\n\nJe vous contacte concernant mon vélo.\n\nMerci pour votre attention.\n\nHamon SA"
+  },
+  "email_42_73": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 42,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "réclamation",
+      "customer_type": "B2C",
+      "word_count": 27
+    },
+    "text": "Document ID: 73\nCreated: 2025-07-03\nFilename: email_42_73.txt\n--------------------------------------------------\n\nObjet: Vélo défectueux\n\nBonjour,\n\nJe vous contacte car je rencontre un problème avec mon vélo acheté récemment.\n\nLe problème persiste malgré mes tentatives de résolution.\n\nJ'attends votre retour.\n\nFamille Chartier"
+  },
+  "transcription_71_110": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 71,
+      "sales_rep": "Andrée Boucher",
+      "product_discussed": "Pro-Sécurité",
+      "outcome": "pas_intéressé",
+      "duration_minutes": 34,
+      "word_count": 147
+    },
+    "text": "Document ID: 110\nCreated: 2025-07-03\nFilename: transcription_71_110.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1992-01-19\nCommercial: Antoine Le Vincent\nClient: Charles SARL\nProduit: Pro-Sécurité\n\n---\n\nCommercial: Bonjour Charles SARL, merci de votre intérêt pour le Pro-Sécurité. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Pro-Sécurité est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 495.81€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_9_85": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 9,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "question",
+      "customer_type": "B2C",
+      "word_count": 19
+    },
+    "text": "Document ID: 85\nCreated: 2025-07-03\nFilename: email_9_85.txt\n--------------------------------------------------\n\nObjet: Besoin d'aide\n\nBonjour,\n\nJ'ai un problème avec mon vélo et j'aimerais obtenir de l'aide.\n\nMerci de me recontacter rapidement.\n\nAugustin Collin"
+  },
+  "transcription_55_106": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 55,
+      "sales_rep": "Anne-Thérèse Ledoux",
+      "product_discussed": "Pro-Location",
+      "outcome": "devis_envoyé",
+      "duration_minutes": 52,
+      "word_count": 146
+    },
+    "text": "Document ID: 106\nCreated: 2025-07-03\nFilename: transcription_55_106.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 2007-12-01\nCommercial: Alphonse Foucher\nClient: Famille Vallet\nProduit: Pro-Location\n\n---\n\nCommercial: Bonjour Famille Vallet, merci de votre intérêt pour le Pro-Location. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Pro-Location est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 1321.77€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "manuel_urbain_confort": {
+    "metadata": {
+      "type": "manuel_technique",
+      "model": "Urbain-Confort",
+      "product_line": "Urbain",
+      "version": "1.5",
+      "last_updated": "2024-10-10",
+      "word_count": 368
+    },
+    "text": "Document ID: 4\nCreated: 2024-10-10\nFilename: manuel_urbain_confort.txt\n--------------------------------------------------\n\nManuel Technique - Urbain-Confort\n        \nBienvenue dans le manuel technique de votre Urbain-Confort. Ce document contient toutes les informations nécessaires pour l'utilisation, l'entretien et la maintenance de votre vélo.\n\nSPÉCIFICATIONS TECHNIQUES - Urbain-Confort\n\nPoids: 13.1 kg\nMatériau du cadre: aluminium\nTailles disponibles: S, M, L, XL\nCouleurs: blanc, gris, rouge\nGarantie: 24 mois\n\nComposants:\n- Freins: Freins à disque hydrauliques\n- Transmission: Dérailleur 21 vitesses\n- Roues: Jantes aluminium double paroi\n- Pneus: Pneus tout-terrain 700x35c\n- Selle: Selle ergonomique avec gel\n\nMONTAGE ET INSTALLATION\n\n1. Déballage\n   - Vérifiez que tous les composants sont présents\n   - Inspectez le cadre pour détecter d'éventuels dommages\n   - Rassemblez les outils nécessaires\n\n2. Installation de la roue avant\n   - Insérez la roue dans la fourche\n   - Serrez les écrous de fixation à 15-20 Nm\n   - Vérifiez l'alignement\n\n3. Réglage de la hauteur de selle\n   - Desserrez le collier de serrage\n   - Ajustez à la hauteur souhaitée\n   - Resserrez fermement\n\n4. Installation du guidon\n   - Alignez le guidon avec la roue avant\n   - Serrez progressivement les vis\n   - Vérifiez la stabilité\n\n5. Contrôles finaux\n   - Testez tous les freins\n   - Vérifiez le fonctionnement des vitesses\n   - Effectuez un test de roulage\n\nENTRETIEN ET MAINTENANCE\n\nEntretien quotidien:\n- Vérifiez la pression des pneus (recommandé: 3-4 bars)\n- Contrôlez l'état des freins\n- Nettoyez la chaîne si nécessaire\n\nEntretien hebdomadaire:\n- Lubrifiez la chaîne avec un lubrifiant adapté\n- Vérifiez le serrage des composants\n- Inspectez l'usure des pneus\n\nEntretien mensuel:\n- Nettoyage complet du vélo\n- Vérification des câbles et gaines\n- Contrôle du jeu de direction\n- Réglage des dérailleurs si nécessaire\n\nEntretien annuel:\n- Révision complète chez un professionnel\n- Remplacement des pièces d'usure\n- Contrôle de sécurité approfondi\n\nRÉSOLUTION DE PROBLÈMES\n\nProblème: Les freins ne répondent pas\nSolution: Vérifiez l'état des patins, ajustez la tension des câbles\n\nProblème: La chaîne saute\nSolution: Contrôlez l'alignement du dérailleur, lubrifiez la chaîne\n\nProblème: Vitesses difficiles à passer\nSolution: Vérifiez la tension des câbles, nettoyez les dérailleurs\n\nProblème: Roue qui frotte\nSolution: Vérifiez l'alignement de la roue et des freins\n\nProblème: Bruit anormal\nSolution: Identifiez la source, vérifiez le serrage des composants\n\nPour tout problème persistant, contactez notre service technique au 01 23 45 67 89."
+  },
+  "email_99_64": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 99,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "remerciement",
+      "customer_type": "B2C",
+      "word_count": 24
+    },
+    "text": "Document ID: 64\nCreated: 2025-07-03\nFilename: email_99_64.txt\n--------------------------------------------------\n\nObjet: Très satisfait\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nCorinne Joseph"
+  },
+  "transcription_15_88": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 15,
+      "sales_rep": "Alexandre Leroy",
+      "product_discussed": "Pro-Sécurité",
+      "outcome": "besoin_plus_info",
+      "duration_minutes": 48,
+      "word_count": 146
+    },
+    "text": "Document ID: 88\nCreated: 2025-07-03\nFilename: transcription_15_88.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1987-03-26\nCommercial: Julie Raynaud\nClient: Frédéric Alexandre\nProduit: Pro-Sécurité\n\n---\n\nCommercial: Bonjour Frédéric Alexandre, merci de votre intérêt pour le Pro-Sécurité. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Pro-Sécurité est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 495.81€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "manuel_pro_sécurité": {
+    "metadata": {
+      "type": "manuel_technique",
+      "model": "Pro-Sécurité",
+      "product_line": "Professionnel",
+      "version": "3.0",
+      "last_updated": "2025-04-18",
+      "word_count": 364
+    },
+    "text": "Document ID: 16\nCreated: 2025-04-18\nFilename: manuel_pro_sécurité.txt\n--------------------------------------------------\n\nManuel Technique - Pro-Sécurité\n        \nBienvenue dans le manuel technique de votre Pro-Sécurité. Ce document contient toutes les informations nécessaires pour l'utilisation, l'entretien et la maintenance de votre vélo.\n\nSPÉCIFICATIONS TECHNIQUES - Pro-Sécurité\n\nPoids: 18.6 kg\nMatériau du cadre: acier\nTailles disponibles: Unique\nCouleurs: rouge, bleu\nGarantie: 12 mois\n\nComposants:\n- Freins: Freins à disque hydrauliques\n- Transmission: Dérailleur 21 vitesses\n- Roues: Jantes aluminium double paroi\n- Pneus: Pneus tout-terrain 700x35c\n- Selle: Selle ergonomique avec gel\n\nMONTAGE ET INSTALLATION\n\n1. Déballage\n   - Vérifiez que tous les composants sont présents\n   - Inspectez le cadre pour détecter d'éventuels dommages\n   - Rassemblez les outils nécessaires\n\n2. Installation de la roue avant\n   - Insérez la roue dans la fourche\n   - Serrez les écrous de fixation à 15-20 Nm\n   - Vérifiez l'alignement\n\n3. Réglage de la hauteur de selle\n   - Desserrez le collier de serrage\n   - Ajustez à la hauteur souhaitée\n   - Resserrez fermement\n\n4. Installation du guidon\n   - Alignez le guidon avec la roue avant\n   - Serrez progressivement les vis\n   - Vérifiez la stabilité\n\n5. Contrôles finaux\n   - Testez tous les freins\n   - Vérifiez le fonctionnement des vitesses\n   - Effectuez un test de roulage\n\nENTRETIEN ET MAINTENANCE\n\nEntretien quotidien:\n- Vérifiez la pression des pneus (recommandé: 3-4 bars)\n- Contrôlez l'état des freins\n- Nettoyez la chaîne si nécessaire\n\nEntretien hebdomadaire:\n- Lubrifiez la chaîne avec un lubrifiant adapté\n- Vérifiez le serrage des composants\n- Inspectez l'usure des pneus\n\nEntretien mensuel:\n- Nettoyage complet du vélo\n- Vérification des câbles et gaines\n- Contrôle du jeu de direction\n- Réglage des dérailleurs si nécessaire\n\nEntretien annuel:\n- Révision complète chez un professionnel\n- Remplacement des pièces d'usure\n- Contrôle de sécurité approfondi\n\nRÉSOLUTION DE PROBLÈMES\n\nProblème: Les freins ne répondent pas\nSolution: Vérifiez l'état des patins, ajustez la tension des câbles\n\nProblème: La chaîne saute\nSolution: Contrôlez l'alignement du dérailleur, lubrifiez la chaîne\n\nProblème: Vitesses difficiles à passer\nSolution: Vérifiez la tension des câbles, nettoyez les dérailleurs\n\nProblème: Roue qui frotte\nSolution: Vérifiez l'alignement de la roue et des freins\n\nProblème: Bruit anormal\nSolution: Identifiez la source, vérifiez le serrage des composants\n\nPour tout problème persistant, contactez notre service technique au 01 23 45 67 89."
+  },
+  "transcription_28_108": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 28,
+      "sales_rep": "Jérôme Étienne",
+      "product_discussed": "Sport-Carbon",
+      "outcome": "commande_passée",
+      "duration_minutes": 42,
+      "word_count": 146
+    },
+    "text": "Document ID: 108\nCreated: 2025-07-03\nFilename: transcription_28_108.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1975-10-22\nCommercial: Adrienne Fleury\nClient: Mathieu SA\nProduit: Sport-Carbon\n\n---\n\nCommercial: Bonjour Mathieu SA, merci de votre intérêt pour le Sport-Carbon. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Sport-Carbon est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 1252.29€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "transcription_64_109": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 64,
+      "sales_rep": "Stéphanie Laroche",
+      "product_discussed": "E-Sport",
+      "outcome": "devis_envoyé",
+      "duration_minutes": 15,
+      "word_count": 146
+    },
+    "text": "Document ID: 109\nCreated: 2025-07-03\nFilename: transcription_64_109.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 2010-04-21\nCommercial: David-Gilbert Legendre\nClient: Famille Guyon\nProduit: E-Sport\n\n---\n\nCommercial: Bonjour Famille Guyon, merci de votre intérêt pour le E-Sport. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le E-Sport est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 2286.86€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "transcription_22_97": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 22,
+      "sales_rep": "Diane-Geneviève Bourgeois",
+      "product_discussed": "Sport-Elite",
+      "outcome": "commande_passée",
+      "duration_minutes": 60,
+      "word_count": 150
+    },
+    "text": "Document ID: 97\nCreated: 2025-07-03\nFilename: transcription_22_97.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1985-03-25\nCommercial: Margot Gérard\nClient: Arnaud Tessier SA SARL\nProduit: Sport-Elite\n\n---\n\nCommercial: Bonjour Arnaud Tessier SA SARL, merci de votre intérêt pour le Sport-Elite. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Sport-Elite est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 1827.61€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "faq_garantie": {
+    "metadata": {
+      "type": "faq",
+      "category": "Garantie",
+      "num_questions": 6,
+      "word_count": 142
+    },
+    "text": "Document ID: 35\nCreated: 2025-07-03\nFilename: faq_garantie.txt\n--------------------------------------------------\n\nFAQ - Garantie\n\nFoire aux questions concernant garantie. Retrouvez ici les réponses aux questions les plus fréquemment posées par nos clients.\n\nQ: Comment faire une réclamation?\nR: Contactez notre service client avec votre facture et des photos du problème.\n\nQ: Combien de temps dure la garantie?\nR: La garantie cadre est de 2 ans, les composants sont garantis 1 an.\n\nQ: Combien de temps dure la garantie?\nR: La garantie cadre est de 2 ans, les composants sont garantis 1 an.\n\nQ: Combien de temps dure la garantie?\nR: La garantie cadre est de 2 ans, les composants sont garantis 1 an.\n\nQ: Que couvre la garantie?\nR: La garantie couvre les défauts de fabrication et de matériaux pour une utilisation normale.\n\nQ: Que couvre la garantie?\nR: La garantie couvre les défauts de fabrication et de matériaux pour une utilisation normale."
+  },
+  "email_65_42": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 65,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "question",
+      "customer_type": "B2B",
+      "word_count": 19
+    },
+    "text": "Document ID: 42\nCreated: 2025-07-03\nFilename: email_65_42.txt\n--------------------------------------------------\n\nObjet: Demande d'information\n\nBonjour,\n\nJ'ai un problème avec mon vélo et j'aimerais obtenir de l'aide.\n\nMerci de me recontacter rapidement.\n\nLombard SARL"
+  },
+  "transcription_70_86": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 70,
+      "sales_rep": "Stéphanie Moreau",
+      "product_discussed": "E-Sport",
+      "outcome": "commande_passée",
+      "duration_minutes": 48,
+      "word_count": 146
+    },
+    "text": "Document ID: 86\nCreated: 2025-07-03\nFilename: transcription_70_86.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1971-08-10\nCommercial: Lucy Antoine\nClient: Clémence Parent\nProduit: E-Sport\n\n---\n\nCommercial: Bonjour Clémence Parent, merci de votre intérêt pour le E-Sport. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le E-Sport est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 2286.86€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_12_72": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 12,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "remerciement",
+      "customer_type": "B2B",
+      "word_count": 26
+    },
+    "text": "Document ID: 72\nCreated: 2025-07-03\nFilename: email_12_72.txt\n--------------------------------------------------\n\nObjet: Merci pour votre service\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nBarbe Hamel SA SARL"
+  },
+  "transcription_62_105": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 62,
+      "sales_rep": "Susan Blanc",
+      "product_discussed": "E-Sport",
+      "outcome": "besoin_plus_info",
+      "duration_minutes": 37,
+      "word_count": 146
+    },
+    "text": "Document ID: 105\nCreated: 2025-07-03\nFilename: transcription_62_105.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 2000-10-03\nCommercial: Franck-Matthieu Seguin\nClient: Suzanne Ramos\nProduit: E-Sport\n\n---\n\nCommercial: Bonjour Suzanne Ramos, merci de votre intérêt pour le E-Sport. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le E-Sport est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 2286.86€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "manuel_e_city": {
+    "metadata": {
+      "type": "manuel_technique",
+      "model": "E-City",
+      "product_line": "Electrique",
+      "version": "1.4",
+      "last_updated": "2025-03-08",
+      "word_count": 368
+    },
+    "text": "Document ID: 11\nCreated: 2025-03-08\nFilename: manuel_e_city.txt\n--------------------------------------------------\n\nManuel Technique - E-City\n        \nBienvenue dans le manuel technique de votre E-City. Ce document contient toutes les informations nécessaires pour l'utilisation, l'entretien et la maintenance de votre vélo.\n\nSPÉCIFICATIONS TECHNIQUES - E-City\n\nPoids: 17.6 kg\nMatériau du cadre: titane\nTailles disponibles: S, M, L, XL\nCouleurs: blanc_nacré, gris_carbone, noir_mat\nGarantie: 36 mois\n\nComposants:\n- Freins: Freins à disque hydrauliques\n- Transmission: Dérailleur 21 vitesses\n- Roues: Jantes aluminium double paroi\n- Pneus: Pneus tout-terrain 700x35c\n- Selle: Selle ergonomique avec gel\n\nMONTAGE ET INSTALLATION\n\n1. Déballage\n   - Vérifiez que tous les composants sont présents\n   - Inspectez le cadre pour détecter d'éventuels dommages\n   - Rassemblez les outils nécessaires\n\n2. Installation de la roue avant\n   - Insérez la roue dans la fourche\n   - Serrez les écrous de fixation à 15-20 Nm\n   - Vérifiez l'alignement\n\n3. Réglage de la hauteur de selle\n   - Desserrez le collier de serrage\n   - Ajustez à la hauteur souhaitée\n   - Resserrez fermement\n\n4. Installation du guidon\n   - Alignez le guidon avec la roue avant\n   - Serrez progressivement les vis\n   - Vérifiez la stabilité\n\n5. Contrôles finaux\n   - Testez tous les freins\n   - Vérifiez le fonctionnement des vitesses\n   - Effectuez un test de roulage\n\nENTRETIEN ET MAINTENANCE\n\nEntretien quotidien:\n- Vérifiez la pression des pneus (recommandé: 3-4 bars)\n- Contrôlez l'état des freins\n- Nettoyez la chaîne si nécessaire\n\nEntretien hebdomadaire:\n- Lubrifiez la chaîne avec un lubrifiant adapté\n- Vérifiez le serrage des composants\n- Inspectez l'usure des pneus\n\nEntretien mensuel:\n- Nettoyage complet du vélo\n- Vérification des câbles et gaines\n- Contrôle du jeu de direction\n- Réglage des dérailleurs si nécessaire\n\nEntretien annuel:\n- Révision complète chez un professionnel\n- Remplacement des pièces d'usure\n- Contrôle de sécurité approfondi\n\nRÉSOLUTION DE PROBLÈMES\n\nProblème: Les freins ne répondent pas\nSolution: Vérifiez l'état des patins, ajustez la tension des câbles\n\nProblème: La chaîne saute\nSolution: Contrôlez l'alignement du dérailleur, lubrifiez la chaîne\n\nProblème: Vitesses difficiles à passer\nSolution: Vérifiez la tension des câbles, nettoyez les dérailleurs\n\nProblème: Roue qui frotte\nSolution: Vérifiez l'alignement de la roue et des freins\n\nProblème: Bruit anormal\nSolution: Identifiez la source, vérifiez le serrage des composants\n\nPour tout problème persistant, contactez notre service technique au 01 23 45 67 89."
+  },
+  "email_59_49": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 59,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "réclamation",
+      "customer_type": "B2C",
+      "word_count": 28
+    },
+    "text": "Document ID: 49\nCreated: 2025-07-03\nFilename: email_59_49.txt\n--------------------------------------------------\n\nObjet: Vélo défectueux\n\nBonjour,\n\nJe vous contacte car je rencontre un problème avec mon vélo acheté récemment.\n\nLe problème persiste malgré mes tentatives de résolution.\n\nJ'attends votre retour.\n\nLucas Le Labbé"
+  },
+  "email_89_53": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 89,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "question",
+      "customer_type": "B2C",
+      "word_count": 24
+    },
+    "text": "Document ID: 53\nCreated: 2025-07-03\nFilename: email_89_53.txt\n--------------------------------------------------\n\nObjet: Besoin d'aide\n\nBonjour,\n\nJe suis très satisfait de mon achat et j'aurais une question technique.\n\nPouvez-vous me conseiller sur l'entretien de mon vélo?\n\nCordialement,\nFamille Mallet"
+  },
+  "manuel_urbain_sport": {
+    "metadata": {
+      "type": "manuel_technique",
+      "model": "Urbain-Sport",
+      "product_line": "Urbain",
+      "version": "2.5",
+      "last_updated": "2025-01-09",
+      "word_count": 367
+    },
+    "text": "Document ID: 19\nCreated: 2025-01-09\nFilename: manuel_urbain_sport.txt\n--------------------------------------------------\n\nManuel Technique - Urbain-Sport\n        \nBienvenue dans le manuel technique de votre Urbain-Sport. Ce document contient toutes les informations nécessaires pour l'utilisation, l'entretien et la maintenance de votre vélo.\n\nSPÉCIFICATIONS TECHNIQUES - Urbain-Sport\n\nPoids: 16.3 kg\nMatériau du cadre: acier\nTailles disponibles: S, M, L, XL\nCouleurs: blanc, bleu\nGarantie: 12 mois\n\nComposants:\n- Freins: Freins à disque hydrauliques\n- Transmission: Dérailleur 21 vitesses\n- Roues: Jantes aluminium double paroi\n- Pneus: Pneus tout-terrain 700x35c\n- Selle: Selle ergonomique avec gel\n\nMONTAGE ET INSTALLATION\n\n1. Déballage\n   - Vérifiez que tous les composants sont présents\n   - Inspectez le cadre pour détecter d'éventuels dommages\n   - Rassemblez les outils nécessaires\n\n2. Installation de la roue avant\n   - Insérez la roue dans la fourche\n   - Serrez les écrous de fixation à 15-20 Nm\n   - Vérifiez l'alignement\n\n3. Réglage de la hauteur de selle\n   - Desserrez le collier de serrage\n   - Ajustez à la hauteur souhaitée\n   - Resserrez fermement\n\n4. Installation du guidon\n   - Alignez le guidon avec la roue avant\n   - Serrez progressivement les vis\n   - Vérifiez la stabilité\n\n5. Contrôles finaux\n   - Testez tous les freins\n   - Vérifiez le fonctionnement des vitesses\n   - Effectuez un test de roulage\n\nENTRETIEN ET MAINTENANCE\n\nEntretien quotidien:\n- Vérifiez la pression des pneus (recommandé: 3-4 bars)\n- Contrôlez l'état des freins\n- Nettoyez la chaîne si nécessaire\n\nEntretien hebdomadaire:\n- Lubrifiez la chaîne avec un lubrifiant adapté\n- Vérifiez le serrage des composants\n- Inspectez l'usure des pneus\n\nEntretien mensuel:\n- Nettoyage complet du vélo\n- Vérification des câbles et gaines\n- Contrôle du jeu de direction\n- Réglage des dérailleurs si nécessaire\n\nEntretien annuel:\n- Révision complète chez un professionnel\n- Remplacement des pièces d'usure\n- Contrôle de sécurité approfondi\n\nRÉSOLUTION DE PROBLÈMES\n\nProblème: Les freins ne répondent pas\nSolution: Vérifiez l'état des patins, ajustez la tension des câbles\n\nProblème: La chaîne saute\nSolution: Contrôlez l'alignement du dérailleur, lubrifiez la chaîne\n\nProblème: Vitesses difficiles à passer\nSolution: Vérifiez la tension des câbles, nettoyez les dérailleurs\n\nProblème: Roue qui frotte\nSolution: Vérifiez l'alignement de la roue et des freins\n\nProblème: Bruit anormal\nSolution: Identifiez la source, vérifiez le serrage des composants\n\nPour tout problème persistant, contactez notre service technique au 01 23 45 67 89."
+  },
+  "email_10_40": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 10,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "remerciement",
+      "customer_type": "B2B",
+      "word_count": 25
+    },
+    "text": "Document ID: 40\nCreated: 2025-07-03\nFilename: email_10_40.txt\n--------------------------------------------------\n\nObjet: Merci pour votre service\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nDidier S.A.R.L. SA"
+  },
+  "transcription_65_87": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 65,
+      "sales_rep": "Gérard Legendre",
+      "product_discussed": "Urbain-Sport",
+      "outcome": "besoin_plus_info",
+      "duration_minutes": 22,
+      "word_count": 146
+    },
+    "text": "Document ID: 87\nCreated: 2025-07-03\nFilename: transcription_65_87.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1991-07-24\nCommercial: Gilles Royer\nClient: Lombard SARL\nProduit: Urbain-Sport\n\n---\n\nCommercial: Bonjour Lombard SARL, merci de votre intérêt pour le Urbain-Sport. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Urbain-Sport est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 856.86€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_43_56": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 43,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "remerciement",
+      "customer_type": "B2B",
+      "word_count": 25
+    },
+    "text": "Document ID: 56\nCreated: 2025-07-03\nFilename: email_43_56.txt\n--------------------------------------------------\n\nObjet: Très satisfait\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nMallet S.A.S. SA"
+  },
+  "transcription_51_107": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 51,
+      "sales_rep": "Marcel Boyer",
+      "product_discussed": "Pro-Livraison",
+      "outcome": "commande_passée",
+      "duration_minutes": 59,
+      "word_count": 146
+    },
+    "text": "Document ID: 107\nCreated: 2025-07-03\nFilename: transcription_51_107.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1977-03-10\nCommercial: Alice Ramos\nClient: Fontaine SA\nProduit: Pro-Livraison\n\n---\n\nCommercial: Bonjour Fontaine SA, merci de votre intérêt pour le Pro-Livraison. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Pro-Livraison est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 1341.92€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "transcription_95_102": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 95,
+      "sales_rep": "Alex Chauvin-Guyon",
+      "product_discussed": "Urbain-Classic",
+      "outcome": "suivi_programmé",
+      "duration_minutes": 46,
+      "word_count": 147
+    },
+    "text": "Document ID: 102\nCreated: 2025-07-03\nFilename: transcription_95_102.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1970-07-11\nCommercial: Agathe Le Bertin\nClient: Lévêque SARL\nProduit: Urbain-Classic\n\n---\n\nCommercial: Bonjour Lévêque SARL, merci de votre intérêt pour le Urbain-Classic. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Urbain-Classic est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 904.94€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_13_67": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 13,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "problème_technique",
+      "customer_type": "B2B",
+      "word_count": 15
+    },
+    "text": "Document ID: 67\nCreated: 2025-07-03\nFilename: email_13_67.txt\n--------------------------------------------------\n\nObjet: Contact client\n\nBonjour,\n\nJe vous contacte concernant mon vélo.\n\nMerci pour votre attention.\n\nPetit et Fils SARL"
+  },
+  "email_97_77": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 97,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "problème_technique",
+      "customer_type": "B2C",
+      "word_count": 13
+    },
+    "text": "Document ID: 77\nCreated: 2025-07-03\nFilename: email_97_77.txt\n--------------------------------------------------\n\nObjet: Contact client\n\nBonjour,\n\nJe vous contacte concernant mon vélo.\n\nMerci pour votre attention.\n\nThéophile François"
+  },
+  "email_75_83": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 75,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "question",
+      "customer_type": "B2C",
+      "word_count": 19
+    },
+    "text": "Document ID: 83\nCreated: 2025-07-03\nFilename: email_75_83.txt\n--------------------------------------------------\n\nObjet: Question sur mon vélo\n\nBonjour,\n\nJ'ai un problème avec mon vélo et j'aimerais obtenir de l'aide.\n\nMerci de me recontacter rapidement.\n\nFamille Maillard"
+  },
+  "transcription_8_103": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 8,
+      "sales_rep": "Clémence Le Martin",
+      "product_discussed": "Pro-Location",
+      "outcome": "pas_intéressé",
+      "duration_minutes": 23,
+      "word_count": 146
+    },
+    "text": "Document ID: 103\nCreated: 2025-07-03\nFilename: transcription_8_103.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 2008-01-19\nCommercial: Laure-Virginie Henry\nClient: Christiane Gonzalez\nProduit: Pro-Location\n\n---\n\nCommercial: Bonjour Christiane Gonzalez, merci de votre intérêt pour le Pro-Location. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Pro-Location est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 1321.77€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_69_55": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 69,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "réclamation",
+      "customer_type": "B2C",
+      "word_count": 27
+    },
+    "text": "Document ID: 55\nCreated: 2025-07-03\nFilename: email_69_55.txt\n--------------------------------------------------\n\nObjet: Problème avec ma commande\n\nBonjour,\n\nJe vous contacte car je rencontre un problème avec mon vélo acheté récemment.\n\nLe problème persiste malgré mes tentatives de résolution.\n\nJ'attends votre retour.\n\nFamille Jacquot"
+  },
+  "transcription_66_101": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 66,
+      "sales_rep": "Thibault-Gilles Rodrigues",
+      "product_discussed": "Urbain-Confort",
+      "outcome": "besoin_plus_info",
+      "duration_minutes": 21,
+      "word_count": 146
+    },
+    "text": "Document ID: 101\nCreated: 2025-07-03\nFilename: transcription_66_101.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1973-03-01\nCommercial: Roland Techer\nClient: Allard SA\nProduit: Urbain-Confort\n\n---\n\nCommercial: Bonjour Allard SA, merci de votre intérêt pour le Urbain-Confort. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Urbain-Confort est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 1069.49€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_37_68": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 37,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "question",
+      "customer_type": "B2B",
+      "word_count": 21
+    },
+    "text": "Document ID: 68\nCreated: 2025-07-03\nFilename: email_37_68.txt\n--------------------------------------------------\n\nObjet: Demande d'information\n\nBonjour,\n\nJ'ai un problème avec mon vélo et j'aimerais obtenir de l'aide.\n\nMerci de me recontacter rapidement.\n\nHebert Seguin SA SARL"
+  },
+  "transcription_32_98": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 32,
+      "sales_rep": "Véronique Le Boyer",
+      "product_discussed": "E-Cargo",
+      "outcome": "commande_passée",
+      "duration_minutes": 15,
+      "word_count": 146
+    },
+    "text": "Document ID: 98\nCreated: 2025-07-03\nFilename: transcription_32_98.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1996-05-10\nCommercial: Agnès Andre\nClient: Famille Hamon\nProduit: E-Cargo\n\n---\n\nCommercial: Bonjour Famille Hamon, merci de votre intérêt pour le E-Cargo. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le E-Cargo est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 3913.17€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_36_69": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 36,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "problème_technique",
+      "customer_type": "B2B",
+      "word_count": 13
+    },
+    "text": "Document ID: 69\nCreated: 2025-07-03\nFilename: email_36_69.txt\n--------------------------------------------------\n\nObjet: Contact client\n\nBonjour,\n\nJe vous contacte concernant mon vélo.\n\nMerci pour votre attention.\n\nMace SA"
+  },
+  "faq_compatibilité": {
+    "metadata": {
+      "type": "faq",
+      "category": "Compatibilité",
+      "num_questions": 10,
+      "word_count": 256
+    },
+    "text": "Document ID: 26\nCreated: 2025-07-03\nFilename: faq_compatibilité.txt\n--------------------------------------------------\n\nFAQ - Compatibilité\n\nFoire aux questions concernant compatibilité. Retrouvez ici les réponses aux questions les plus fréquemment posées par nos clients.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition.\n\nQ: Comment régler la hauteur de selle?\nR: La hauteur de selle se règle en desserrant le collier de serrage, ajustant la position et resserrant fermement.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition.\n\nQ: Comment régler la hauteur de selle?\nR: La hauteur de selle se règle en desserrant le collier de serrage, ajustant la position et resserrant fermement.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition.\n\nQ: Comment régler la hauteur de selle?\nR: La hauteur de selle se règle en desserrant le collier de serrage, ajustant la position et resserrant fermement.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Comment passer les vitesses correctement?\nR: Réduisez légèrement l'effort de pédalage lors du changement de vitesse pour faciliter la transition.\n\nQ: Comment régler la hauteur de selle?\nR: La hauteur de selle se règle en desserrant le collier de serrage, ajustant la position et resserrant fermement."
+  },
+  "email_75_54": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 75,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "problème_technique",
+      "customer_type": "B2C",
+      "word_count": 13
+    },
+    "text": "Document ID: 54\nCreated: 2025-07-03\nFilename: email_75_54.txt\n--------------------------------------------------\n\nObjet: Contact client\n\nBonjour,\n\nJe vous contacte concernant mon vélo.\n\nMerci pour votre attention.\n\nFamille Maillard"
+  },
+  "email_55_70": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 55,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "problème_technique",
+      "customer_type": "B2C",
+      "word_count": 13
+    },
+    "text": "Document ID: 70\nCreated: 2025-07-03\nFilename: email_55_70.txt\n--------------------------------------------------\n\nObjet: Contact client\n\nBonjour,\n\nJe vous contacte concernant mon vélo.\n\nMerci pour votre attention.\n\nFamille Vallet"
+  },
+  "manuel_sport_elite": {
+    "metadata": {
+      "type": "manuel_technique",
+      "model": "Sport-Elite",
+      "product_line": "Sport",
+      "version": "1.5",
+      "last_updated": "2024-08-28",
+      "word_count": 367
+    },
+    "text": "Document ID: 5\nCreated: 2024-08-28\nFilename: manuel_sport_elite.txt\n--------------------------------------------------\n\nManuel Technique - Sport-Elite\n        \nBienvenue dans le manuel technique de votre Sport-Elite. Ce document contient toutes les informations nécessaires pour l'utilisation, l'entretien et la maintenance de votre vélo.\n\nSPÉCIFICATIONS TECHNIQUES - Sport-Elite\n\nPoids: 8.5 kg\nMatériau du cadre: carbone\nTailles disponibles: S, M, L, XL\nCouleurs: gris, bleu\nGarantie: 24 mois\n\nComposants:\n- Freins: Freins à disque hydrauliques\n- Transmission: Dérailleur 21 vitesses\n- Roues: Jantes aluminium double paroi\n- Pneus: Pneus tout-terrain 700x35c\n- Selle: Selle ergonomique avec gel\n\nMONTAGE ET INSTALLATION\n\n1. Déballage\n   - Vérifiez que tous les composants sont présents\n   - Inspectez le cadre pour détecter d'éventuels dommages\n   - Rassemblez les outils nécessaires\n\n2. Installation de la roue avant\n   - Insérez la roue dans la fourche\n   - Serrez les écrous de fixation à 15-20 Nm\n   - Vérifiez l'alignement\n\n3. Réglage de la hauteur de selle\n   - Desserrez le collier de serrage\n   - Ajustez à la hauteur souhaitée\n   - Resserrez fermement\n\n4. Installation du guidon\n   - Alignez le guidon avec la roue avant\n   - Serrez progressivement les vis\n   - Vérifiez la stabilité\n\n5. Contrôles finaux\n   - Testez tous les freins\n   - Vérifiez le fonctionnement des vitesses\n   - Effectuez un test de roulage\n\nENTRETIEN ET MAINTENANCE\n\nEntretien quotidien:\n- Vérifiez la pression des pneus (recommandé: 3-4 bars)\n- Contrôlez l'état des freins\n- Nettoyez la chaîne si nécessaire\n\nEntretien hebdomadaire:\n- Lubrifiez la chaîne avec un lubrifiant adapté\n- Vérifiez le serrage des composants\n- Inspectez l'usure des pneus\n\nEntretien mensuel:\n- Nettoyage complet du vélo\n- Vérification des câbles et gaines\n- Contrôle du jeu de direction\n- Réglage des dérailleurs si nécessaire\n\nEntretien annuel:\n- Révision complète chez un professionnel\n- Remplacement des pièces d'usure\n- Contrôle de sécurité approfondi\n\nRÉSOLUTION DE PROBLÈMES\n\nProblème: Les freins ne répondent pas\nSolution: Vérifiez l'état des patins, ajustez la tension des câbles\n\nProblème: La chaîne saute\nSolution: Contrôlez l'alignement du dérailleur, lubrifiez la chaîne\n\nProblème: Vitesses difficiles à passer\nSolution: Vérifiez la tension des câbles, nettoyez les dérailleurs\n\nProblème: Roue qui frotte\nSolution: Vérifiez l'alignement de la roue et des freins\n\nProblème: Bruit anormal\nSolution: Identifiez la source, vérifiez le serrage des composants\n\nPour tout problème persistant, contactez notre service technique au 01 23 45 67 89."
+  },
+  "transcription_25_92": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 25,
+      "sales_rep": "Augustin Fabre-David",
+      "product_discussed": "E-Cargo",
+      "outcome": "besoin_plus_info",
+      "duration_minutes": 41,
+      "word_count": 148
+    },
+    "text": "Document ID: 92\nCreated: 2025-07-03\nFilename: transcription_25_92.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 2008-10-10\nCommercial: Maurice Mercier\nClient: Bigot S.A.S. SA\nProduit: E-Cargo\n\n---\n\nCommercial: Bonjour Bigot S.A.S. SA, merci de votre intérêt pour le E-Cargo. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le E-Cargo est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 3913.17€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_92_59": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 92,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "réclamation",
+      "customer_type": "B2B",
+      "word_count": 27
+    },
+    "text": "Document ID: 59\nCreated: 2025-07-03\nFilename: email_92_59.txt\n--------------------------------------------------\n\nObjet: Réclamation\n\nBonjour,\n\nJe vous contacte car je rencontre un problème avec mon vélo acheté récemment.\n\nLe problème persiste malgré mes tentatives de résolution.\n\nJ'attends votre retour.\n\nRamos SARL"
+  },
+  "manuel_e_sport": {
+    "metadata": {
+      "type": "manuel_technique",
+      "model": "E-Sport",
+      "product_line": "Electrique",
+      "version": "1.4",
+      "last_updated": "2024-08-25",
+      "word_count": 367
+    },
+    "text": "Document ID: 2\nCreated: 2024-08-25\nFilename: manuel_e_sport.txt\n--------------------------------------------------\n\nManuel Technique - E-Sport\n        \nBienvenue dans le manuel technique de votre E-Sport. Ce document contient toutes les informations nécessaires pour l'utilisation, l'entretien et la maintenance de votre vélo.\n\nSPÉCIFICATIONS TECHNIQUES - E-Sport\n\nPoids: 19.1 kg\nMatériau du cadre: carbone\nTailles disponibles: S, M, L, XL\nCouleurs: noir_mat, blanc_nacré\nGarantie: 36 mois\n\nComposants:\n- Freins: Freins à disque hydrauliques\n- Transmission: Dérailleur 21 vitesses\n- Roues: Jantes aluminium double paroi\n- Pneus: Pneus tout-terrain 700x35c\n- Selle: Selle ergonomique avec gel\n\nMONTAGE ET INSTALLATION\n\n1. Déballage\n   - Vérifiez que tous les composants sont présents\n   - Inspectez le cadre pour détecter d'éventuels dommages\n   - Rassemblez les outils nécessaires\n\n2. Installation de la roue avant\n   - Insérez la roue dans la fourche\n   - Serrez les écrous de fixation à 15-20 Nm\n   - Vérifiez l'alignement\n\n3. Réglage de la hauteur de selle\n   - Desserrez le collier de serrage\n   - Ajustez à la hauteur souhaitée\n   - Resserrez fermement\n\n4. Installation du guidon\n   - Alignez le guidon avec la roue avant\n   - Serrez progressivement les vis\n   - Vérifiez la stabilité\n\n5. Contrôles finaux\n   - Testez tous les freins\n   - Vérifiez le fonctionnement des vitesses\n   - Effectuez un test de roulage\n\nENTRETIEN ET MAINTENANCE\n\nEntretien quotidien:\n- Vérifiez la pression des pneus (recommandé: 3-4 bars)\n- Contrôlez l'état des freins\n- Nettoyez la chaîne si nécessaire\n\nEntretien hebdomadaire:\n- Lubrifiez la chaîne avec un lubrifiant adapté\n- Vérifiez le serrage des composants\n- Inspectez l'usure des pneus\n\nEntretien mensuel:\n- Nettoyage complet du vélo\n- Vérification des câbles et gaines\n- Contrôle du jeu de direction\n- Réglage des dérailleurs si nécessaire\n\nEntretien annuel:\n- Révision complète chez un professionnel\n- Remplacement des pièces d'usure\n- Contrôle de sécurité approfondi\n\nRÉSOLUTION DE PROBLÈMES\n\nProblème: Les freins ne répondent pas\nSolution: Vérifiez l'état des patins, ajustez la tension des câbles\n\nProblème: La chaîne saute\nSolution: Contrôlez l'alignement du dérailleur, lubrifiez la chaîne\n\nProblème: Vitesses difficiles à passer\nSolution: Vérifiez la tension des câbles, nettoyez les dérailleurs\n\nProblème: Roue qui frotte\nSolution: Vérifiez l'alignement de la roue et des freins\n\nProblème: Bruit anormal\nSolution: Identifiez la source, vérifiez le serrage des composants\n\nPour tout problème persistant, contactez notre service technique au 01 23 45 67 89."
+  },
+  "email_71_43": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 71,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "question",
+      "customer_type": "B2B",
+      "word_count": 24
+    },
+    "text": "Document ID: 43\nCreated: 2025-07-03\nFilename: email_71_43.txt\n--------------------------------------------------\n\nObjet: Question sur mon vélo\n\nBonjour,\n\nJe suis très satisfait de mon achat et j'aurais une question technique.\n\nPouvez-vous me conseiller sur l'entretien de mon vélo?\n\nCordialement,\nCharles SARL"
+  },
+  "email_34_79": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 34,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "question",
+      "customer_type": "B2B",
+      "word_count": 26
+    },
+    "text": "Document ID: 79\nCreated: 2025-07-03\nFilename: email_34_79.txt\n--------------------------------------------------\n\nObjet: Besoin d'aide\n\nBonjour,\n\nJe suis très satisfait de mon achat et j'aurais une question technique.\n\nPouvez-vous me conseiller sur l'entretien de mon vélo?\n\nCordialement,\nBrunel Moreau S.A.R.L. SA"
+  },
+  "email_10_39": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 10,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "question",
+      "customer_type": "B2B",
+      "word_count": 20
+    },
+    "text": "Document ID: 39\nCreated: 2025-07-03\nFilename: email_10_39.txt\n--------------------------------------------------\n\nObjet: Demande d'information\n\nBonjour,\n\nJ'ai un problème avec mon vélo et j'aimerais obtenir de l'aide.\n\nMerci de me recontacter rapidement.\n\nDidier S.A.R.L. SA"
+  },
+  "email_17_57": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 17,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "question",
+      "customer_type": "B2B",
+      "word_count": 22
+    },
+    "text": "Document ID: 57\nCreated: 2025-07-03\nFilename: email_17_57.txt\n--------------------------------------------------\n\nObjet: Besoin d'aide\n\nBonjour,\n\nJ'ai un problème avec mon vélo et j'aimerais obtenir de l'aide.\n\nMerci de me recontacter rapidement.\n\nWagner Blanc et Fils SA"
+  },
+  "email_50_51": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 50,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "remerciement",
+      "customer_type": "B2B",
+      "word_count": 24
+    },
+    "text": "Document ID: 51\nCreated: 2025-07-03\nFilename: email_50_51.txt\n--------------------------------------------------\n\nObjet: Merci pour votre service\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nGautier SARL"
+  },
+  "transcription_89_91": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 89,
+      "sales_rep": "Pénélope Marchand",
+      "product_discussed": "Pro-Sécurité",
+      "outcome": "devis_envoyé",
+      "duration_minutes": 33,
+      "word_count": 146
+    },
+    "text": "Document ID: 91\nCreated: 2025-07-03\nFilename: transcription_89_91.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 2008-03-02\nCommercial: Gilbert Vaillant-Fleury\nClient: Famille Mallet\nProduit: Pro-Sécurité\n\n---\n\nCommercial: Bonjour Famille Mallet, merci de votre intérêt pour le Pro-Sécurité. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Pro-Sécurité est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 495.81€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "email_89_41": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 89,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "remerciement",
+      "customer_type": "B2C",
+      "word_count": 24
+    },
+    "text": "Document ID: 41\nCreated: 2025-07-03\nFilename: email_89_41.txt\n--------------------------------------------------\n\nObjet: Merci pour votre service\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nFamille Mallet"
+  },
+  "email_1_46": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 1,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "problème_technique",
+      "customer_type": "B2C",
+      "word_count": 13
+    },
+    "text": "Document ID: 46\nCreated: 2025-07-03\nFilename: email_1_46.txt\n--------------------------------------------------\n\nObjet: Contact client\n\nBonjour,\n\nJe vous contacte concernant mon vélo.\n\nMerci pour votre attention.\n\nFamille Fernandez"
+  },
+  "email_67_62": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 67,
+      "ticket_id": null,
+      "sentiment": "positif",
+      "category": "réclamation",
+      "customer_type": "B2C",
+      "word_count": 27
+    },
+    "text": "Document ID: 62\nCreated: 2025-07-03\nFilename: email_67_62.txt\n--------------------------------------------------\n\nObjet: Problème avec ma commande\n\nBonjour,\n\nJe vous contacte car je rencontre un problème avec mon vélo acheté récemment.\n\nLe problème persiste malgré mes tentatives de résolution.\n\nJ'attends votre retour.\n\nMarc Paul-Guillou"
+  },
+  "email_71_61": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 71,
+      "ticket_id": null,
+      "sentiment": "neutre",
+      "category": "remerciement",
+      "customer_type": "B2B",
+      "word_count": 24
+    },
+    "text": "Document ID: 61\nCreated: 2025-07-03\nFilename: email_71_61.txt\n--------------------------------------------------\n\nObjet: Très satisfait\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nCharles SARL"
+  },
+  "email_9_52": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 9,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "remerciement",
+      "customer_type": "B2C",
+      "word_count": 24
+    },
+    "text": "Document ID: 52\nCreated: 2025-07-03\nFilename: email_9_52.txt\n--------------------------------------------------\n\nObjet: Très satisfait\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nAugustin Collin"
+  },
+  "transcription_40_94": {
+    "metadata": {
+      "type": "transcription_commerciale",
+      "client_id": 40,
+      "sales_rep": "Margaux Leclercq",
+      "product_discussed": "Urbain-Confort",
+      "outcome": "devis_envoyé",
+      "duration_minutes": 50,
+      "word_count": 146
+    },
+    "text": "Document ID: 94\nCreated: 2025-07-03\nFilename: transcription_40_94.txt\n--------------------------------------------------\n\nTranscription Conversation Commerciale\nDate: 1985-12-27\nCommercial: Pauline Regnier-Blondel\nClient: Klein SARL\nProduit: Urbain-Confort\n\n---\n\nCommercial: Bonjour Klein SARL, merci de votre intérêt pour le Urbain-Confort. Que recherchez-vous exactement?\n\nClient: Bonjour, je cherche un vélo pour mes déplacements quotidiens en ville.\n\nCommercial: Parfait! Le Urbain-Confort est idéal pour cet usage. Il offre un excellent confort et une grande fiabilité. Quelle distance parcourez-vous généralement?\n\nClient: Environ 10-15 km par jour. J'ai besoin de quelque chose de robuste.\n\nCommercial: Ce modèle conviendra parfaitement. Il dispose d'un cadre résistant et de composants de qualité. Avez-vous des questions spécifiques?\n\nClient: Quel est le prix et quelles sont les options de financement?\n\nCommercial: Le prix est de 1069.49€. Nous proposons un paiement en 3 fois sans frais ou un crédit sur 12 mois.\n\nClient: Intéressant. Puis-je avoir un devis détaillé?\n\nCommercial: Bien sûr! Je vous prépare cela immédiatement avec les accessoires recommandés."
+  },
+  "faq_sécurité": {
+    "metadata": {
+      "type": "faq",
+      "category": "Sécurité",
+      "num_questions": 10,
+      "word_count": 281
+    },
+    "text": "Document ID: 33\nCreated: 2025-07-03\nFilename: faq_sécurité.txt\n--------------------------------------------------\n\nFAQ - Sécurité\n\nFoire aux questions concernant sécurité. Retrouvez ici les réponses aux questions les plus fréquemment posées par nos clients.\n\nQ: Comment régler la hauteur de selle?\nR: La hauteur de selle se règle en desserrant le collier de serrage, ajustant la position et resserrant fermement.\n\nQ: Comment régler la hauteur de selle?\nR: La hauteur de selle se règle en desserrant le collier de serrage, ajustant la position et resserrant fermement.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain.\n\nQ: Comment régler la hauteur de selle?\nR: La hauteur de selle se règle en desserrant le collier de serrage, ajustant la position et resserrant fermement.\n\nQ: Quelle pression mettre dans les pneus?\nR: La pression recommandée est généralement entre 3 et 4 bars, selon votre poids et le type de terrain."
+  },
+  "email_36_38": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 36,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "problème_technique",
+      "customer_type": "B2B",
+      "word_count": 13
+    },
+    "text": "Document ID: 38\nCreated: 2025-07-03\nFilename: email_36_38.txt\n--------------------------------------------------\n\nObjet: Contact client\n\nBonjour,\n\nJe vous contacte concernant mon vélo.\n\nMerci pour votre attention.\n\nMace SA"
+  },
+  "email_11_66": {
+    "metadata": {
+      "type": "email_client",
+      "client_id": 11,
+      "ticket_id": null,
+      "sentiment": "négatif",
+      "category": "remerciement",
+      "customer_type": "B2B",
+      "word_count": 26
+    },
+    "text": "Document ID: 66\nCreated: 2025-07-03\nFilename: email_11_66.txt\n--------------------------------------------------\n\nObjet: Merci pour votre service\n\nBonjour,\n\nJe tenais à vous remercier pour l'excellent service et la qualité de mon vélo.\n\nJe n'hésiterai pas à vous recommander.\n\nCordialement,\nGuillaume et Fils SARL"
+  }
+}
