@@ -31,15 +31,14 @@ def write_file(
             - "business": Business report (Contexte, Analyse, Opportunités, Recommandations)
             - "customer_analysis": Customer analysis (Retours Clients, Points Positifs, Améliorations)
         format: Output format:
-            - "text": Plain text (default)
+            - "text": Plain text file (.txt) (default)
             - "excel": Excel spreadsheet (.xlsx)
-        filename: Output filename for Excel format (without extension).
-            If not provided for Excel, uses sanitized title.
+        filename: Output filename (without extension).
+            If not provided, uses sanitized title.
             File will be saved in current directory.
 
     Returns:
-        For text format: Formatted report as string
-        For Excel: Path to the generated .xlsx file
+        Path to the generated file (.txt or .xlsx)
 
     Examples:
         write_file("Analyse des Ventes Q4", "Résumé: Ventes en hausse de 15%...", report_type="business")
@@ -52,15 +51,15 @@ def write_file(
         if format == "excel":
             return _generate_excel(title, content, report_type, timestamp, filename)
         else:
-            return _generate_text(title, content, report_type, timestamp)
+            return _generate_text(title, content, report_type, timestamp, filename)
 
     except Exception as e:
         return f"Error generating report: {str(e)}"
 
 
-def _generate_text(title: str, content: str, report_type: str, timestamp: str) -> str:
-    """Generate plain text report"""
-    return f"""
+def _generate_text(title: str, content: str, report_type: str, timestamp: str, filename: str = None) -> str:
+    """Generate plain text report and save to file"""
+    report_content = f"""
 {'='*60}
 {title.upper()}
 {'='*60}
@@ -76,6 +75,17 @@ Date: {timestamp}
 Fin du rapport
 {'='*60}
 """
+    # Generate filename
+    if not filename:
+        filename = "".join(c if c.isalnum() or c in ' -_' else '_' for c in title)
+        filename = filename.replace(' ', '_')
+
+    filepath = f"{filename}.txt"
+
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(report_content)
+
+    return f"Text report generated: {os.path.abspath(filepath)}"
 
 
 def _generate_excel(title: str, content: str, report_type: str, timestamp: str, filename: str = None) -> str:

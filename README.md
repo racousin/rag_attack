@@ -22,6 +22,7 @@ Construire un système RAG sur les données VéloCorp.
 
 | Notebook | Description | Lien |
 |----------|-------------|------|
+| **Partie 0 - Données** | Présentation des données | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/racousin/rag_attack/blob/main/partie1_rag_0.ipynb) |
 | **Partie 1 - RAG** | Comprendre et implémenter un RAG : embeddings, recherche vectorielle, génération | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/racousin/rag_attack/blob/main/partie1_rag_1.ipynb) |
 
 **Concepts abordés :**
